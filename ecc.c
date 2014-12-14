@@ -53,6 +53,14 @@ int eq(number a, number b) {
 // Testing function //
 //////////////////////
 
+number parse(char* text) {
+    number b = new_number();
+    FOR(i) {
+        sscanf(text + i * 2, "%02hhx", &b[N-i-1]);
+    }
+    return b;
+}
+
 void print(char* label, number n) {
     printf("%s: ", label);
     for (int i = N - 1; i >= 0; i--) {
@@ -62,10 +70,7 @@ void print(char* label, number n) {
 }
 
 void assertEquals(number a, char* text) {
-    number b = new_number();
-    FOR(i) {
-        sscanf(text + i * 2, "%02hhx", &b[N-i-1]);
-    }
+    number b = parse(text);
     if (!eq(a, b)) {
         print("Expected ", b);
         print("got ", a);
@@ -73,14 +78,11 @@ void assertEquals(number a, char* text) {
 }
 
 int main() {
-    number a = new_number();
-    a[0] = 0x01;
+    number a = parse("00000000000000000001");
     assert(eq(a, a));
     assertEquals(a, "00000000000000000001");
 
-    number b = new_number();
-    b[0] = 0xFF;
-    b[1] = 0xFF;
+    number b = parse("0000000000000000FFFF");
     assertEquals(b, "0000000000000000FFFF");
 
     number c = new_number();
