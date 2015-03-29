@@ -13,8 +13,8 @@ typedef chunk* number;
 #define ZERO new_number()
 
 number new_number();
-void add(number a, number b, number p, number result);
-void sub(number a, number b, number p, number result);
+void add(number a, number b, number result);
+void sub(number a, number b, number result);
 
 number new_number() {
     number n = malloc(sizeof(chunk) * N);
@@ -24,7 +24,7 @@ number new_number() {
     return n;
 }
 
-void add(number a, number b, number p, number result) {
+void add(number a, number b, number result) {
     chunk carry = 0;
     chunk sum;
     FOR(i) {
@@ -32,23 +32,15 @@ void add(number a, number b, number p, number result) {
         carry = sum < a[i] || (sum == a[i] && b[i] != 0);
         result[i] = sum;
     }
-
-    if (carry) {
-        sub(result, p, ZERO, result);
-    }
 }
 
-void sub(number a, number b, number p, number result) {
+void sub(number a, number b, number result) {
     chunk carry = 0;
     chunk sum;
     FOR(i) {
         sum = a[i] - b[i] - carry;
         carry = a[i] < b[i] || sum > a[i];
         result[i] = sum;
-    }
-
-    if (carry) {
-        add(result, p, ZERO, result);
     }
 }
 
@@ -104,23 +96,23 @@ int main() {
     assert(!eq(a, b));
 
     number c = new_number();
-    add(a, b, ZERO, c);
+    add(a, b, c);
     assertEquals(c, "00000000000000010000");
-    add(a, c, ZERO, c);
+    add(a, c, c);
     assertEquals(c, "00000000000000010001");
-    add(b, c, ZERO, c);
+    add(b, c, c);
     assertEquals(c, "00000000000000020000");
-    sub(c, b, ZERO, c);
+    sub(c, b, c);
     assertEquals(c, "00000000000000010001");
-    sub(c, b, ZERO, c);
+    sub(c, b, c);
     assertEquals(c, "00000000000000000002");
-    sub(c, a, ZERO, c);
-    sub(c, a, ZERO, c);
-    sub(c, a, ZERO, c);
+    sub(c, a, c);
+    sub(c, a, c);
+    sub(c, a, c);
     assertEquals(c, "FFFFFFFFFFFFFFFFFFFF");
-    add(c, a, ZERO, c);
+    add(c, a, c);
     assertEquals(c, "00000000000000000000");
 
-    add(b, b, ZERO, c);
+    add(b, b, c);
     assertEquals(c, "0000000000000001FFFE");
 }
