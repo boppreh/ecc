@@ -48,13 +48,15 @@ void mult(number a, number b, number result) {
     //number inter = (number) malloc(sizeof(chunk) * N * 2);
 }
 
-int eq(number a, number b) {
+int cmp(number a, number b) {
     FOR(i) {
-        if (a[i] != b[i]) {
-            return 0;
+        if (a[i] > b[i]) {
+            return 1;
+        } else if (a[i] < b[i]) {
+            return -1;
         }
     }
-    return 1;
+    return 0;
 }
 
 
@@ -80,7 +82,7 @@ void print(char* label, number n) {
 
 void assertEquals(number a, char* text) {
     number b = parse(text);
-    if (!eq(a, b)) {
+    if (cmp(a, b) != 0) {
         print("Expected ", b);
         print("got ", a);
     }
@@ -88,12 +90,12 @@ void assertEquals(number a, char* text) {
 
 int main() {
     number a = parse("00000000000000000001");
-    assert(eq(a, a));
+    assert(cmp(a, a) == 0);
     assertEquals(a, "00000000000000000001");
 
     number b = parse("0000000000000000FFFF");
     assertEquals(b, "0000000000000000FFFF");
-    assert(!eq(a, b));
+    assert(cmp(a, b) == -1);
 
     number c = new_number();
     add(a, b, c);
