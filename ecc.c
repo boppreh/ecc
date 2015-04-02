@@ -10,11 +10,14 @@ typedef unsigned char chunk;
 typedef chunk* number;
 // Helper macro.
 #define FOR(i) for (int i = 0; i < N; i++)
+#define RFOR(i) for (int i = N - 1; i >= 0; i--)
 #define ZERO new_number()
+#define MAX make_max()
 
 number new_number();
-void add(number a, number b, number result);
-void sub(number a, number b, number result);
+int cmp(number a, number b);
+void add(number a, number b, number p, number result);
+void sub(number a, number b, number p, number result);
 
 number new_number() {
     number n = malloc(sizeof(chunk) * N);
@@ -24,7 +27,21 @@ number new_number() {
     return n;
 }
 
-void add(number a, number b, number result) {
+void cp(number src, number dst) {
+    FOR(i) {
+        dst[i] = src[i];
+    }
+}
+
+number make_max() {
+    number n = malloc(sizeof(chunk) * N);
+    FOR(i) {
+        n[i] = 0xFF;
+    }
+    return n;
+}
+
+void add(number a, number b, number p, number result) {
     chunk carry = 0;
     chunk sum;
     FOR(i) {
@@ -32,9 +49,21 @@ void add(number a, number b, number result) {
         carry = sum < a[i] || (sum == a[i] && b[i] != 0);
         result[i] = sum;
     }
+    
+    if (cmp(result, p) == 1) {
+        printf("Preventing overflow.\n");
+        sub(result, p, MAX, result);
+    }
 }
 
-void sub(number a, number b, number result) {
+void sub(number a, number b, number p, number result) {
+    if (cmp(a, b) == -1) {
+        printf("Preventing underflow.\n");
+        cp(a, result);   
+        a = result;
+        add(a, p, MAX, a);
+    }
+
     chunk carry = 0;
     chunk sum;
     FOR(i) {
@@ -49,7 +78,7 @@ void mult(number a, number b, number result) {
 }
 
 int cmp(number a, number b) {
-    FOR(i) {
+    RFOR(i) {
         if (a[i] > b[i]) {
             return 1;
         } else if (a[i] < b[i]) {
@@ -98,23 +127,23 @@ int main() {
     assert(cmp(a, b) == -1);
 
     number c = new_number();
-    add(a, b, c);
+    add(a, b, MAX, c);
     assertEquals(c, "00000000000000010000");
-    add(a, c, c);
+    add(a, c, MAX, c);
     assertEquals(c, "00000000000000010001");
-    add(b, c, c);
+    add(b, c, MAX, c);
     assertEquals(c, "00000000000000020000");
-    sub(c, b, c);
+    sub(c, b, MAX, c);
     assertEquals(c, "00000000000000010001");
-    sub(c, b, c);
+    sub(c, b, MAX, c);
     assertEquals(c, "00000000000000000002");
-    sub(c, a, c);
-    sub(c, a, c);
-    sub(c, a, c);
+    sub(c, a, MAX, c);
+    sub(c, a, MAX, c);
+    sub(c, a, MAX, c);
     assertEquals(c, "FFFFFFFFFFFFFFFFFFFF");
-    add(c, a, c);
+    add(c, a, MAX, c);
     assertEquals(c, "00000000000000000000");
 
-    add(b, b, c);
+    add(b, b, MAX, c);
     assertEquals(c, "0000000000000001FFFE");
 }
