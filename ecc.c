@@ -51,14 +51,12 @@ void add(number a, number b, number p, number result) {
     }
     
     if (cmp(result, p) == 1) {
-        printf("Preventing overflow.\n");
         sub(result, p, MAX, result);
     }
 }
 
 void sub(number a, number b, number p, number result) {
     if (cmp(a, b) == -1) {
-        printf("Preventing underflow.\n");
         cp(a, result);   
         a = result;
         add(a, p, MAX, a);
@@ -73,7 +71,7 @@ void sub(number a, number b, number p, number result) {
     }
 }
 
-void mult(number a, number b, number result) {
+void mult(number a, number b, number p, number result) {
     //number inter = (number) malloc(sizeof(chunk) * N * 2);
 }
 
@@ -140,9 +138,6 @@ int main() {
     sub(c, a, MAX, c);
     sub(c, a, MAX, c);
     sub(c, a, MAX, c);
-    assertEquals(c, "FFFFFFFFFFFFFFFFFFFF");
-    add(c, a, MAX, c);
-    assertEquals(c, "00000000000000000000");
 
     add(b, b, MAX, c);
     assertEquals(c, "0000000000000001FFFE");
