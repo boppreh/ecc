@@ -71,8 +71,25 @@ void sub(number a, number b, number p, number result) {
     }
 }
 
-void mult(number a, number b, number p, number result) {
-    //number inter = (number) malloc(sizeof(chunk) * N * 2);
+void mul(number a, number b, number p, number result) {
+    chunk k = 0;
+    chunk carry = 0;
+    unsigned long n;
+
+    cp(ZERO, result);
+
+    for (int i = N/2 - 1; i >= 0; i--) {
+		for (int j = N/2 - 1, k = i + j, carry = 0; j >= 0; j--, k--) {
+            n = a[i] * b[j] + result[k] + carry;
+            carry = n / 0xFF;
+            result[k] = n & 0xFF;
+        }
+        result[k] += carry;
+    }
+}
+
+void karatsuba(number a, number b, number p, number result) {
+
 }
 
 int cmp(number a, number b) {
@@ -116,7 +133,10 @@ void assertEquals(number a, char* text) {
 }
 
 int main() {
-    number a = parse("00000000000000000001");
+    number ONE = parse("00000000000000000001");
+    number TWO = parse("00000000000000000002");
+
+    number a = ONE;
     assert(cmp(a, a) == 0);
     assertEquals(a, "00000000000000000001");
 
@@ -141,4 +161,19 @@ int main() {
 
     add(b, b, MAX, c);
     assertEquals(c, "0000000000000001FFFE");
+
+    mul(ONE, ZERO, MAX, c);
+    assertEquals(c, "00000000000000000000");
+    mul(ZERO, ONE, MAX, c);
+    assertEquals(c, "00000000000000000000");
+    mul(ZERO, ZERO, MAX, c);
+    assertEquals(c, "00000000000000000000");
+    mul(ONE, ONE, MAX, c);
+    assertEquals(c, "00000000000000000001");
+    mul(TWO, TWO, MAX, c);
+    assertEquals(c, "00000000000000000004");
+
+    // TODO: fix multiplication when result is one of the operands.
+    // mul(c, c, MAX, c);
+    //assertEquals(c, "00000000000000000010");
 }
