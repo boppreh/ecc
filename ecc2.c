@@ -20,6 +20,12 @@ Number new_number(long size) {
     return n;
 }
 
+void zero(Number dst) {
+    FOR(i, dst) {
+        dst.v[i] = 0;
+    }
+}
+
 void cp(Number src, Number dst) {
     FOR(i, src) {
         dst.v[i] = src.v[i];
@@ -89,6 +95,28 @@ void sub(Number a, Number b, Number result) {
         dif = a.v[i] - b.v[i] - carry;
         carry = a.v[i] < b.v[i] || dif > a.v[i];
         result.v[i] = dif;
+    }
+}
+
+void mul(Number a, Number b, Number result) {
+    assert(a.v != result.v);
+    assert(b.v != result.v);
+    assert(a.length == b.length);
+    assert(result.length >= a.length);
+
+    chunk k = 0;
+    chunk carry = 0;
+    unsigned long n;
+
+    zero(result);
+
+    for (int i = a.length/2 - 1; i >= 0; i--) {
+		for (int j = a.length/2 - 1, k = i + j, carry = 0; j >= 0; j--, k--) {
+            n = a.v[i] * b.v[j] + result.v[k] + carry;
+            carry = n / 0xFF;
+            result.v[k] = n & 0xFF;
+        }
+        result.v[k] += carry;
     }
 }
 
