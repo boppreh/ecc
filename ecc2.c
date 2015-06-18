@@ -61,9 +61,9 @@ Number parse(char* text) {
     return b;
 }
 
-#define print(n) print_with_label(#n, n)
-void print_with_label(char* label, Number n) {
-    printf("%s: ", label);
+#define print(n) print_with_label(__func__, #n, n)
+void print_with_label(const char* func, const char* label, Number n) {
+    printf("%s (%s): ", label, func);
     FOR(i, n) {
         printf("%02hhx", n.v[i]);
     } 
