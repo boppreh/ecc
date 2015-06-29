@@ -36,16 +36,33 @@ void zero(Number dst) {
 }
 
 void cp(Number src, Number dst) {
-    FOR(i, src) {
-        dst.v[i] = src.v[i];
+    Number smallest;
+    if (src.length < dst.length) {
+        smallest = src;
+    } else {
+        smallest = dst;
+    }
+    RFOR(i, smallest) {
+        dst.v[dst.length - i - 1] = src.v[src.length - i - 1];
     }
 }
 
 int cmp(Number a, Number b) {
-    RFOR(i, a) {
-        if (a.v[i] > b.v[i]) {
+    if (a.length < b.length) {
+        return -cmp(b, a);
+    }
+
+    int size_dif = a.length - b.length;
+    for (int i = 0; i < size_dif; i++) {
+        if (a.v[i] > 0) {
             return 1;
-        } else if (a.v[i] < b.v[i]) {
+        }
+    }
+
+    for (int i = b.length - 1; i >= 0; i--) {
+        if (a.v[i + size_dif] > b.v[i]) {
+            return 1;
+        } else if (a.v[i + size_dif] < b.v[i]) {
             return -1;
         }
     }
@@ -68,15 +85,6 @@ Number parse(char* text) {
         sscanf(text + i * 2, "%02hhx", &b.v[length-i-1]);
     }
     return b;
-}
-
-#define print(n) print_with_label(__func__, #n, n)
-void print_with_label(const char* func, const char* label, Number n) {
-    printf("%s (%s): ", label, func);
-    FOR(i, n) {
-        printf("%02hhx", n.v[i]);
-    } 
-    printf("\n");
 }
 
 void add(Number a, Number b, Number result) {
