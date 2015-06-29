@@ -119,31 +119,37 @@ void mul(Number a, Number b, Number result) {
     assert(a.v != result.v);
     assert(b.v != result.v);
     assert(a.length == b.length);
-    assert(result.length >= a.length);
+    assert(result.length >= 2 * a.length);
 
-    chunk k = 0;
+    int k = 0;
     chunk carry = 0;
     unsigned long n;
 
     zero(result);
 
-    for (int i = a.length/2 - 1; i >= 0; i--) {
-		for (int j = a.length/2 - 1, k = i + j, carry = 0; j >= 0; j--, k--) {
+    FOR(i, a) {
+        FOR(j, a) {
+            k = i + j + 1;
             n = a.v[i] * b.v[j] + result.v[k] + carry;
             carry = n / 0xFF;
             result.v[k] = n & 0xFF;
         }
         result.v[k] += carry;
+        carry = 0;
     }
 }
 
 int main() {
-    Number _0 = to_number(0, 32);
-    Number _1 = to_number(1, 32);
-    Number _2 = to_number(2, 32);
-    Number _255 = to_number(255, 32);
+    assert(cmp(to_number(1, 4), to_number(1, 5)) == 0);
+    assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
+    assert(cmp(to_number(1, 4), to_number(2, 5)) == -1);
 
-    Number a = new_number(32);
+    Number _0 = to_number(0, 4);
+    Number _1 = to_number(1, 4);
+    Number _2 = to_number(2, 4);
+    Number _255 = to_number(255, 4);
+
+    Number a = new_number(4);
 
     add(_1, _0, a);
     assert(cmp(a, _1) == 0);
@@ -154,4 +160,16 @@ int main() {
     assert(cmp(a, _1) == 0);
     sub(_2, _1, a);
     assert(cmp(a, _1) == 0);
+
+    Number p = new_number(8);
+    Number q = new_number(16);
+    mul(_0, _0, p);
+    assert(cmp(p, _0) == 0);
+    mul(_0, _1, p);
+    assert(cmp(p, _0) == 0);
+    mul(_1, _1, p);
+    assert(cmp(p, _1) == 0);
+    mul(_2, _2, p);
+    mul(p, p, q);
+    assert(cmp(q, to_number(16, 4)) == 0);
 }
