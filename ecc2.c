@@ -15,6 +15,15 @@ typedef struct {
 #define FOR(i, n) for (int i = 0; i < n.length; i++)
 #define RFOR(i, n) for (int i = n.length - 1; i >= 0; i--)
 
+#define print(n) print_with_label(__func__, #n, __LINE__, n)
+void print_with_label(const char* func, const char* label, int line, Number n) {
+    printf("%s (%s:%d): ", label, func, line);
+    FOR(i, n) {
+        printf("%02hhx", n.v[i]);
+    } 
+    printf("\n");
+}
+
 Number new_number(long size) {
     Number n = {malloc(sizeof(chunk) * size), size};
     return n;
