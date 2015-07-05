@@ -151,6 +151,25 @@ void mod(Number a, Number p) {
     }
 }
 
+void addm(Number a, Number b, Number p, Number result) {
+    add(a, b, result);
+    mod(result, p);
+}
+
+void subm(Number a, Number b, Number p, Number result) {
+    if (cmp(a, b) == -1) {
+        cp(a, result);
+        add(result, p, result);
+        a = result;
+    }
+    sub(a, b, result);
+}
+
+void mulm(Number a, Number b, Number p, Number result) {
+    mul(a, b, result);
+    mod(result, p);
+}
+
 int main() {
     assert(cmp(to_number(1, 4), to_number(1, 5)) == 0);
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
