@@ -94,12 +94,11 @@ Number parse(const char* text) {
 }
 
 void add(Number a, Number b, Number result) {
-    assert(a.length == b.length);
-    assert(result.length >= a.length);
+    assert(result.length >= a.length && result.length >= b.length);
 
     chunk carry = 0;
     chunk sum;
-    FOR(i, a) {
+    FOR2(i, a, b) {
         sum = a.v[i] + b.v[i] + carry;
         carry = sum < a.v[i] || (sum == a.v[i] && b.v[i] != 0);
         result.v[i] = sum;
@@ -109,12 +108,11 @@ void add(Number a, Number b, Number result) {
 }
 
 void sub(Number a, Number b, Number result) {
-    assert(a.length == b.length);
-    assert(result.length >= a.length);
+    assert(result.length >= a.length && result.length >= b.length);
 
     chunk carry = 0;
     chunk dif;
-    FOR(i, a) {
+    FOR2(i, a, b) {
         dif = a.v[i] - b.v[i] - carry;
         carry = a.v[i] < b.v[i] || dif > a.v[i];
         result.v[i] = dif;
@@ -141,6 +139,15 @@ void mul(Number a, Number b, Number result) {
         }
         result.v[k+1] += carry;
         carry = 0;
+    }
+}
+
+void mod(Number a, Number p) {
+    if (cmp(a, p) == -1) {
+        return;
+    }
+    while (cmp(a, p) != -1) {
+        sub(a, p, a);
     }
 }
 
@@ -185,4 +192,9 @@ int main() {
 
     mul(_128, _3, p);
     assert(cmp(p, parse("0180")) == 0);
+
+    cp(_255, p);
+    mod(p, _128);
+    add(_1, p, p);
+    assert(cmp(p, _128) == 0);
 }
