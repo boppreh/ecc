@@ -14,11 +14,13 @@ typedef struct {
 
 #define FOR(i, n) for (int i = 0; i < n.length; i++)
 #define RFOR(i, n) for (int i = n.length - 1; i >= 0; i--)
+#define FOR2(i, a, b) for (int i = 0; i < smallest(a, b).length; i++)
+#define RFOR2(i, a, b) for (int i = smallest(a, b).length - 1; i >= 0; i--)
 
 #define print(n) print_with_label(__func__, #n, __LINE__, n)
 void print_with_label(const char* func, const char* label, int line, Number n) {
     printf("%s (%s:%d): ", label, func, line);
-    FOR(i, n) {
+    RFOR(i, n) {
         printf("%02hhx", n.v[i]);
     } 
     printf("\n");
@@ -35,15 +37,17 @@ void zero(Number dst) {
     }
 }
 
-void cp(Number src, Number dst) {
-    Number smallest;
-    if (src.length < dst.length) {
-        smallest = src;
+Number smallest(Number a, Number b) {
+    if (a.length < b.length) {
+        return a;
     } else {
-        smallest = dst;
+        return b;
     }
-    RFOR(i, smallest) {
-        dst.v[dst.length - i - 1] = src.v[src.length - i - 1];
+}
+
+void cp(Number src, Number dst) {
+    FOR2(i, src, dst) {
+        dst.v[i] = src.v[i];
     }
 }
 
@@ -52,17 +56,16 @@ int cmp(Number a, Number b) {
         return -cmp(b, a);
     }
 
-    int size_dif = a.length - b.length;
-    for (int i = 0; i < size_dif; i++) {
+    for (int i = b.length; i < a.length; i++) {
         if (a.v[i] > 0) {
             return 1;
         }
     }
 
-    for (int i = b.length - 1; i >= 0; i--) {
-        if (a.v[i + size_dif] > b.v[i]) {
+    RFOR(i, b) {
+        if (a.v[i] > b.v[i]) {
             return 1;
-        } else if (a.v[i + size_dif] < b.v[i]) {
+        } else if (a.v[i] < b.v[i]) {
             return -1;
         }
     }
@@ -71,18 +74,21 @@ int cmp(Number a, Number b) {
 
 Number to_number(chunk least, long size) {
     Number n = new_number(size);
-    FOR(i, n) {
+    RFOR(i, n) {
         n.v[i] = 0x00;
     }
-    n.v[size-1] = least;
+    n.v[0] = least;
     return n;
 }
 
-Number parse(char* text) {
-    int length = strlen(text) / sizeof(chunk);
+Number parse(const char* text) {
+    assert(strlen(text) % 2 == 0);
+    // Ceiling division.
+    int length = strlen(text) / (2 * sizeof(chunk));
     Number b = new_number(length);
-    FOR(i, b) {
-        sscanf(text + i * 2, "%02hhx", &b.v[length-i-1]);
+    RFOR(i, b) {
+        sscanf(text, "%02hhx", &b.v[i]);
+        text += 2;
     }
     return b;
 }
@@ -93,7 +99,7 @@ void add(Number a, Number b, Number result) {
 
     chunk carry = 0;
     chunk sum;
-    RFOR(i, a) {
+    FOR(i, a) {
         sum = a.v[i] + b.v[i] + carry;
         carry = sum < a.v[i] || (sum == a.v[i] && b.v[i] != 0);
         result.v[i] = sum;
@@ -108,7 +114,7 @@ void sub(Number a, Number b, Number result) {
 
     chunk carry = 0;
     chunk dif;
-    RFOR(i, a) {
+    FOR(i, a) {
         dif = a.v[i] - b.v[i] - carry;
         carry = a.v[i] < b.v[i] || dif > a.v[i];
         result.v[i] = dif;
@@ -118,7 +124,6 @@ void sub(Number a, Number b, Number result) {
 void mul(Number a, Number b, Number result) {
     assert(a.v != result.v);
     assert(b.v != result.v);
-    assert(a.length == b.length);
     assert(result.length >= 2 * a.length);
 
     int k = 0;
@@ -127,14 +132,14 @@ void mul(Number a, Number b, Number result) {
 
     zero(result);
 
-    FOR(i, a) {
-        FOR(j, a) {
-            k = i + j + 1;
+    RFOR2(i, a, b) {
+        RFOR2(j, a, b) {
+            k = i + j;
             n = a.v[i] * b.v[j] + result.v[k] + carry;
             carry = n / 0xFF;
             result.v[k] = n & 0xFF;
         }
-        result.v[k] += carry;
+        result.v[k+1] += carry;
         carry = 0;
     }
 }
@@ -142,11 +147,16 @@ void mul(Number a, Number b, Number result) {
 int main() {
     assert(cmp(to_number(1, 4), to_number(1, 5)) == 0);
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
-    assert(cmp(to_number(1, 4), to_number(2, 5)) == -1);
+    assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
+
+    assert(cmp(parse("0002"), to_number(2, 2)) == 0);
+    assert(cmp(parse("00FF"), to_number(255, 2)) == 0);
 
     Number _0 = to_number(0, 4);
     Number _1 = to_number(1, 4);
     Number _2 = to_number(2, 4);
+    Number _3 = to_number(3, 4);
+    Number _128 = to_number(128, 4);
     Number _255 = to_number(255, 4);
 
     Number a = new_number(4);
@@ -172,4 +182,7 @@ int main() {
     mul(_2, _2, p);
     mul(p, p, q);
     assert(cmp(q, to_number(16, 4)) == 0);
+
+    mul(_128, _3, p);
+    assert(cmp(p, parse("0180")) == 0);
 }
