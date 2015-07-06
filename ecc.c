@@ -1,179 +1,253 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 
 // Chunk of a finite field element.
 typedef unsigned char chunk;
-// Number of chunks per element.
-#define N 10
+
 // A finite field element.
-typedef chunk* number;
-// Helper macro.
-#define FOR(i) for (int i = 0; i < N; i++)
-#define RFOR(i) for (int i = N - 1; i >= 0; i--)
-#define ZERO new_number()
-#define MAX make_max()
+typedef struct {
+    chunk* v;
+    long length; 
+} Number;
 
-number new_number();
-int cmp(number a, number b);
-void add(number a, number b, number p, number result);
-void sub(number a, number b, number p, number result);
+#define FOR(i, n) for (int i = 0; i < n.length; i++)
+#define RFOR(i, n) for (int i = n.length - 1; i >= 0; i--)
+#define FOR2(i, a, b) for (int i = 0; i < smallest(a, b).length; i++)
+#define RFOR2(i, a, b) for (int i = smallest(a, b).length - 1; i >= 0; i--)
 
-number new_number() {
-    number n = malloc(sizeof(chunk) * N);
-    FOR(i) {
-        n[i] = 0x00;
-    }
+#define print(n) print_with_label(__func__, #n, __LINE__, n)
+void print_with_label(const char* func, const char* label, int line, Number n) {
+    printf("%s (%s:%d): ", label, func, line);
+    RFOR(i, n) {
+        printf("%02hhx", n.v[i]);
+    } 
+    printf("\n");
+}
+
+Number new_number(long size) {
+    Number n = {malloc(sizeof(chunk) * size), size};
     return n;
 }
 
-void cp(number src, number dst) {
-    FOR(i) {
-        dst[i] = src[i];
-    }
-}
-
-number make_max() {
-    number n = malloc(sizeof(chunk) * N);
-    FOR(i) {
-        n[i] = 0xFF;
-    }
-    return n;
-}
-
-void add(number a, number b, number p, number result) {
-    chunk carry = 0;
-    chunk sum;
-    FOR(i) {
-        sum = a[i] + b[i] + carry;
-        carry = sum < a[i] || (sum == a[i] && b[i] != 0);
-        result[i] = sum;
-    }
-    
-    if (cmp(result, p) == 1) {
-        sub(result, p, MAX, result);
-    }
-}
-
-void sub(number a, number b, number p, number result) {
-    if (cmp(a, b) == -1) {
-        cp(a, result);   
-        a = result;
-        add(a, p, MAX, a);
-    }
-
-    chunk carry = 0;
-    chunk sum;
-    FOR(i) {
-        sum = a[i] - b[i] - carry;
-        carry = a[i] < b[i] || sum > a[i];
-        result[i] = sum;
-    }
-}
-
-void mul(number a, number b, number p, number result) {
-    chunk k = 0;
-    chunk carry = 0;
-    unsigned long n;
-
-    cp(ZERO, result);
-
-    for (int i = N/2 - 1; i >= 0; i--) {
-		for (int j = N/2 - 1, k = i + j, carry = 0; j >= 0; j--, k--) {
-            n = a[i] * b[j] + result[k] + carry;
-            carry = n / 0xFF;
-            result[k] = n & 0xFF;
+int isZero(Number a) {
+    FOR(i, a) {
+        if (a.v[i] != 0) {
+            return 0;
         }
-        result[k] += carry;
+    }
+    return 1;
+}
+
+void zero(Number dst) {
+    FOR(i, dst) {
+        dst.v[i] = 0;
     }
 }
 
-void karatsuba(number a, number b, number p, number result) {
-
+Number smallest(Number a, Number b) {
+    if (a.length < b.length) {
+        return a;
+    } else {
+        return b;
+    }
 }
 
-int cmp(number a, number b) {
-    RFOR(i) {
-        if (a[i] > b[i]) {
+void cp(Number src, Number dst) {
+    FOR2(i, src, dst) {
+        dst.v[i] = src.v[i];
+    }
+}
+
+Number clone(Number src) {
+    Number c = new_number(src.length);
+    cp(src, c);
+    return c;
+}
+
+int cmp(Number a, Number b) {
+    if (a.length < b.length) {
+        return -cmp(b, a);
+    }
+
+    for (int i = b.length; i < a.length; i++) {
+        if (a.v[i] > 0) {
             return 1;
-        } else if (a[i] < b[i]) {
+        }
+    }
+
+    RFOR(i, b) {
+        if (a.v[i] > b.v[i]) {
+            return 1;
+        } else if (a.v[i] < b.v[i]) {
             return -1;
         }
     }
     return 0;
 }
 
+Number to_number(chunk least, long size) {
+    Number n = new_number(size);
+    RFOR(i, n) {
+        n.v[i] = 0x00;
+    }
+    n.v[0] = least;
+    return n;
+}
 
-//////////////////////
-// Testing function //
-//////////////////////
-
-number parse(char* text) {
-    number b = new_number();
-    FOR(i) {
-        sscanf(text + i * 2, "%02hhx", &b[N-i-1]);
+Number parse(const char* text) {
+    assert(strlen(text) % 2 == 0);
+    // Ceiling division.
+    int length = strlen(text) / (2 * sizeof(chunk));
+    Number b = new_number(length);
+    RFOR(i, b) {
+        sscanf(text, "%02hhx", &b.v[i]);
+        text += 2;
     }
     return b;
 }
 
-void print(char* label, number n) {
-    printf("%s: ", label);
-    for (int i = N - 1; i >= 0; i--) {
-        printf("%02hhx", n[i]);
-    } 
-    printf("\n");
+void add(Number a, Number b, Number result) {
+    assert(result.length >= a.length && result.length >= b.length);
+
+    chunk carry = 0;
+    chunk sum;
+    FOR2(i, a, b) {
+        sum = a.v[i] + b.v[i] + carry;
+        carry = sum < a.v[i] || (sum == a.v[i] && b.v[i] != 0);
+        result.v[i] = sum;
+    }
+
+    assert(carry == 0);
 }
 
-void assertEquals(number a, char* text) {
-    number b = parse(text);
-    if (cmp(a, b) != 0) {
-        print("Expected ", b);
-        print("got ", a);
+void sub(Number a, Number b, Number result) {
+    assert(result.length >= a.length && result.length >= b.length);
+
+    chunk carry = 0;
+    chunk dif;
+    FOR2(i, a, b) {
+        dif = a.v[i] - b.v[i] - carry;
+        carry = a.v[i] < b.v[i] || dif > a.v[i];
+        result.v[i] = dif;
     }
 }
 
-int main() {
-    number ONE = parse("00000000000000000001");
-    number TWO = parse("00000000000000000002");
+void mul(Number a, Number b, Number result) {
+    assert(a.v != result.v);
+    assert(b.v != result.v);
+    assert(result.length >= 2 * a.length);
 
-    number a = ONE;
-    assert(cmp(a, a) == 0);
-    assertEquals(a, "00000000000000000001");
+    int k = 0;
+    chunk carry = 0;
+    unsigned long n;
 
-    number b = parse("0000000000000000FFFF");
-    assertEquals(b, "0000000000000000FFFF");
-    assert(cmp(a, b) == -1);
+    zero(result);
 
-    number c = new_number();
-    add(a, b, MAX, c);
-    assertEquals(c, "00000000000000010000");
-    add(a, c, MAX, c);
-    assertEquals(c, "00000000000000010001");
-    add(b, c, MAX, c);
-    assertEquals(c, "00000000000000020000");
-    sub(c, b, MAX, c);
-    assertEquals(c, "00000000000000010001");
-    sub(c, b, MAX, c);
-    assertEquals(c, "00000000000000000002");
-    sub(c, a, MAX, c);
-    sub(c, a, MAX, c);
-    sub(c, a, MAX, c);
+    RFOR2(i, a, b) {
+        RFOR2(j, a, b) {
+            k = i + j;
+            n = a.v[i] * b.v[j] + result.v[k] + carry;
+            carry = n / 0xFF;
+            result.v[k] = n & 0xFF;
+        }
+        result.v[k+1] += carry;
+        carry = 0;
+    }
+}
 
-    add(b, b, MAX, c);
-    assertEquals(c, "0000000000000001FFFE");
+void divmod(Number a, Number b, Number quotient, Number remainder) {
+    zero(quotient);
+    Number _1 = to_number(1, a.length);
+    cp(a, remainder);
+    while (cmp(remainder, b) == 1) {
+        sub(remainder, b, remainder);
+        add(_1, quotient, quotient);
+    }
+    free(_1.v);
+}
 
-    mul(ONE, ZERO, MAX, c);
-    assertEquals(c, "00000000000000000000");
-    mul(ZERO, ONE, MAX, c);
-    assertEquals(c, "00000000000000000000");
-    mul(ZERO, ZERO, MAX, c);
-    assertEquals(c, "00000000000000000000");
-    mul(ONE, ONE, MAX, c);
-    assertEquals(c, "00000000000000000001");
-    mul(TWO, TWO, MAX, c);
-    assertEquals(c, "00000000000000000004");
+void _div(Number a, Number b, Number result) {
+    Number remainder = new_number(a.length);
+    divmod(a, b, result, remainder);
+    free(remainder.v);
+}
 
-    // TODO: fix multiplication when result is one of the operands.
-    // mul(c, c, MAX, c);
-    //assertEquals(c, "00000000000000000010");
+void mod(Number a, Number p, Number result) {
+    Number quotient = new_number(a.length);
+    divmod(a, p, quotient, result);
+    free(quotient.v);
+}
+
+void addm(Number a, Number b, Number p, Number result) {
+    add(a, b, result);
+    mod(result, p, result);
+}
+
+void subm(Number a, Number b, Number p, Number result) {
+    if (cmp(a, b) == -1) {
+        cp(a, result);
+        add(result, p, result);
+        a = result;
+    }
+    sub(a, b, result);
+}
+
+void mulm(Number a, Number b, Number p, Number result) {
+    mul(a, b, result);
+    mod(result, p, result);
+}
+
+void inversem(Number a, Number p, Number result) {
+    int l = a.length;
+
+    a = clone(a);
+    Number b = clone(p);
+
+    Number x = to_number(0, l);
+    Number y = to_number(1, l);
+    Number u = to_number(1, l);
+    Number v = to_number(0, l);
+    Number q = new_number(l);
+    Number r = new_number(l);
+    Number m = new_number(l);
+    Number n = new_number(l);
+    while (!isZero(a)) {
+        _div(b, a, q);
+        mod(b, a, r);
+
+        // m = x-u*q
+        mul(u, q, m);
+        sub(x, m, m);
+
+        // n = y-v*q
+        mul(v, q, n);
+        sub(y, n, n);
+        
+        b = a;
+        a = r;
+        x = u;
+        y = v;
+        u = m;
+        v = n;
+    }
+    cp(x, result);
+    free(a.v);
+    free(b.v);
+    free(x.v);
+    free(y.v);
+    free(u.v);
+    free(v.v);
+    free(q.v);
+    free(r.v);
+    free(m.v);
+    free(n.v);
+}
+
+void divm(Number a, Number b, Number p, Number result) {
+    Number inverse = new_number(p.length);
+    inversem(b, p, inverse);
+    mul(a, inverse, result);
+    free(inverse.v);
 }
