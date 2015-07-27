@@ -31,9 +31,18 @@ Number new_number(long size) {
     return n;
 }
 
-int isZero(Number a) {
+int iszero(Number a) {
     FOR(i, a) {
         if (a.v[i] != 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int ismax(Number a) {
+    FOR(i, a) {
+        if (a.v[i] != 0xFF) {
             return 0;
         }
     }
@@ -123,7 +132,7 @@ void add(Number a, Number b, Number result) {
 }
 
 void sub(Number a, Number b, Number result) {
-    assert(result.length >= a.length && result.length >= b.length);
+    // assert(result.length >= a.length && result.length >= b.length);
 
     chunk carry = 0;
     chunk dif;
@@ -157,15 +166,52 @@ void mul(Number a, Number b, Number result) {
     }
 }
 
+int div2(Number a, Number quotient) {
+    int remainder = a.v[0] & 1;
+    FOR(i, a) {
+        quotient.v[i] = a.v[i] >> 1;
+        if (i + 1 < a.length) {
+            quotient.v[i] |= (a.v[i+1] & 1) << (8 * sizeof(chunk) - 1);
+        }
+    } 
+    return remainder;
+}
+
 void divmod(Number a, Number b, Number quotient, Number remainder) {
-    zero(quotient);
-    Number _1 = to_number(1, a.length);
-    cp(a, remainder);
-    while (cmp(remainder, b) == 1) {
-        sub(remainder, b, remainder);
-        add(_1, quotient, quotient);
+    zero(remainder);
+    // Assumes a < b^2 (i.e. no more than one multiplication was performed).
+    cp(b, quotient);
+    Number distance = new_number(a.length);
+    div2(quotient, distance);
+    Number total = new_number(a.length * 2);
+    while (1) {
+        mul(b, quotient, total);
+
+        print(total);
+        print(quotient);
+        print(remainder);
+        print(distance);
+
+        int comparison = cmp(total, a);
+        if (comparison == 0) {
+            zero(remainder);
+            break;
+        } else if (comparison > 0) {
+            sub(quotient, distance, quotient);
+            continue;
+        } else if (comparison < 0) {
+            sub(a, total, remainder);
+            if (cmp(b, remainder) > 0) {
+                break;
+            } else {
+                add(quotient, distance, quotient);
+            }
+        }
+
+        div2(distance, distance);
     }
-    free(_1.v);
+    free(distance.v);
+    free(total.v);
 }
 
 void _div(Number a, Number b, Number result) {
@@ -211,9 +257,9 @@ void inversem(Number a, Number p, Number result) {
     Number v = to_number(0, l);
     Number q = new_number(l);
     Number r = new_number(l);
-    Number m = new_number(l);
-    Number n = new_number(l);
-    while (!isZero(a)) {
+    Number m = new_number(l * 2);
+    Number n = new_number(l * 2);
+    while (!iszero(a)) {
         _div(b, a, q);
         mod(b, a, r);
 
@@ -225,12 +271,12 @@ void inversem(Number a, Number p, Number result) {
         mul(v, q, n);
         sub(y, n, n);
         
-        b = a;
-        a = r;
-        x = u;
-        y = v;
-        u = m;
-        v = n;
+        cp(a, b);
+        cp(r, a);
+        cp(u, x);
+        cp(v, y);
+        cp(m, u);
+        cp(n, v);
     }
     cp(x, result);
     free(a.v);
@@ -251,3 +297,17 @@ void divm(Number a, Number b, Number p, Number result) {
     mul(a, inverse, result);
     free(inverse.v);
 }
+
+typedef struct {
+    Number prime;
+    Number a;
+    Number b;
+    Number generator;
+    Number generator_order;
+} Curve;
+
+typedef struct {
+    Number x;
+    Number y;
+    Curve* c;
+} Point;
