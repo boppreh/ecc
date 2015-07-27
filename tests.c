@@ -1,22 +1,32 @@
 #include "ecc.c"
 
-int main(void) {
+static Number _0;
+static Number _1;
+static Number _2;
+static Number _3;
+static Number _128;
+static Number _255;
+
+void setup() {
+    _0 = to_number(0, 4);
+    _1 = to_number(1, 4);
+    _2 = to_number(2, 4);
+    _3 = to_number(3, 4);
+    _128 = to_number(128, 4);
+    _255 = to_number(255, 4);
+}
+
+void testSanity() {
     assert(cmp(to_number(1, 4), to_number(1, 5)) == 0);
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
 
     assert(cmp(parse("0002"), to_number(2, 2)) == 0);
     assert(cmp(parse("00FF"), to_number(255, 2)) == 0);
+}
 
-    Number _0 = to_number(0, 4);
-    Number _1 = to_number(1, 4);
-    Number _2 = to_number(2, 4);
-    Number _3 = to_number(3, 4);
-    Number _128 = to_number(128, 4);
-    Number _255 = to_number(255, 4);
-
+void testAddSub() {
     Number a = new_number(4);
-
     add(_1, _0, a);
     assert(cmp(a, _1) == 0);
     add(_1, _1, a);
@@ -26,7 +36,9 @@ int main(void) {
     assert(cmp(a, _1) == 0);
     sub(_2, _1, a);
     assert(cmp(a, _1) == 0);
+}
 
+void testMul() {
     Number p = new_number(8);
     Number q = new_number(16);
     mul(_0, _0, p);
@@ -41,11 +53,22 @@ int main(void) {
 
     mul(_128, _3, p);
     assert(cmp(p, parse("0180")) == 0);
+}
 
-    cp(_255, p);
-    mod(p, _128, p);
-    add(_1, p, p);
-    assert(cmp(p, _128) == 0);
+void testDiv2() {
+    Number quotient = new_number(4);
+    int remainder2 = div2(_128, quotient);
+    assert(cmp(quotient, parse("0040")) == 0);
+    assert(remainder2 == 0);
+}
+
+int main(void) {
+    setup();
+    testSanity();
+    testAddSub();
+    testMul();
+    testDiv2();
+
 
     return 0;
 }
