@@ -57,9 +57,19 @@ void testMul() {
 
 void testDiv2() {
     Number quotient = new_number(4);
-    int remainder2 = div2(_128, quotient);
+    int remainder2;
+
+    remainder2 = div2(_128, quotient);
     assert(cmp(quotient, parse("0040")) == 0);
     assert(remainder2 == 0);
+
+    remainder2 = div2(parse("0FFF"), quotient);
+    assert(cmp(quotient, parse("07FF")) == 0);
+    assert(remainder2 == 1);
+}
+
+void testDiv() {
+
 }
 
 int main(void) {
@@ -68,7 +78,7 @@ int main(void) {
     testAddSub();
     testMul();
     testDiv2();
-
+    testDiv();
 
     return 0;
 }
