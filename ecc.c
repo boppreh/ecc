@@ -158,7 +158,7 @@ void mul(Number a, Number b, Number result) {
         RFOR2(j, a, b) {
             k = i + j;
             n = a.v[i] * b.v[j] + result.v[k] + carry;
-            carry = n / 0xFF;
+            carry = n / 0x100;
             result.v[k] = n & 0xFF;
         }
         result.v[k+1] += carry;
@@ -181,34 +181,32 @@ void divmod(Number a, Number b, Number quotient, Number remainder) {
     zero(remainder);
     // Assumes a < b^2 (i.e. no more than one multiplication was performed).
     cp(b, quotient);
+
     Number distance = new_number(a.length);
     div2(quotient, distance);
     Number total = new_number(a.length * 2);
-    while (1) {
+    Number _1 = to_number(1, a.length);
+
+    int count = 0;
+    while (!iszero(distance) && count++ < 100) {
         mul(b, quotient, total);
-
-        print(total);
-        print(quotient);
-        print(remainder);
-        print(distance);
-
         int comparison = cmp(total, a);
         if (comparison == 0) {
             zero(remainder);
             break;
         } else if (comparison > 0) {
             sub(quotient, distance, quotient);
-            continue;
         } else if (comparison < 0) {
             sub(a, total, remainder);
             if (cmp(b, remainder) > 0) {
                 break;
-            } else {
-                add(quotient, distance, quotient);
             }
+            add(quotient, distance, quotient);
         }
 
-        div2(distance, distance);
+        if (div2(distance, distance)) {
+            add(distance, _1, distance);
+        }
     }
     free(distance.v);
     free(total.v);
