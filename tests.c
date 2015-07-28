@@ -78,6 +78,10 @@ void testDiv() {
     Number quotient = new_number(4);
     Number remainder = new_number(4);
 
+    divmod(_1, _128, quotient, remainder);
+    assert(cmp(quotient, _0) == 0);
+    assert(cmp(remainder, _1) == 0);
+
     divmod(_255, _128, quotient, remainder);
     assert(cmp(quotient, _1) == 0);
     assert(cmp(remainder, parse("7F")) == 0);
