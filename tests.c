@@ -51,6 +51,12 @@ void testMul() {
     mul(p, p, q);
     assert(cmp(q, to_number(16, 4)) == 0);
 
+    mul(_255, _3, p);
+    assert(cmp(p, parse("02FD")) == 0);
+
+    mul(parse("55"), _3, p);
+    assert(cmp(p, _255) == 0);
+
     mul(_128, _3, p);
     assert(cmp(p, parse("0180")) == 0);
 }
@@ -60,7 +66,7 @@ void testDiv2() {
     int remainder2;
 
     remainder2 = div2(_128, quotient);
-    assert(cmp(quotient, parse("0040")) == 0);
+    assert(cmp(quotient, parse("40")) == 0);
     assert(remainder2 == 0);
 
     remainder2 = div2(parse("0FFF"), quotient);
@@ -69,7 +75,20 @@ void testDiv2() {
 }
 
 void testDiv() {
+    Number quotient = new_number(4);
+    Number remainder = new_number(4);
 
+    divmod(_255, _128, quotient, remainder);
+    assert(cmp(quotient, _1) == 0);
+    assert(cmp(remainder, parse("7F")) == 0);
+
+    divmod(_255, _3, quotient, remainder);
+    assert(cmp(quotient, parse("55")) == 0);
+    assert(cmp(remainder, _0) == 0);
+
+    divmod(_128, _2, quotient, remainder);
+    assert(cmp(quotient, parse("40")) == 0);
+    assert(cmp(remainder, _0) == 0);
 }
 
 int main(void) {
