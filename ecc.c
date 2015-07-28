@@ -106,13 +106,18 @@ Number to_number(chunk least, long size) {
 }
 
 Number parse(const char* text) {
-    assert(strlen(text) % 2 == 0);
-    // Ceiling division.
-    int length = strlen(text) / (2 * sizeof(chunk));
+    int missing = strlen(text) % 2 == 1;
+    // +1 for ceiling division.
+    int length = (strlen(text) + 1) / (2 * sizeof(chunk));
     Number b = new_number(length);
     RFOR(i, b) {
-        sscanf(text, "%02hhx", &b.v[i]);
-        text += 2;
+        if (i == b.length - 1 && missing) {
+            sscanf(text, "%2hhx", &b.v[i]);
+            text += 1;
+        } else {
+            sscanf(text, "%02hhx", &b.v[i]);
+            text += 2;
+        }
     }
     return b;
 }
