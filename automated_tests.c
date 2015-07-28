@@ -3,2048 +3,1639 @@
 
 int main() {
 
-	Number p = parse("2147483647");
-	Number a = new_number(16);
-	Number b = new_number(16);
-	Number result = new_number(2*16);
-
-	a = parse("0");
-	b = parse("0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("0")) == 0);
-
-	a = parse("0");
-	b = parse("1");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1")) == 0);
-
-	a = parse("1");
-	b = parse("0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1")) == 0);
-
-	a = parse("1");
-	b = parse("1");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2")) == 0);
-
-	a = parse("0");
-	b = parse("0");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("0")) == 0);
-
-	a = parse("0");
-	b = parse("1");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("0")) == 0);
-
-	a = parse("1");
-	b = parse("0");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("0")) == 0);
-
-	a = parse("1");
-	b = parse("1");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1")) == 0);
-
-	a = parse("5c2937cf");
-	b = parse("5103617d");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2d2c994d")) == 0);
-
-	a = parse("3bd48c7e");
-	b = parse("282223ba");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("63f6b038")) == 0);
-
-	a = parse("2eb59743");
-	b = parse("79aca45b");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("28623b9f")) == 0);
-
-	a = parse("2c176c22");
-	b = parse("75e3750e");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("21fae131")) == 0);
-
-	a = parse("1e4b7af7");
-	b = parse("1c3c80f4");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3a87fbeb")) == 0);
-
-	a = parse("5c992a81");
-	b = parse("34268a81");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("10bfb503")) == 0);
-
-	a = parse("66509a85");
-	b = parse("7edbbf45");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("652c59cb")) == 0);
-
-	a = parse("78498108");
-	b = parse("3855e0ba");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("309f61c3")) == 0);
-
-	a = parse("4f8001cc");
-	b = parse("73bab633");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("433ab800")) == 0);
-
-	a = parse("432e57f5");
-	b = parse("3b92721");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("46e77f16")) == 0);
-
-	a = parse("7f1b8fc4");
-	b = parse("7896e5e3");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("77b275a8")) == 0);
-
-	a = parse("55d69b4a");
-	b = parse("47288781");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1cff22cc")) == 0);
-
-	a = parse("783ea8c7");
-	b = parse("39475501");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3185fdc9")) == 0);
-
-	a = parse("7e73c654");
-	b = parse("372cb506");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("35a07b5b")) == 0);
-
-	a = parse("651a48fb");
-	b = parse("7d2a00ef");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("624449eb")) == 0);
-
-	a = parse("79a72ad5");
-	b = parse("2495300e");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1e3c5ae4")) == 0);
-
-	a = parse("313c67df");
-	b = parse("50761303");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1b27ae3")) == 0);
-
-	a = parse("6f4fd9be");
-	b = parse("718d614b");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("60dd3b0a")) == 0);
-
-	a = parse("4df4cd95");
-	b = parse("7e371108");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("4c2bde9e")) == 0);
-
-	a = parse("557c5a44");
-	b = parse("6f331d11");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("44af7756")) == 0);
-
-	a = parse("6ea1e5af");
-	b = parse("7ab6ae66");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("69589416")) == 0);
-
-	a = parse("70578c00");
-	b = parse("12db3590");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("332c191")) == 0);
-
-	a = parse("4a7c9fea");
-	b = parse("35e03ce2");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("5cdccd")) == 0);
-
-	a = parse("189cd2ba");
-	b = parse("7be2f9da");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("147fcc95")) == 0);
-
-	a = parse("7806338c");
-	b = parse("2cb1f619");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("24b829a6")) == 0);
-
-	a = parse("26b70ff3");
-	b = parse("1f6538c1");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("461c48b4")) == 0);
-
-	a = parse("42808a8");
-	b = parse("62168387");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("663e8c2f")) == 0);
-
-	a = parse("3ea08c95");
-	b = parse("5bb586c2");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1a561358")) == 0);
-
-	a = parse("662fd149");
-	b = parse("5b734909");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("41a31a53")) == 0);
-
-	a = parse("3c531daf");
-	b = parse("45f0f771");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2441521")) == 0);
-
-	a = parse("1bbe2922");
-	b = parse("54051378");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("6fc33c9a")) == 0);
-
-	a = parse("5713136e");
-	b = parse("47a3a4a4");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1eb6b813")) == 0);
-
-	a = parse("10a139b1");
-	b = parse("30a15db7");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("41429768")) == 0);
-
-	a = parse("762f78c0");
-	b = parse("4d2452f4");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("4353cbb5")) == 0);
-
-	a = parse("1946d0ea");
-	b = parse("4e5fd898");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("67a6a982")) == 0);
-
-	a = parse("7bd54758");
-	b = parse("6627643");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("237bd9c")) == 0);
-
-	a = parse("7f3964cc");
-	b = parse("6f41f4ab");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("6e7b5978")) == 0);
-
-	a = parse("588050af");
-	b = parse("3136f980");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("9b74a30")) == 0);
-
-	a = parse("226a50a2");
-	b = parse("67ac7f9");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("28e5189b")) == 0);
-
-	a = parse("11f12e37");
-	b = parse("181ad73c");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2a0c0573")) == 0);
-
-	a = parse("1e1a16e5");
-	b = parse("11a874cd");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2fc28bb2")) == 0);
-
-	a = parse("59e1ab1");
-	b = parse("129a0181");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("18381c32")) == 0);
-
-	a = parse("4951c384");
-	b = parse("26c5842f");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("701747b3")) == 0);
-
-	a = parse("39634253");
-	b = parse("2663cf49");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("5fc7119c")) == 0);
-
-	a = parse("466be984");
-	b = parse("44d547e8");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("b41316d")) == 0);
-
-	a = parse("689ca95d");
-	b = parse("4b7340e1");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("340fea3f")) == 0);
-
-	a = parse("6ef2b289");
-	b = parse("46f429ea");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("35e6dc74")) == 0);
-
-	a = parse("109c09ae");
-	b = parse("385fab6d");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("48fbb51b")) == 0);
-
-	a = parse("446304d8");
-	b = parse("79c6d499");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3e29d972")) == 0);
-
-	a = parse("4089095");
-	b = parse("e5445fb");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("125cd690")) == 0);
-
-	a = parse("3b491bad");
-	b = parse("1b256b1f");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("566e86cc")) == 0);
-
-	a = parse("1048d07e");
-	b = parse("7a1b3db8");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("a640e37")) == 0);
-
-	a = parse("e813d58");
-	b = parse("d20e5a9");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1ba22301")) == 0);
-
-	a = parse("5eca1b26");
-	b = parse("cbf0166");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("6b891c8c")) == 0);
-
-	a = parse("1247c07");
-	b = parse("f8ea992");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("10b32599")) == 0);
-
-	a = parse("5e90d69b");
-	b = parse("6b4d17");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("5efc23b2")) == 0);
-
-	a = parse("21ea8264");
-	b = parse("7e86d060");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("207152c5")) == 0);
-
-	a = parse("722fc913");
-	b = parse("22acba89");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("14dc839d")) == 0);
-
-	a = parse("64915faf");
-	b = parse("60fe068c");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("458f663c")) == 0);
-
-	a = parse("1d354c82");
-	b = parse("9368cc4");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("266bd946")) == 0);
-
-	a = parse("40a37690");
-	b = parse("4854ae");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("40ebcb3e")) == 0);
-
-	a = parse("5b5be89d");
-	b = parse("7bff4df");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("631bdd7c")) == 0);
-
-	a = parse("7d8c35a9");
-	b = parse("3548ab2e");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("32d4e0d8")) == 0);
-
-	a = parse("593eb857");
-	b = parse("3e554597");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1793fdef")) == 0);
-
-	a = parse("61c572ef");
-	b = parse("24c1dfa0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("6875290")) == 0);
-
-	a = parse("2882944");
-	b = parse("506f7125");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("52f79a69")) == 0);
-
-	a = parse("5f52f96f");
-	b = parse("4230c769");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2183c0d9")) == 0);
-
-	a = parse("723e9628");
-	b = parse("764df2c3");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("688c88ec")) == 0);
-
-	a = parse("12cd4a6e");
-	b = parse("41c9bbe0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("5497064e")) == 0);
-
-	a = parse("13f07f65");
-	b = parse("6743f389");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("7b3472ee")) == 0);
-
-	a = parse("7aa1c84e");
-	b = parse("1d3df833");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("17dfc082")) == 0);
-
-	a = parse("292c254e");
-	b = parse("a104188");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("333c66d6")) == 0);
-
-	a = parse("157564af");
-	b = parse("18402021");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2db584d0")) == 0);
-
-	a = parse("2da32f30");
-	b = parse("190af10c");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("46ae203c")) == 0);
-
-	a = parse("3de250bd");
-	b = parse("fb477e6");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("4d96c8a3")) == 0);
-
-	a = parse("616b6ea0");
-	b = parse("701dcf3c");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("51893ddd")) == 0);
-
-	a = parse("133a6041");
-	b = parse("18733712");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2bad9753")) == 0);
-
-	a = parse("735e1022");
-	b = parse("4aaf658b");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3e0d75ae")) == 0);
-
-	a = parse("4ceff1cf");
-	b = parse("3d0c4a42");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("9fc3c12")) == 0);
-
-	a = parse("7d2caa62");
-	b = parse("649db68f");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("61ca60f2")) == 0);
-
-	a = parse("20089109");
-	b = parse("77d3aab");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2785cbb4")) == 0);
-
-	a = parse("6ec9c65b");
-	b = parse("731d18d5");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("61e6df31")) == 0);
-
-	a = parse("7ea69080");
-	b = parse("75fc7251");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("74a302d2")) == 0);
-
-	a = parse("7f2dbe1d");
-	b = parse("71ba22d4");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("70e7e0f2")) == 0);
-
-	a = parse("36fb78fa");
-	b = parse("78bf47f");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3e876d79")) == 0);
-
-	a = parse("45c20f44");
-	b = parse("5e6cc9e9");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("242ed92e")) == 0);
-
-	a = parse("5bf94d3b");
-	b = parse("513c3a4d");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2d358789")) == 0);
-
-	a = parse("2d7d2880");
-	b = parse("51e6cd8e");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("7f63f60e")) == 0);
-
-	a = parse("2cf63b6b");
-	b = parse("423c6e36");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("6f32a9a1")) == 0);
-
-	a = parse("175fd94d");
-	b = parse("58bd81d0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("701d5b1d")) == 0);
-
-	a = parse("4bd05260");
-	b = parse("4e5fbbb");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("50b64e1b")) == 0);
-
-	a = parse("4c426832");
-	b = parse("a6e26ff");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("56b08f31")) == 0);
-
-	a = parse("1712eb47");
-	b = parse("2053ad14");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("3766985b")) == 0);
-
-	a = parse("25b4c9de");
-	b = parse("91795c8");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("2ecc5fa6")) == 0);
-
-	a = parse("7be43057");
-	b = parse("795add0a");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("753f0d62")) == 0);
-
-	a = parse("39802aaf");
-	b = parse("653f7469");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("1ebf9f19")) == 0);
-
-	a = parse("1ea363fd");
-	b = parse("77fc976b");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("169ffb69")) == 0);
-
-	a = parse("73f42032");
-	b = parse("3f860102");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("337a2135")) == 0);
-
-	a = parse("74c54a5c");
-	b = parse("55e5af19");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("4aaaf976")) == 0);
-
-	a = parse("368f2f79");
-	b = parse("22b54bf0");
-	addm(a, b, p, result);
-	assert(cmp(result, parse("59447b69")) == 0);
-
-	a = parse("311b7f84");
-	b = parse("25c2a3ab");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("56de232f")) == 0);
-
-	a = parse("418d82e5");
-	b = parse("49cf56f4");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("b5cd9da")) == 0);
-
-	a = parse("16e5469f");
-	b = parse("79a5599f");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("108aa03f")) == 0);
-
-	a = parse("3551a564");
-	b = parse("11a709e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("366c1602")) == 0);
-
-	a = parse("474a7f44");
-	b = parse("6387c77");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4d82fbbb")) == 0);
-
-	a = parse("3951949c");
-	b = parse("47781afc");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("c9af99")) == 0);
-
-	a = parse("5fc9f469");
-	b = parse("7db54fbb");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("5d7f4425")) == 0);
-
-	a = parse("f93357d");
-	b = parse("3af324cd");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4a865a4a")) == 0);
-
-	a = parse("1ce83e9f");
-	b = parse("32204a2a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4f0888c9")) == 0);
-
-	a = parse("32274843");
-	b = parse("76f97a6b");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2920c2af")) == 0);
-
-	a = parse("5ba56073");
-	b = parse("1fdc66cd");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7b81c740")) == 0);
-
-	a = parse("23502ab8");
-	b = parse("2f6e8d62");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("52beb81a")) == 0);
-
-	a = parse("465e4997");
-	b = parse("3cc4c95e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("32312f6")) == 0);
-
-	a = parse("53d5b12d");
-	b = parse("2075e8fe");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("744b9a2b")) == 0);
-
-	a = parse("246929e");
-	b = parse("711483ee");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("735b168c")) == 0);
-
-	a = parse("a6ea829");
-	b = parse("5de47593");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("68531dbc")) == 0);
-
-	a = parse("3a83a951");
-	b = parse("1d71c23c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("57f56b8d")) == 0);
-
-	a = parse("6e5f1a15");
-	b = parse("4c3e136e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3a9d2d84")) == 0);
-
-	a = parse("5dae47a0");
-	b = parse("1cdb46b1");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7a898e51")) == 0);
-
-	a = parse("36ffdcf2");
-	b = parse("57d00f1a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("ecfec0d")) == 0);
-
-	a = parse("2b5465d8");
-	b = parse("587c0c5c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3d07235")) == 0);
-
-	a = parse("154df352");
-	b = parse("1d3729d6");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("32851d28")) == 0);
-
-	a = parse("249640d1");
-	b = parse("3ff417a7");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("648a5878")) == 0);
-
-	a = parse("15172de8");
-	b = parse("75be69ed");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("ad597d6")) == 0);
-
-	a = parse("5dab1ecf");
-	b = parse("1173e85d");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("6f1f072c")) == 0);
-
-	a = parse("33d16516");
-	b = parse("78e30f6e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2cb47485")) == 0);
-
-	a = parse("23f950fe");
-	b = parse("7feb029a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("23e45399")) == 0);
-
-	a = parse("240eac9a");
-	b = parse("2de9b96e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("51f86608")) == 0);
-
-	a = parse("134821c2");
-	b = parse("53bfaf02");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("6707d0c4")) == 0);
-
-	a = parse("4f362a7c");
-	b = parse("65563478");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("348c5ef5")) == 0);
-
-	a = parse("742dded0");
-	b = parse("314fb6cd");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("257d959e")) == 0);
-
-	a = parse("7b34b840");
-	b = parse("5ff322eb");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("5b27db2c")) == 0);
-
-	a = parse("1d180de5");
-	b = parse("4910ca29");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("6628d80e")) == 0);
-
-	a = parse("c8affce");
-	b = parse("28c37e4a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("354e7e18")) == 0);
-
-	a = parse("7e04b92f");
-	b = parse("355189ca");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("335642fa")) == 0);
-
-	a = parse("558dbaa1");
-	b = parse("31b7ec63");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("745a705")) == 0);
-
-	a = parse("42cbd511");
-	b = parse("f908649");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("525c5b5a")) == 0);
-
-	a = parse("36af3710");
-	b = parse("41ad5947");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("785c9057")) == 0);
-
-	a = parse("7dd0684a");
-	b = parse("691584cd");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("66e5ed18")) == 0);
-
-	a = parse("7232de79");
-	b = parse("28a8a0f2");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1adb7f6c")) == 0);
-
-	a = parse("4f3debd5");
-	b = parse("4442f875");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1380e44b")) == 0);
-
-	a = parse("786c16a5");
-	b = parse("7080c539");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("68ecdbdf")) == 0);
-
-	a = parse("735042a9");
-	b = parse("3721aa58");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2a71ed02")) == 0);
-
-	a = parse("4be16a26");
-	b = parse("5165857d");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1d46efa4")) == 0);
-
-	a = parse("24330a2f");
-	b = parse("6eaf9503");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("12e29f33")) == 0);
-
-	a = parse("2020ccb1");
-	b = parse("290fc6f4");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("493093a5")) == 0);
-
-	a = parse("5b5af936");
-	b = parse("41f2060a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1d4cff41")) == 0);
-
-	a = parse("7dd1e69f");
-	b = parse("62436ce5");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("60155385")) == 0);
-
-	a = parse("77b31d20");
-	b = parse("24a807f2");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1c5b2513")) == 0);
-
-	a = parse("53bd997");
-	b = parse("1906ee9c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1e42c833")) == 0);
-
-	a = parse("73f70022");
-	b = parse("3f40ae05");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3337ae28")) == 0);
-
-	a = parse("164cace4");
-	b = parse("6460b4a1");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7aad6185")) == 0);
-
-	a = parse("142145ef");
-	b = parse("beadd94");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("200c2383")) == 0);
-
-	a = parse("3ddfa867");
-	b = parse("4afeb916");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("8de617e")) == 0);
-
-	a = parse("11bab278");
-	b = parse("64eafa3c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("76a5acb4")) == 0);
-
-	a = parse("3c939831");
-	b = parse("b8c5f0a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("481ff73b")) == 0);
-
-	a = parse("2121f98f");
-	b = parse("1a924d39");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3bb446c8")) == 0);
-
-	a = parse("28ec795f");
-	b = parse("2c31dc35");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("551e5594")) == 0);
-
-	a = parse("3df3ae51");
-	b = parse("54d053c6");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("12c40218")) == 0);
-
-	a = parse("603adb0f");
-	b = parse("4cb93c85");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2cf41795")) == 0);
-
-	a = parse("91010d9");
-	b = parse("138eedf1");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1c9efeca")) == 0);
-
-	a = parse("66d8ce31");
-	b = parse("48ce8f84");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2fa75db6")) == 0);
-
-	a = parse("1ba4d387");
-	b = parse("6db42e37");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("95901bf")) == 0);
-
-	a = parse("400a36cf");
-	b = parse("3ec9ce52");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7ed40521")) == 0);
-
-	a = parse("56c74973");
-	b = parse("6d522ddb");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4419774f")) == 0);
-
-	a = parse("baa5550");
-	b = parse("7af09195");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("69ae6e6")) == 0);
-
-	a = parse("49429e1b");
-	b = parse("6c7170aa");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("35b40ec6")) == 0);
-
-	a = parse("5e26de85");
-	b = parse("7fc4ca40");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("5deba8c6")) == 0);
-
-	a = parse("f83224b");
-	b = parse("1c315b56");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2bb47da1")) == 0);
-
-	a = parse("57b3a74c");
-	b = parse("5f358ccc");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("36e93419")) == 0);
-
-	a = parse("50ef1a0c");
-	b = parse("3adef5cd");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("bce0fda")) == 0);
-
-	a = parse("1eea330d");
-	b = parse("321b1e88");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("51055195")) == 0);
-
-	a = parse("411c2180");
-	b = parse("171c71f5");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("58389375")) == 0);
-
-	a = parse("37ee551f");
-	b = parse("b193f6b");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4307948a")) == 0);
-
-	a = parse("24fd6140");
-	b = parse("1c1e32ec");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("411b942c")) == 0);
-
-	a = parse("3c37cc33");
-	b = parse("4360e9fb");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7f98b62e")) == 0);
-
-	a = parse("6bffe81");
-	b = parse("71e2eb71");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("78a2e9f2")) == 0);
-
-	a = parse("341adb18");
-	b = parse("5c7ee544");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1099c05d")) == 0);
-
-	a = parse("3b5fcf49");
-	b = parse("429a877c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7dfa56c5")) == 0);
-
-	a = parse("4500b607");
-	b = parse("5b4c5170");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("204d0778")) == 0);
-
-	a = parse("3193f85e");
-	b = parse("1c289dd0");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("4dbc962e")) == 0);
-
-	a = parse("338f63aa");
-	b = parse("70d4864a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2463e9f5")) == 0);
-
-	a = parse("48ed6895");
-	b = parse("3ace7905");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3bbe19b")) == 0);
-
-	a = parse("47afea7a");
-	b = parse("7f6be990");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("471bd40b")) == 0);
-
-	a = parse("1f3d60fc");
-	b = parse("3800121");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("22bd621d")) == 0);
-
-	a = parse("87edb2a");
-	b = parse("338f2153");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3c0dfc7d")) == 0);
-
-	a = parse("676a6e8f");
-	b = parse("299933d4");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1103a264")) == 0);
-
-	a = parse("7c874d4d");
-	b = parse("1d56b37d");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("19de00cb")) == 0);
-
-	a = parse("3239cfb8");
-	b = parse("4d4be4f2");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("7f85b4aa")) == 0);
-
-	a = parse("5947246a");
-	b = parse("55f2f29a");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2f3a1705")) == 0);
-
-	a = parse("1e65884b");
-	b = parse("27e58794");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("464b0fdf")) == 0);
-
-	a = parse("74ec705f");
-	b = parse("5f837e63");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("546feec3")) == 0);
-
-	a = parse("21412abb");
-	b = parse("4f9dc7e7");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("70def2a2")) == 0);
-
-	a = parse("5929caba");
-	b = parse("a49e42e");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("6373aee8")) == 0);
-
-	a = parse("15d30639");
-	b = parse("7a8dc0ce");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("1060c708")) == 0);
-
-	a = parse("5c622c20");
-	b = parse("3b7a5f50");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("17dc8b71")) == 0);
-
-	a = parse("57b0d7dc");
-	b = parse("627d4971");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("3a2e214e")) == 0);
-
-	a = parse("4e9b442b");
-	b = parse("119ec48b");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("603a08b6")) == 0);
-
-	a = parse("1eb938df");
-	b = parse("5480f19c");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("733a2a7b")) == 0);
-
-	a = parse("3d6433b1");
-	b = parse("6cc4ec18");
-	subm(a, b, p, result);
-	assert(cmp(result, parse("2a291fca")) == 0);
-
-	a = parse("70cd68e");
-	b = parse("72e6b20f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("79f3889d")) == 0);
-
-	a = parse("7c90abd7");
-	b = parse("375af4f0");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("33eba0c8")) == 0);
-
-	a = parse("3370c7d8");
-	b = parse("3251ca8f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("65c29267")) == 0);
-
-	a = parse("23d1621e");
-	b = parse("8b9a7de");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2c8b09fc")) == 0);
-
-	a = parse("45d03e9f");
-	b = parse("40d925bc");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6a9645c")) == 0);
-
-	a = parse("232d980d");
-	b = parse("44f69a1d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6824322a")) == 0);
-
-	a = parse("19e46dbd");
-	b = parse("7dcd946d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("17b2022b")) == 0);
-
-	a = parse("36107c51");
-	b = parse("4173cd99");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("778449ea")) == 0);
-
-	a = parse("5d4b7604");
-	b = parse("57d65934");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3521cf39")) == 0);
-
-	a = parse("40492ac0");
-	b = parse("3c39ae35");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7c82d8f5")) == 0);
-
-	a = parse("12d662f");
-	b = parse("785ae1d1");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("79884800")) == 0);
-
-	a = parse("1777847d");
-	b = parse("62c5bb01");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7a3d3f7e")) == 0);
-
-	a = parse("5274647a");
-	b = parse("2a2fb0c8");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7ca41542")) == 0);
-
-	a = parse("6f2a3a79");
-	b = parse("2f00515a");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1e2a8bd4")) == 0);
-
-	a = parse("79f3b82");
-	b = parse("3f47ed40");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("46e728c2")) == 0);
-
-	a = parse("6111dc85");
-	b = parse("39027496");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1a14511c")) == 0);
-
-	a = parse("6d550d4b");
-	b = parse("33b3e7e6");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2108f532")) == 0);
-
-	a = parse("2477087c");
-	b = parse("1e8981e4");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("43008a60")) == 0);
-
-	a = parse("7d0be8e5");
-	b = parse("24ba8cb4");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("21c6759a")) == 0);
-
-	a = parse("6dcf782");
-	b = parse("130cb2ca");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("19e9aa4c")) == 0);
-
-	a = parse("3f961ffd");
-	b = parse("6b9a1c94");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2b303c92")) == 0);
-
-	a = parse("18a8d28a");
-	b = parse("42dc2f36");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5b8501c0")) == 0);
-
-	a = parse("7498038d");
-	b = parse("19b82e9b");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("e503229")) == 0);
-
-	a = parse("1edfb842");
-	b = parse("50e12a6d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6fc0e2af")) == 0);
-
-	a = parse("5ef3a9");
-	b = parse("9242d07");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("98320b0")) == 0);
-
-	a = parse("7c3de2c9");
-	b = parse("6081b7cc");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5cbf9a96")) == 0);
-
-	a = parse("16faf5e6");
-	b = parse("6bee9ad");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1db9df93")) == 0);
-
-	a = parse("5dddfb92");
-	b = parse("73beb8c8");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("519cb45b")) == 0);
-
-	a = parse("7d518b1");
-	b = parse("372138ff");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3ef651b0")) == 0);
-
-	a = parse("73d76119");
-	b = parse("65b37f75");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("598ae08f")) == 0);
-
-	a = parse("5b244dc0");
-	b = parse("3c049a8c");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1728e84d")) == 0);
-
-	a = parse("73a469d4");
-	b = parse("75882687");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("692c905c")) == 0);
-
-	a = parse("965528f");
-	b = parse("1956a591");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("22bbf820")) == 0);
-
-	a = parse("37604050");
-	b = parse("52fa6f37");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("a5aaf88")) == 0);
-
-	a = parse("5512b910");
-	b = parse("57e16d7f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2cf42690")) == 0);
-
-	a = parse("490d4ac9");
-	b = parse("52ec4c00");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1bf996ca")) == 0);
-
-	a = parse("516c2756");
-	b = parse("4be70cab");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1d533402")) == 0);
-
-	a = parse("705eae84");
-	b = parse("671e7938");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("577d27bd")) == 0);
-
-	a = parse("2d990996");
-	b = parse("321faccf");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5fb8b665")) == 0);
-
-	a = parse("5cd13c7f");
-	b = parse("26397750");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("30ab3d0")) == 0);
-
-	a = parse("444c2eb7");
-	b = parse("778ed96d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3bdb0825")) == 0);
-
-	a = parse("a163929");
-	b = parse("5973c26f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6389fb98")) == 0);
-
-	a = parse("35928184");
-	b = parse("3a29a302");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6fbc2486")) == 0);
-
-	a = parse("3bfe38ec");
-	b = parse("6ebe9076");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2abcc963")) == 0);
-
-	a = parse("203e86b7");
-	b = parse("5bfcfbd8");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7c3b828f")) == 0);
-
-	a = parse("14f79516");
-	b = parse("4e94fc6e");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("638c9184")) == 0);
-
-	a = parse("65a3ba45");
-	b = parse("4f1dc9c8");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("34c1840e")) == 0);
-
-	a = parse("2d705ac3");
-	b = parse("5aaf3e7e");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("81f9942")) == 0);
-
-	a = parse("58554b4");
-	b = parse("5a111d6c");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5f967220")) == 0);
-
-	a = parse("7852a189");
-	b = parse("460c8def");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3e5f2f79")) == 0);
-
-	a = parse("5c9874e");
-	b = parse("3a1ec916");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3fe85064")) == 0);
-
-	a = parse("22fe372b");
-	b = parse("5db4dc60");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("b3138c")) == 0);
-
-	a = parse("3cb475c6");
-	b = parse("6e365048");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2aeac60f")) == 0);
-
-	a = parse("1b6fc040");
-	b = parse("37558734");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("52c54774")) == 0);
-
-	a = parse("54209e2f");
-	b = parse("6198f6db");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("35b9950b")) == 0);
-
-	a = parse("4c80de1c");
-	b = parse("65ed6743");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("326e4560")) == 0);
-
-	a = parse("6cf4262a");
-	b = parse("41ba4586");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2eae6bb1")) == 0);
-
-	a = parse("5bae3f45");
-	b = parse("91cea05");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("64cb294a")) == 0);
-
-	a = parse("3fc1d521");
-	b = parse("3a407347");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7a024868")) == 0);
-
-	a = parse("2b673755");
-	b = parse("2caf8992");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5816c0e7")) == 0);
-
-	a = parse("5d849d7c");
-	b = parse("48ccefc0");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("26518d3d")) == 0);
-
-	a = parse("46dae7a6");
-	b = parse("7aa73b76");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("4182231d")) == 0);
-
-	a = parse("4c3e7889");
-	b = parse("4b99ae9b");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("17d82725")) == 0);
-
-	a = parse("6fd63ac0");
-	b = parse("31a8e964");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("217f2425")) == 0);
-
-	a = parse("7959e5c7");
-	b = parse("2a5016b4");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("23a9fc7c")) == 0);
-
-	a = parse("65d902e3");
-	b = parse("682c345e");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("4e053742")) == 0);
-
-	a = parse("20eebe23");
-	b = parse("5064457d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("715303a0")) == 0);
-
-	a = parse("12a8df4");
-	b = parse("2a48874f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2b731543")) == 0);
-
-	a = parse("5b816dc1");
-	b = parse("34d09a0c");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("105207ce")) == 0);
-
-	a = parse("244d25ee");
-	b = parse("7e9708c2");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("22e42eb1")) == 0);
-
-	a = parse("7b6fdc8");
-	b = parse("4d69612a");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("55205ef2")) == 0);
-
-	a = parse("7b7d540c");
-	b = parse("762b3e2f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("71a8923c")) == 0);
-
-	a = parse("32066a26");
-	b = parse("5cd2bfb3");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("ed929da")) == 0);
-
-	a = parse("1afc14ef");
-	b = parse("ed9c657");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("29d5db46")) == 0);
-
-	a = parse("3025ffc7");
-	b = parse("55d94550");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5ff4518")) == 0);
-
-	a = parse("283baa3e");
-	b = parse("5cfad9af");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("53683ee")) == 0);
-
-	a = parse("351a9370");
-	b = parse("36fcd185");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("6c1764f5")) == 0);
-
-	a = parse("318b280b");
-	b = parse("59dcda2e");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("b68023a")) == 0);
-
-	a = parse("2d85ee53");
-	b = parse("58b26556");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("63853aa")) == 0);
-
-	a = parse("6a30d137");
-	b = parse("520bcb42");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3c3c9c7a")) == 0);
-
-	a = parse("1cac909b");
-	b = parse("ca0c6e4");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("294d577f")) == 0);
-
-	a = parse("26bf25cc");
-	b = parse("7199a588");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1858cb55")) == 0);
-
-	a = parse("7a29550b");
-	b = parse("af9b93d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5230e49")) == 0);
-
-	a = parse("51947e7c");
-	b = parse("67f064ab");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3984e328")) == 0);
-
-	a = parse("818ba6");
-	b = parse("c533924");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("cd4c4ca")) == 0);
-
-	a = parse("4d52ee89");
-	b = parse("698afb08");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("36dde992")) == 0);
-
-	a = parse("5a5978cc");
-	b = parse("5e2ef57c");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("38886e49")) == 0);
-
-	a = parse("54223fee");
-	b = parse("3338ec95");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("75b2c84")) == 0);
-
-	a = parse("681996b3");
-	b = parse("703b417d");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("5854d831")) == 0);
-
-	a = parse("41b6505e");
-	b = parse("5dc40791");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("1f7a57f0")) == 0);
-
-	a = parse("18f4c3e9");
-	b = parse("29dfc61e");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("42d48a07")) == 0);
-
-	a = parse("4e16af17");
-	b = parse("75820088");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("4398afa0")) == 0);
-
-	a = parse("2a8c3e9e");
-	b = parse("50488dc1");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("7ad4cc5f")) == 0);
-
-	a = parse("14b35e8");
-	b = parse("3d9da1a1");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("3ee8d789")) == 0);
-
-	a = parse("ae190eb");
-	b = parse("5a36bee2");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("65184fcd")) == 0);
-
-	a = parse("47bb0b2b");
-	b = parse("5fcda8b");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("4db7e5b6")) == 0);
-
-	a = parse("96955ef");
-	b = parse("36d52c81");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("403e8270")) == 0);
-
-	a = parse("b55c471");
-	b = parse("76c39124");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("2195596")) == 0);
-
-	a = parse("2bd9dd73");
-	b = parse("2db2a00f");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("598c7d82")) == 0);
-
-	a = parse("67dc53b0");
-	b = parse("50c94951");
-	mulm(a, b, p, result);
-	assert(cmp(result, parse("38a59d02")) == 0);
-
-	a = parse("514ba6ce");
-	b = parse("40a56a46");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("11f11115")) == 0);
-
-	a = parse("694f5870");
-	b = parse("2414763a");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("d63ceab")) == 0);
-
-	a = parse("463b9cf0");
-	b = parse("244febc3");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6a8b88b3")) == 0);
-
-	a = parse("2f4fd0fc");
-	b = parse("7f5c31cc");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2eac02c9")) == 0);
-
-	a = parse("664e43e3");
-	b = parse("3b524ce3");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("21a090c7")) == 0);
-
-	a = parse("c3510e7");
-	b = parse("49a6c744");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("55dbd82b")) == 0);
-
-	a = parse("3e2d9dd2");
-	b = parse("74d28256");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("33002029")) == 0);
-
-	a = parse("307e6ab9");
-	b = parse("7f78275e");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2ff69218")) == 0);
-
-	a = parse("7c4d7b75");
-	b = parse("378e0be8");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("33db875e")) == 0);
-
-	a = parse("1084081b");
-	b = parse("57ea3aaf");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("686e42ca")) == 0);
-
-	a = parse("73152a54");
-	b = parse("3e8ddbe4");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("31a30639")) == 0);
-
-	a = parse("54b13f9b");
-	b = parse("2cc4b0ac");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("175f048")) == 0);
-
-	a = parse("15d2bf81");
-	b = parse("1b78d410");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("314b9391")) == 0);
-
-	a = parse("75f503a1");
-	b = parse("6a300d09");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("602510ab")) == 0);
-
-	a = parse("1c401486");
-	b = parse("34035438");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("504368be")) == 0);
-
-	a = parse("bc2a13");
-	b = parse("1f73a1ff");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("202fcc12")) == 0);
-
-	a = parse("7cc9f8f9");
-	b = parse("6df82838");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6ac22132")) == 0);
-
-	a = parse("20e14130");
-	b = parse("7fc5dd8");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("28dd9f08")) == 0);
-
-	a = parse("63cad336");
-	b = parse("73b263d4");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("577d370b")) == 0);
-
-	a = parse("472c420d");
-	b = parse("44cb6720");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("bf7a92e")) == 0);
-
-	a = parse("581db6f8");
-	b = parse("6e2b5062");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4649075b")) == 0);
-
-	a = parse("53c9aaae");
-	b = parse("7f31b62b");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("52fb60da")) == 0);
-
-	a = parse("5a60ea7");
-	b = parse("2fd240f5");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("35784f9c")) == 0);
-
-	a = parse("6b89c105");
-	b = parse("7d004677");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("688a077d")) == 0);
-
-	a = parse("7d14e137");
-	b = parse("24e5f81f");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("21fad957")) == 0);
-
-	a = parse("57e2676f");
-	b = parse("55e429ca");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2dc6913a")) == 0);
-
-	a = parse("1ae2799e");
-	b = parse("3ed3b2fa");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("59b62c98")) == 0);
-
-	a = parse("2b0a0c");
-	b = parse("3b3dbec7");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("3b68c8d3")) == 0);
-
-	a = parse("38aa8b37");
-	b = parse("520f4068");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("ab9cba0")) == 0);
-
-	a = parse("70ee9e98");
-	b = parse("d88828a");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("7e772122")) == 0);
-
-	a = parse("68ae59dc");
-	b = parse("6f3c048d");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("57ea5e6a")) == 0);
-
-	a = parse("2ae63f97");
-	b = parse("75356cc8");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("201bac60")) == 0);
-
-	a = parse("79119d9");
-	b = parse("19a36581");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("21347f5a")) == 0);
-
-	a = parse("3084922b");
-	b = parse("6885474b");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("1909d977")) == 0);
-
-	a = parse("68357789");
-	b = parse("78347786");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6069ef10")) == 0);
-
-	a = parse("75b44696");
-	b = parse("342ad0e2");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("29df1779")) == 0);
-
-	a = parse("67db575");
-	b = parse("2fff3d44");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("367cf2b9")) == 0);
-
-	a = parse("68a222d6");
-	b = parse("1ed8805c");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("77aa333")) == 0);
-
-	a = parse("63674f52");
-	b = parse("4990d577");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2cf824ca")) == 0);
-
-	a = parse("45e01d9d");
-	b = parse("14f2e847");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("5ad305e4")) == 0);
-
-	a = parse("853924d");
-	b = parse("59a0b62f");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("61f4487c")) == 0);
-
-	a = parse("685dca03");
-	b = parse("3edfcc87");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("273d968b")) == 0);
-
-	a = parse("19649e9e");
-	b = parse("a6c9981");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("23d1381f")) == 0);
-
-	a = parse("893d8ca");
-	b = parse("2df57286");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("36894b50")) == 0);
-
-	a = parse("3226e04d");
-	b = parse("62379c30");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("145e7c7e")) == 0);
-
-	a = parse("1f4184af");
-	b = parse("6ac0ba35");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("a023ee5")) == 0);
-
-	a = parse("231ef949");
-	b = parse("688975bc");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("ba86f06")) == 0);
-
-	a = parse("1d080756");
-	b = parse("7fbc6538");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("1cc46c8f")) == 0);
-
-	a = parse("44f0b603");
-	b = parse("30437114");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("75342717")) == 0);
-
-	a = parse("6a2a832b");
-	b = parse("433a8f2d");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2d651259")) == 0);
-
-	a = parse("15a320bc");
-	b = parse("3124fb69");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("46c81c25")) == 0);
-
-	a = parse("32dd174");
-	b = parse("62a4ed75");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("65d2bee9")) == 0);
-
-	a = parse("347c9119");
-	b = parse("18184584");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4c94d69d")) == 0);
-
-	a = parse("4bf5d4d9");
-	b = parse("695f752e");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("35554a08")) == 0);
-
-	a = parse("3903e3db");
-	b = parse("22a1af85");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("5ba59360")) == 0);
-
-	a = parse("486aa99a");
-	b = parse("44357799");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("ca02134")) == 0);
-
-	a = parse("37e78fbf");
-	b = parse("382f4f36");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("7016def5")) == 0);
-
-	a = parse("469930ec");
-	b = parse("3c34df");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("46d565cb")) == 0);
-
-	a = parse("6c7f4afd");
-	b = parse("713646b5");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("5db591b3")) == 0);
-
-	a = parse("ea446c4");
-	b = parse("5f2cc701");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6dd10dc5")) == 0);
-
-	a = parse("6f33a63a");
-	b = parse("6f88b87c");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("5ebc5eb7")) == 0);
-
-	a = parse("5f2c649c");
-	b = parse("c59b8f6");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6b861d92")) == 0);
-
-	a = parse("2e3aaae5");
-	b = parse("426570a5");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("70a01b8a")) == 0);
-
-	a = parse("47ae4f40");
-	b = parse("775672ef");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("3f04c230")) == 0);
-
-	a = parse("7b2d299a");
-	b = parse("15ff31bf");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("112c5b5a")) == 0);
-
-	a = parse("41290d5e");
-	b = parse("539a77");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("417ca7d5")) == 0);
-
-	a = parse("4cf93a10");
-	b = parse("5d7c122a");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2a754c3b")) == 0);
-
-	a = parse("45b8a883");
-	b = parse("7c4f4a93");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4207f317")) == 0);
-
-	a = parse("13e92c50");
-	b = parse("518a04e3");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("65733133")) == 0);
-
-	a = parse("1c2dc776");
-	b = parse("641d47de");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4b0f55")) == 0);
-
-	a = parse("6a2fff74");
-	b = parse("3aaccd84");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("24dcccf9")) == 0);
-
-	a = parse("4776feca");
-	b = parse("52d9bba2");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("1a50ba6d")) == 0);
-
-	a = parse("26cdd8bb");
-	b = parse("7c48fd32");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2316d5ee")) == 0);
-
-	a = parse("21fd4f93");
-	b = parse("2476acf6");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4673fc89")) == 0);
-
-	a = parse("d7e7442");
-	b = parse("230b13f5");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("30898837")) == 0);
-
-	a = parse("5c391faa");
-	b = parse("66c59dd6");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("42febd81")) == 0);
-
-	a = parse("6fb99005");
-	b = parse("5807f378");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("47c1837e")) == 0);
-
-	a = parse("4fb9a03e");
-	b = parse("5872268f");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("282bc6ce")) == 0);
-
-	a = parse("1cd6a09");
-	b = parse("70af3a61");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("727ca46a")) == 0);
-
-	a = parse("298e2d1");
-	b = parse("377570aa");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("3a0e537b")) == 0);
-
-	a = parse("5d5d61ae");
-	b = parse("2c6342ec");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("9c0a49b")) == 0);
-
-	a = parse("1afeef63");
-	b = parse("717c36a1");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("c7b2605")) == 0);
-
-	a = parse("326856f");
-	b = parse("40a55858");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("43cbddc7")) == 0);
-
-	a = parse("184c88aa");
-	b = parse("3a2a11d9");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("52769a83")) == 0);
-
-	a = parse("772cd684");
-	b = parse("441f3639");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("3b4c0cbe")) == 0);
-
-	a = parse("cb90b19");
-	b = parse("2a325a54");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("36eb656d")) == 0);
-
-	a = parse("f238a");
-	b = parse("5cfe6f1a");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("5d0d92a4")) == 0);
-
-	a = parse("60b02a3c");
-	b = parse("6acdc8c1");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("4b7df2fe")) == 0);
-
-	a = parse("30747a50");
-	b = parse("2683b7db");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("56f8322b")) == 0);
-
-	a = parse("7f744318");
-	b = parse("26ea4d34");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("265e904d")) == 0);
-
-	a = parse("d270a1c");
-	b = parse("563f12b8");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("63661cd4")) == 0);
-
-	a = parse("38e49636");
-	b = parse("71cbfe97");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("2ab094ce")) == 0);
-
-	a = parse("41f01c14");
-	b = parse("7fa84fa6");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("41986bbb")) == 0);
-
-	a = parse("60dc6877");
-	b = parse("290ea427");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("9eb0c9f")) == 0);
-
-	a = parse("622ae166");
-	b = parse("26ea1cc1");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("914fe28")) == 0);
-
-	a = parse("29b5905d");
-	b = parse("169737aa");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("404cc807")) == 0);
-
-	a = parse("10b98618");
-	b = parse("2f730a27");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("402c903f")) == 0);
-
-	a = parse("1ea8738e");
-	b = parse("519f550a");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("7047c898")) == 0);
-
-	a = parse("5cf7cb7d");
-	b = parse("1048e73f");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("6d40b2bc")) == 0);
-
-	a = parse("4929aebf");
-	b = parse("5c2ec017");
-	divm(a, b, p, result);
-	assert(cmp(result, parse("25586ed7")) == 0);
+	Number p = parse("7fffffff", 4);
+	Number result = new_number(4);
+
+	addm(parse("0", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("0", 4)) == 0);
+
+	addm(parse("0", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1", 4)) == 0);
+
+	addm(parse("1", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1", 4)) == 0);
+
+	addm(parse("1", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2", 4)) == 0);
+
+	mulm(parse("0", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("0", 4)) == 0);
+
+	mulm(parse("0", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("0", 4)) == 0);
+
+	mulm(parse("1", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("0", 4)) == 0);
+
+	mulm(parse("1", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1", 4)) == 0);
+
+	addm(parse("fd3", 4), parse("f662da", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f672ad", 4)) == 0);
+
+	addm(parse("7ca63e", 4), parse("ca0159", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("146a797", 4)) == 0);
+
+	addm(parse("529bd6", 4), parse("a7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("529c7d", 4)) == 0);
+
+	addm(parse("3c07ae1", 4), parse("4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3c07ae5", 4)) == 0);
+
+	addm(parse("cfb4ee", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("cfb4fd", 4)) == 0);
+
+	addm(parse("3eb5c44c", 4), parse("d53", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3eb5d19f", 4)) == 0);
+
+	addm(parse("5", 4), parse("7a509b5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7a509ba", 4)) == 0);
+
+	addm(parse("6f82405", 4), parse("a7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6f824ac", 4)) == 0);
+
+	addm(parse("8", 4), parse("30", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("38", 4)) == 0);
+
+	addm(parse("e7a", 4), parse("17cb8b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("17da05", 4)) == 0);
+
+	addm(parse("c", 4), parse("ee", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("fa", 4)) == 0);
+
+	addm(parse("dc", 4), parse("db", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1b7", 4)) == 0);
+
+	addm(parse("56cd", 4), parse("b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("56d8", 4)) == 0);
+
+	addm(parse("4bd5", 4), parse("28fa7e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("294653", 4)) == 0);
+
+	addm(parse("21d7f", 4), parse("d9607", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("fb386", 4)) == 0);
+
+	addm(parse("6", 4), parse("1f373aa0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1f373aa6", 4)) == 0);
+
+	addm(parse("5e4ec", 4), parse("c3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5e5af", 4)) == 0);
+
+	addm(parse("61f", 4), parse("96f3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9d12", 4)) == 0);
+
+	addm(parse("469586", 4), parse("e2e9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("47786f", 4)) == 0);
+
+	addm(parse("26", 4), parse("b689", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("b6af", 4)) == 0);
+
+	addm(parse("6e3e9", 4), parse("465", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6e84e", 4)) == 0);
+
+	addm(parse("76d5f", 4), parse("1dec361a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1df3a379", 4)) == 0);
+
+	addm(parse("6e22e3d7", 4), parse("aa6630", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6ecd4a07", 4)) == 0);
+
+	addm(parse("9587", 4), parse("71bbe639", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("71bc7bc0", 4)) == 0);
+
+	addm(parse("a2", 4), parse("5de4b448", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5de4b4ea", 4)) == 0);
+
+	addm(parse("57b61fd7", 4), parse("8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("57b61fdf", 4)) == 0);
+
+	addm(parse("828ab", 4), parse("c7446e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("cf6d19", 4)) == 0);
+
+	addm(parse("8a0", 4), parse("6edc7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6f667", 4)) == 0);
+
+	addm(parse("c40a", 4), parse("3b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c445", 4)) == 0);
+
+	addm(parse("512f6a", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("512f79", 4)) == 0);
+
+	addm(parse("215a57", 4), parse("fe77", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2258ce", 4)) == 0);
+
+	addm(parse("eb", 4), parse("c5b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d46", 4)) == 0);
+
+	addm(parse("f0c6763", 4), parse("23", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f0c6786", 4)) == 0);
+
+	addm(parse("1383a183", 4), parse("339eb784", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("47225907", 4)) == 0);
+
+	addm(parse("6f", 4), parse("24b1c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("24b8b", 4)) == 0);
+
+	addm(parse("5e2", 4), parse("d2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6b4", 4)) == 0);
+
+	addm(parse("488e71b", 4), parse("c066", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("489a781", 4)) == 0);
+
+	addm(parse("515", 4), parse("89b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("db0", 4)) == 0);
+
+	addm(parse("4afc", 4), parse("f8ce", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("143ca", 4)) == 0);
+
+	addm(parse("8d072c", 4), parse("d2e09", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9a3535", 4)) == 0);
+
+	addm(parse("11db25", 4), parse("47", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("11db6c", 4)) == 0);
+
+	addm(parse("af776", 4), parse("62d4a1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6dcc17", 4)) == 0);
+
+	addm(parse("739", 4), parse("d8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("811", 4)) == 0);
+
+	addm(parse("2e", 4), parse("f1cd8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f1d06", 4)) == 0);
+
+	addm(parse("27234e", 4), parse("7e40", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("27a18e", 4)) == 0);
+
+	addm(parse("5", 4), parse("270b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2710", 4)) == 0);
+
+	addm(parse("e0280f", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("e0280f", 4)) == 0);
+
+	addm(parse("20278d7a", 4), parse("eb", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("20278e65", 4)) == 0);
+
+	addm(parse("6010b7", 4), parse("4c5db14", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("525ebcb", 4)) == 0);
+
+	addm(parse("46a", 4), parse("ffd93", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1001fd", 4)) == 0);
+
+	addm(parse("15", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1e", 4)) == 0);
+
+	addm(parse("93c", 4), parse("ab", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9e7", 4)) == 0);
+
+	addm(parse("f09e2e", 4), parse("8719fd6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9623e04", 4)) == 0);
+
+	addm(parse("cf98219", 4), parse("7ddfa966", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ad92b80", 4)) == 0);
+
+	addm(parse("bfb0743", 4), parse("20", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("bfb0763", 4)) == 0);
+
+	addm(parse("2f73af3", 4), parse("fa0aace", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1297e5c1", 4)) == 0);
+
+	addm(parse("1abd7", 4), parse("e5cd6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1008ad", 4)) == 0);
+
+	addm(parse("9418", 4), parse("8a6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9cbe", 4)) == 0);
+
+	addm(parse("606b", 4), parse("2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("606d", 4)) == 0);
+
+	addm(parse("e0e0", 4), parse("a96", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("eb76", 4)) == 0);
+
+	addm(parse("72bd5", 4), parse("16dbef", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1e07c4", 4)) == 0);
+
+	addm(parse("a5fb9fc", 4), parse("6b49b03", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("111454ff", 4)) == 0);
+
+	addm(parse("8732f", 4), parse("77a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("87aa9", 4)) == 0);
+
+	addm(parse("36dfd", 4), parse("d4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("36ed1", 4)) == 0);
+
+	addm(parse("1124", 4), parse("daf", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1ed3", 4)) == 0);
+
+	addm(parse("2f42c28a", 4), parse("a63e3d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2fe900c7", 4)) == 0);
+
+	addm(parse("f", 4), parse("64de615b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("64de616a", 4)) == 0);
+
+	addm(parse("fd3", 4), parse("38b23d73", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("38b24d46", 4)) == 0);
+
+	addm(parse("384", 4), parse("6630b5d0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6630b954", 4)) == 0);
+
+	addm(parse("cfc8d3", 4), parse("d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("cfc8e0", 4)) == 0);
+
+	addm(parse("58de2197", 4), parse("38b3a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("58e1acd1", 4)) == 0);
+
+	addm(parse("51c", 4), parse("4ab5b08", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4ab6024", 4)) == 0);
+
+	addm(parse("a88", 4), parse("962382", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("962e0a", 4)) == 0);
+
+	addm(parse("fcf", 4), parse("e1590", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("e255f", 4)) == 0);
+
+	addm(parse("75399", 4), parse("9a79", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ee12", 4)) == 0);
+
+	addm(parse("c3e60bc", 4), parse("1a48", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c3e7b04", 4)) == 0);
+
+	addm(parse("be1bf74", 4), parse("27c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("be1c1f0", 4)) == 0);
+
+	addm(parse("9e6", 4), parse("53a30", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("54416", 4)) == 0);
+
+	addm(parse("5cc42f8", 4), parse("1bbc7def", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2188c0e7", 4)) == 0);
+
+	addm(parse("18", 4), parse("693780a4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("693780bc", 4)) == 0);
+
+	addm(parse("48", 4), parse("2e0d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2e55", 4)) == 0);
+
+	addm(parse("4bb73", 4), parse("a9b24b0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("a9fe023", 4)) == 0);
+
+	addm(parse("37cf9b11", 4), parse("6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("37cf9b17", 4)) == 0);
+
+	addm(parse("c803e42", 4), parse("a4c7a6d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("16ccb8af", 4)) == 0);
+
+	addm(parse("7f", 4), parse("17dc", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("185b", 4)) == 0);
+
+	addm(parse("1dde733a", 4), parse("d4bf55", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1eb3328f", 4)) == 0);
+
+	addm(parse("acf", 4), parse("f3fd38e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f3fde5d", 4)) == 0);
+
+	addm(parse("83a06ad", 4), parse("d8e8242", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("15c888ef", 4)) == 0);
+
+	addm(parse("6a072d3c", 4), parse("76db3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6a0e9aef", 4)) == 0);
+
+	addm(parse("7a43cf25", 4), parse("206fe0ae", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1ab3afd4", 4)) == 0);
+
+	addm(parse("9dc2", 4), parse("559bc2c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("55a59ee", 4)) == 0);
+
+	addm(parse("6f", 4), parse("526", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("595", 4)) == 0);
+
+	addm(parse("bbf", 4), parse("69b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("125a", 4)) == 0);
+
+	addm(parse("73d471", 4), parse("a3674d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1173bbe", 4)) == 0);
+
+	addm(parse("4f006", 4), parse("fb131", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("14a137", 4)) == 0);
+
+	addm(parse("3", 4), parse("646", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("649", 4)) == 0);
+
+	addm(parse("d", 4), parse("a1a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("a27", 4)) == 0);
+
+	addm(parse("3", 4), parse("1b034", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1b037", 4)) == 0);
+
+	addm(parse("659056", 4), parse("6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("65905c", 4)) == 0);
+
+	addm(parse("25f8d4d", 4), parse("c637", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2605384", 4)) == 0);
+
+	subm(parse("b33a", 4), parse("d4f5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fffde44", 4)) == 0);
+
+	subm(parse("9d44f7", 4), parse("3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9d44f4", 4)) == 0);
+
+	subm(parse("8ef9950", 4), parse("a28dd", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("8e57073", 4)) == 0);
+
+	subm(parse("e919f75", 4), parse("2abdc72", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("be5c303", 4)) == 0);
+
+	subm(parse("fae", 4), parse("e31", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("17d", 4)) == 0);
+
+	subm(parse("a", 4), parse("6d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fffff9c", 4)) == 0);
+
+	subm(parse("43c948", 4), parse("f3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("43c855", 4)) == 0);
+
+	subm(parse("116", 4), parse("4b5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffc60", 4)) == 0);
+
+	subm(parse("b", 4), parse("f30f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fff0cfb", 4)) == 0);
+
+	subm(parse("b", 4), parse("27d64995", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5829b675", 4)) == 0);
+
+	subm(parse("179e", 4), parse("a22", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d7c", 4)) == 0);
+
+	subm(parse("8d6", 4), parse("ef9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffff9dc", 4)) == 0);
+
+	subm(parse("d7", 4), parse("32e40f4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7cd1bfe2", 4)) == 0);
+
+	subm(parse("6f5", 4), parse("76c39b0c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("93c6be8", 4)) == 0);
+
+	subm(parse("1a4c2", 4), parse("70", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1a452", 4)) == 0);
+
+	subm(parse("79b", 4), parse("77788f24", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("8877876", 4)) == 0);
+
+	subm(parse("f9f", 4), parse("3c2b9f80", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("43d4701e", 4)) == 0);
+
+	subm(parse("4", 4), parse("c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffff7", 4)) == 0);
+
+	subm(parse("83b4f8b", 4), parse("60c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("83b497f", 4)) == 0);
+
+	subm(parse("623dab8d", 4), parse("ecdc", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("623cbeb1", 4)) == 0);
+
+	subm(parse("c37c", 4), parse("4e24d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffbe12e", 4)) == 0);
+
+	subm(parse("bf0aa", 4), parse("93e6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("b5cc4", 4)) == 0);
+
+	subm(parse("98000", 4), parse("eae9f5c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("715ae0a3", 4)) == 0);
+
+	subm(parse("2b78c", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2b77d", 4)) == 0);
+
+	subm(parse("517", 4), parse("9f829d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f608279", 4)) == 0);
+
+	subm(parse("26c9026", 4), parse("5478d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2674899", 4)) == 0);
+
+	subm(parse("eda1d93", 4), parse("9cf9f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ed04df4", 4)) == 0);
+
+	subm(parse("2afe0df6", 4), parse("15220e39", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("15dbffbd", 4)) == 0);
+
+	subm(parse("e23e8d", 4), parse("41e6683e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3efbd64e", 4)) == 0);
+
+	subm(parse("202bb807", 4), parse("285ec0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("20035947", 4)) == 0);
+
+	subm(parse("6e528e71", 4), parse("c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6e528e65", 4)) == 0);
+
+	subm(parse("3ec", 4), parse("1d95", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fffe656", 4)) == 0);
+
+	subm(parse("f", 4), parse("4dd", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffb31", 4)) == 0);
+
+	subm(parse("7", 4), parse("1cf68b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fe3097b", 4)) == 0);
+
+	subm(parse("8f", 4), parse("94a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffff744", 4)) == 0);
+
+	subm(parse("1a703", 4), parse("f2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1a611", 4)) == 0);
+
+	subm(parse("8", 4), parse("65c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffff9ab", 4)) == 0);
+
+	subm(parse("c26459", 4), parse("9e7d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c1c5dc", 4)) == 0);
+
+	subm(parse("f668a", 4), parse("df7ac24", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7217ba65", 4)) == 0);
+
+	subm(parse("a", 4), parse("9cc799a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7633866f", 4)) == 0);
+
+	subm(parse("d8", 4), parse("750c08", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f8af4cf", 4)) == 0);
+
+	subm(parse("720e74", 4), parse("7e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("720df6", 4)) == 0);
+
+	subm(parse("1b1e205b", 4), parse("6d0725", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1ab11936", 4)) == 0);
+
+	subm(parse("4", 4), parse("285daae6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("57a2551d", 4)) == 0);
+
+	subm(parse("79fa63c", 4), parse("0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("79fa63c", 4)) == 0);
+
+	subm(parse("9f82a87", 4), parse("214dee", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("9d6dc99", 4)) == 0);
+
+	subm(parse("c437e1", 4), parse("b90e79", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("b2968", 4)) == 0);
+
+	subm(parse("20f2b65", 4), parse("74903a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("19a9b2b", 4)) == 0);
+
+	subm(parse("ad0ee", 4), parse("1e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ad0d0", 4)) == 0);
+
+	subm(parse("dc", 4), parse("a2b0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fff5e2b", 4)) == 0);
+
+	subm(parse("4d57", 4), parse("b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4d4c", 4)) == 0);
+
+	subm(parse("8486", 4), parse("2c0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("81c6", 4)) == 0);
+
+	subm(parse("5e46", 4), parse("607a74d4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1f85e971", 4)) == 0);
+
+	subm(parse("f5", 4), parse("3c6c7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffc3a2d", 4)) == 0);
+
+	subm(parse("4c", 4), parse("d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3f", 4)) == 0);
+
+	subm(parse("c3df7", 4), parse("77b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c367c", 4)) == 0);
+
+	subm(parse("e1fc1a8", 4), parse("557ec", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("e1a69bc", 4)) == 0);
+
+	subm(parse("68dce6a", 4), parse("428", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("68dca42", 4)) == 0);
+
+	subm(parse("47a731f8", 4), parse("261b735", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("45457ac3", 4)) == 0);
+
+	subm(parse("a6c2f", 4), parse("7f84a5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f8ae789", 4)) == 0);
+
+	subm(parse("fd8", 4), parse("a8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f30", 4)) == 0);
+
+	subm(parse("d1217e", 4), parse("4e7c7f5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7be95988", 4)) == 0);
+
+	subm(parse("618c0f38", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("618c0f2f", 4)) == 0);
+
+	subm(parse("4", 4), parse("5ff65da", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7a009a29", 4)) == 0);
+
+	subm(parse("5f9c35", 4), parse("dc7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5f8e6e", 4)) == 0);
+
+	subm(parse("0", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffff6", 4)) == 0);
+
+	subm(parse("bbe", 4), parse("4d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("b71", 4)) == 0);
+
+	subm(parse("f806", 4), parse("2c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f7da", 4)) == 0);
+
+	subm(parse("8", 4), parse("914c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fff6ebb", 4)) == 0);
+
+	subm(parse("443", 4), parse("bec", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffff856", 4)) == 0);
+
+	subm(parse("5ba9e210", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5ba9e206", 4)) == 0);
+
+	subm(parse("4", 4), parse("5693fdb", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7a96c028", 4)) == 0);
+
+	subm(parse("2d2890c2", 4), parse("6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2d2890bc", 4)) == 0);
+
+	subm(parse("7", 4), parse("2a26a570", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("55d95a96", 4)) == 0);
+
+	subm(parse("e73000c", 4), parse("6ea846a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7887ba2", 4)) == 0);
+
+	subm(parse("2e", 4), parse("112e57", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7feed1d6", 4)) == 0);
+
+	subm(parse("4102f", 4), parse("d99f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("33690", 4)) == 0);
+
+	subm(parse("9", 4), parse("8ae75", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ff75193", 4)) == 0);
+
+	subm(parse("40d", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("404", 4)) == 0);
+
+	subm(parse("df3c11a", 4), parse("9451de", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d5f6f3c", 4)) == 0);
+
+	subm(parse("b", 4), parse("d23ec3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f2dc147", 4)) == 0);
+
+	subm(parse("20cf747", 4), parse("82c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("20cef1b", 4)) == 0);
+
+	subm(parse("1", 4), parse("33", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fffffcd", 4)) == 0);
+
+	subm(parse("b49", 4), parse("441e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7fffc72a", 4)) == 0);
+
+	subm(parse("330", 4), parse("24b2da67", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5b4d28c8", 4)) == 0);
+
+	subm(parse("40a14fe8", 4), parse("3a66f52", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3cfae096", 4)) == 0);
+
+	subm(parse("8e7847", 4), parse("c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("8e783b", 4)) == 0);
+
+	subm(parse("12c", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("12b", 4)) == 0);
+
+	subm(parse("588fa53f", 4), parse("6839ec", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("58276b53", 4)) == 0);
+
+	subm(parse("e9b3", 4), parse("31b54d48", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4e4b9c6a", 4)) == 0);
+
+	subm(parse("e0b6753", 4), parse("9a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("e0b66b9", 4)) == 0);
+
+	subm(parse("277acfee", 4), parse("92e635", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("26e7e9b9", 4)) == 0);
+
+	subm(parse("592", 4), parse("3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("58f", 4)) == 0);
+
+	subm(parse("6e379f84", 4), parse("d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6e379f77", 4)) == 0);
+
+	subm(parse("d", 4), parse("61a7280", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("79e58d8c", 4)) == 0);
+
+	subm(parse("c", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffffc", 4)) == 0);
+
+	subm(parse("df615", 4), parse("392", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("df283", 4)) == 0);
+
+	subm(parse("70256574", 4), parse("f62308", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6f2f426c", 4)) == 0);
+
+	subm(parse("ffe", 4), parse("3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ffb", 4)) == 0);
+
+	subm(parse("dd", 4), parse("535", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7ffffba7", 4)) == 0);
+
+	mulm(parse("71", 4), parse("775e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("34b07e", 4)) == 0);
+
+	mulm(parse("30", 4), parse("8f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1ad0", 4)) == 0);
+
+	mulm(parse("f3a15e5", 4), parse("bd6dd", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("244abd3e", 4)) == 0);
+
+	mulm(parse("41e9745", 4), parse("b1c5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("522122d1", 4)) == 0);
+
+	mulm(parse("d6", 4), parse("5f05b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4f6ec12", 4)) == 0);
+
+	mulm(parse("0", 4), parse("d2313c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("0", 4)) == 0);
+
+	mulm(parse("c", 4), parse("88cef6d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("669b391c", 4)) == 0);
+
+	mulm(parse("79a79", 4), parse("799f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1cbc222e", 4)) == 0);
+
+	mulm(parse("453f2", 4), parse("6faa533d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("14f73d38", 4)) == 0);
+
+	mulm(parse("adad1e", 4), parse("2ef7e9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4b7ec208", 4)) == 0);
+
+	mulm(parse("2a41", 4), parse("584f85f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3782a7f1", 4)) == 0);
+
+	mulm(parse("cbf747a", 4), parse("5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3fbd4662", 4)) == 0);
+
+	mulm(parse("c", 4), parse("f8c9398", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3a96eb21", 4)) == 0);
+
+	mulm(parse("c7ba", 4), parse("b502", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d381175", 4)) == 0);
+
+	mulm(parse("69d7ac55", 4), parse("2c9221", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("43d68bed", 4)) == 0);
+
+	mulm(parse("688c40", 4), parse("1dc", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4264c701", 4)) == 0);
+
+	mulm(parse("df", 4), parse("55", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4a0b", 4)) == 0);
+
+	mulm(parse("db6b443", 4), parse("18ac52", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("bed662e", 4)) == 0);
+
+	mulm(parse("ddaf", 4), parse("8e3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7b20a2d", 4)) == 0);
+
+	mulm(parse("34a0e", 4), parse("7ca9d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("20d576c9", 4)) == 0);
+
+	mulm(parse("b", 4), parse("2376b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("186199", 4)) == 0);
+
+	mulm(parse("c5df04b", 4), parse("30d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3a96151a", 4)) == 0);
+
+	mulm(parse("3cc9d3c4", 4), parse("9d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("47c6df7e", 4)) == 0);
+
+	mulm(parse("2", 4), parse("57be71ac", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2f7ce359", 4)) == 0);
+
+	mulm(parse("e2294", 4), parse("e9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("cdd78b4", 4)) == 0);
+
+	mulm(parse("4799", 4), parse("d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3a2c5", 4)) == 0);
+
+	mulm(parse("d4461a", 4), parse("d25ff4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("11abd3aa", 4)) == 0);
+
+	mulm(parse("5b4", 4), parse("269e628e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3f4a1390", 4)) == 0);
+
+	mulm(parse("1665edbc", 4), parse("ce1d9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("372b016f", 4)) == 0);
+
+	mulm(parse("394b75ad", 4), parse("89c46", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("53c373f8", 4)) == 0);
+
+	mulm(parse("7b64b271", 4), parse("7fbf264d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3c3ba038", 4)) == 0);
+
+	mulm(parse("28d27aad", 4), parse("870", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6feb1660", 4)) == 0);
+
+	mulm(parse("955c9", 4), parse("6f43ecbf", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3caf6a4f", 4)) == 0);
+
+	mulm(parse("7d5c0", 4), parse("69313aa", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("57519885", 4)) == 0);
+
+	mulm(parse("748", 4), parse("483422", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("dbb9794", 4)) == 0);
+
+	mulm(parse("ca", 4), parse("36d364f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("342cda5b", 4)) == 0);
+
+	mulm(parse("7d8", 4), parse("1c9adb8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5ea9b5c", 4)) == 0);
+
+	mulm(parse("29", 4), parse("89", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("15f1", 4)) == 0);
+
+	mulm(parse("58", 4), parse("158bf", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7681a8", 4)) == 0);
+
+	mulm(parse("b847b", 4), parse("aa1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7a6b1f5b", 4)) == 0);
+
+	mulm(parse("9", 4), parse("9715c04", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("54fc3c24", 4)) == 0);
+
+	mulm(parse("bae2636", 4), parse("3b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3122ce77", 4)) == 0);
+
+	mulm(parse("5", 4), parse("b4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("384", 4)) == 0);
+
+	mulm(parse("d9", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("87a", 4)) == 0);
+
+	mulm(parse("45", 4), parse("99", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("293d", 4)) == 0);
+
+	mulm(parse("544e691e", 4), parse("79", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("590faf7d", 4)) == 0);
+
+	mulm(parse("b794049", 4), parse("3f100f2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("38b236e4", 4)) == 0);
+
+	mulm(parse("81", 4), parse("be74483", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f89860e", 4)) == 0);
+
+	mulm(parse("f5", 4), parse("7b90b0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("76417870", 4)) == 0);
+
+	mulm(parse("b5", 4), parse("338d98", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("24731c78", 4)) == 0);
+
+	mulm(parse("7391", 4), parse("794019", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3c788996", 4)) == 0);
+
+	mulm(parse("2a70fd", 4), parse("5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d434f1", 4)) == 0);
+
+	mulm(parse("2", 4), parse("46b39eb", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("8d673d6", 4)) == 0);
+
+	mulm(parse("d", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c3", 4)) == 0);
+
+	mulm(parse("f07c55", 4), parse("817d45", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("545cf731", 4)) == 0);
+
+	mulm(parse("f7", 4), parse("7c2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("77c2e", 4)) == 0);
+
+	mulm(parse("a45af", 4), parse("e919", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5a6d1529", 4)) == 0);
+
+	mulm(parse("5706", 4), parse("385e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("13294434", 4)) == 0);
+
+	mulm(parse("a7ab93", 4), parse("667283", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5cc6c86b", 4)) == 0);
+
+	mulm(parse("9251da", 4), parse("91", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("52e05c7a", 4)) == 0);
+
+	mulm(parse("c", 4), parse("2539844", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1beb2330", 4)) == 0);
+
+	mulm(parse("a933", 4), parse("ffb", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("a8fe201", 4)) == 0);
+
+	mulm(parse("6b2c5be2", 4), parse("a790c07", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4d1bec5c", 4)) == 0);
+
+	mulm(parse("98b96d", 4), parse("e85f70a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2c91bd61", 4)) == 0);
+
+	mulm(parse("1d79", 4), parse("44", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7d424", 4)) == 0);
+
+	mulm(parse("6b9", 4), parse("6b4807b8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("373be99a", 4)) == 0);
+
+	mulm(parse("5", 4), parse("2b6655a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("d8ffac2", 4)) == 0);
+
+	mulm(parse("66", 4), parse("8e4107e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ade923b", 4)) == 0);
+
+	mulm(parse("9969a16", 4), parse("dbf959a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1b924d1", 4)) == 0);
+
+	mulm(parse("ba7c", 4), parse("35e6f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("743e63c8", 4)) == 0);
+
+	mulm(parse("5", 4), parse("dd", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("451", 4)) == 0);
+
+	mulm(parse("191d5b0e", 4), parse("4987cc", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("75755e8a", 4)) == 0);
+
+	mulm(parse("634fa36", 4), parse("98196f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6d7f238e", 4)) == 0);
+
+	mulm(parse("fea", 4), parse("8c611", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ba00a8b", 4)) == 0);
+
+	mulm(parse("b3557b1", 4), parse("edd", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("17d8631a", 4)) == 0);
+
+	mulm(parse("b21d5", 4), parse("9e122df", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3d669e80", 4)) == 0);
+
+	mulm(parse("ff53c", 4), parse("e6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("e5653e8", 4)) == 0);
+
+	mulm(parse("455", 4), parse("f7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("42e03", 4)) == 0);
+
+	mulm(parse("bb6", 4), parse("ffca", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("bb3879c", 4)) == 0);
+
+	mulm(parse("529", 4), parse("4641eb63", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("a27a4b0", 4)) == 0);
+
+	mulm(parse("6", 4), parse("54266", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1f8e64", 4)) == 0);
+
+	mulm(parse("47fcd646", 4), parse("acb0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5dcab93e", 4)) == 0);
+
+	mulm(parse("2", 4), parse("37cb643", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6f96c86", 4)) == 0);
+
+	mulm(parse("abd", 4), parse("e45b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("994252f", 4)) == 0);
+
+	mulm(parse("3a2edfc2", 4), parse("df17003", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("366a012b", 4)) == 0);
+
+	mulm(parse("d473e", 4), parse("9ade9ae", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("71c4db30", 4)) == 0);
+
+	mulm(parse("a1030f", 4), parse("2b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1b0b8385", 4)) == 0);
+
+	mulm(parse("2365107", 4), parse("155559fe", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ec136dd", 4)) == 0);
+
+	mulm(parse("1d2a4bd", 4), parse("b6a256", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7638b50", 4)) == 0);
+
+	mulm(parse("72573fe", 4), parse("36312006", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("24050303", 4)) == 0);
+
+	mulm(parse("555d7", 4), parse("6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("20030a", 4)) == 0);
+
+	mulm(parse("9ff8b4c", 4), parse("631f8b6f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6061c678", 4)) == 0);
+
+	mulm(parse("6a6c", 4), parse("b978", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4d19eea0", 4)) == 0);
+
+	mulm(parse("8", 4), parse("721b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("390d8", 4)) == 0);
+
+	mulm(parse("2f316f60", 4), parse("1a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4b054fc9", 4)) == 0);
+
+	mulm(parse("736329", 4), parse("69e8a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("485cc811", 4)) == 0);
+
+	mulm(parse("4211d134", 4), parse("73034", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7b47f46a", 4)) == 0);
+
+	mulm(parse("38", 4), parse("109f35", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3a2d398", 4)) == 0);
+
+	mulm(parse("c060c0", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6c366c0", 4)) == 0);
+
+	mulm(parse("3d7cc", 4), parse("47", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("110d994", 4)) == 0);
+
+	divm(parse("1cb9", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("ccccfac", 4)) == 0);
+
+	divm(parse("b82add", 4), parse("bc", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("31b4b96b", 4)) == 0);
+
+	divm(parse("c568a", 4), parse("52c8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("404720b7", 4)) == 0);
+
+	divm(parse("f7b", 4), parse("9", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5555570d", 4)) == 0);
+
+	divm(parse("3929e4", 4), parse("65ce1ba", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("76dc6295", 4)) == 0);
+
+	divm(parse("55", 4), parse("b977", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("37f59ac0", 4)) == 0);
+
+	divm(parse("c52", 4), parse("cc1164", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2f7ed69e", 4)) == 0);
+
+	divm(parse("40a90c", 4), parse("36004622", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("677c0f0f", 4)) == 0);
+
+	divm(parse("f1", 4), parse("4c2f87", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("a634b17", 4)) == 0);
+
+	divm(parse("c12", 4), parse("8f5a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4b01214d", 4)) == 0);
+
+	divm(parse("a3c47", 4), parse("da1d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("589771c5", 4)) == 0);
+
+	divm(parse("d53e7e", 4), parse("b1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4626cf2d", 4)) == 0);
+
+	divm(parse("bf", 4), parse("1816", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2e05d001", 4)) == 0);
+
+	divm(parse("32b", 4), parse("267d5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3de41cce", 4)) == 0);
+
+	divm(parse("7a5", 4), parse("8f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4faa11f4", 4)) == 0);
+
+	divm(parse("df", 4), parse("b68", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("35f62e4a", 4)) == 0);
+
+	divm(parse("44012", 4), parse("31e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5dfeb8dc", 4)) == 0);
+
+	divm(parse("f07ff", 4), parse("6fa", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("47060750", 4)) == 0);
+
+	divm(parse("17e7cc", 4), parse("2", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("bf3e6", 4)) == 0);
+
+	divm(parse("724a690", 4), parse("4547c03", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5448f86b", 4)) == 0);
+
+	divm(parse("dd7", 4), parse("92e1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3245d007", 4)) == 0);
+
+	divm(parse("2f0afb", 4), parse("7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6b86d", 4)) == 0);
+
+	divm(parse("6d384c", 4), parse("de8f67", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("37e35e91", 4)) == 0);
+
+	divm(parse("78827f01", 4), parse("9fa6", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4600ee23", 4)) == 0);
+
+	divm(parse("20f", 4), parse("d861", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("62a57a6d", 4)) == 0);
+
+	divm(parse("2bee1", 4), parse("333c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2d2cbc5d", 4)) == 0);
+
+	divm(parse("e6", 4), parse("af77", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f583793", 4)) == 0);
+
+	divm(parse("c11", 4), parse("c7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5a0cdd53", 4)) == 0);
+
+	divm(parse("b729", 4), parse("9a0", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("643531f1", 4)) == 0);
+
+	divm(parse("d09c0", 4), parse("fe", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("48912f68", 4)) == 0);
+
+	divm(parse("145c", 4), parse("b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1745d34e", 4)) == 0);
+
+	divm(parse("4d16", 4), parse("afab87e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1584c76c", 4)) == 0);
+
+	divm(parse("8e6cc9", 4), parse("3f8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("49b38ab0", 4)) == 0);
+
+	divm(parse("65", 4), parse("5f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7bf53897", 4)) == 0);
+
+	divm(parse("3d5ee", 4), parse("e81e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7e8e885", 4)) == 0);
+
+	divm(parse("b0", 4), parse("2451", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7585cbd8", 4)) == 0);
+
+	divm(parse("b5390d", 4), parse("2bd8b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("14f5744a", 4)) == 0);
+
+	divm(parse("c74", 4), parse("7b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6e4f16fe", 4)) == 0);
+
+	divm(parse("466ca", 4), parse("1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("466ca", 4)) == 0);
+
+	divm(parse("a9", 4), parse("18f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("66a819b", 4)) == 0);
+
+	divm(parse("99", 4), parse("b0f9e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5df0f219", 4)) == 0);
+
+	divm(parse("b22fbe", 4), parse("dea", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("388fca1c", 4)) == 0);
+
+	divm(parse("8668f7", 4), parse("c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4ab5de14", 4)) == 0);
+
+	divm(parse("69", 4), parse("72", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("250d7944", 4)) == 0);
+
+	divm(parse("d3f2", 4), parse("316c3", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("35a5f52c", 4)) == 0);
+
+	divm(parse("d34d7", 4), parse("6106e32f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("225e03e2", 4)) == 0);
+
+	divm(parse("a078", 4), parse("d5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("237495c9", 4)) == 0);
+
+	divm(parse("5cfc", 4), parse("2abeac82", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("dc4992c", 4)) == 0);
+
+	divm(parse("34699", 4), parse("8c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("21d4233f", 4)) == 0);
+
+	divm(parse("8a0f1e8", 4), parse("4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2283c7a", 4)) == 0);
+
+	divm(parse("45", 4), parse("f74af7e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4eaecaa1", 4)) == 0);
+
+	divm(parse("37", 4), parse("379fe5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4157e87d", 4)) == 0);
+
+	divm(parse("7f9a", 4), parse("54", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("f3cf554", 4)) == 0);
+
+	divm(parse("3da435e0", 4), parse("d056d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1aa9b2af", 4)) == 0);
+
+	divm(parse("a8d1eb", 4), parse("4a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("391709c1", 4)) == 0);
+
+	divm(parse("8", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4ccccccd", 4)) == 0);
+
+	divm(parse("fd080", 4), parse("483e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("695a9cdb", 4)) == 0);
+
+	divm(parse("7a1b6109", 4), parse("6d22", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2171fd93", 4)) == 0);
+
+	divm(parse("d2cd9", 4), parse("115b5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("c459cf5", 4)) == 0);
+
+	divm(parse("75436", 4), parse("22d", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6d9da85d", 4)) == 0);
+
+	divm(parse("b82bbcf", 4), parse("ac09ed", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("282daa09", 4)) == 0);
+
+	divm(parse("9d68398", 4), parse("ea4c", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("396e7baa", 4)) == 0);
+
+	divm(parse("8afd1e", 4), parse("bb67a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6f46df1a", 4)) == 0);
+
+	divm(parse("7b", 4), parse("4969b222", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("46aae47", 4)) == 0);
+
+	divm(parse("7ee48d", 4), parse("5", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1960e9", 4)) == 0);
+
+	divm(parse("bf734", 4), parse("ae", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3ad9d0de", 4)) == 0);
+
+	divm(parse("582455f", 4), parse("cf37a42", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("70a6017e", 4)) == 0);
+
+	divm(parse("46e0", 4), parse("303", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("877888f", 4)) == 0);
+
+	divm(parse("445429", 4), parse("4", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("2011150a", 4)) == 0);
+
+	divm(parse("269", 4), parse("1011432", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("72039a58", 4)) == 0);
+
+	divm(parse("839e3", 4), parse("c4b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("321c302", 4)) == 0);
+
+	divm(parse("21ed", 4), parse("86fe", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4ce5a496", 4)) == 0);
+
+	divm(parse("8e9", 4), parse("908c510", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("682fa6ad", 4)) == 0);
+
+	divm(parse("4", 4), parse("7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("36db6db7", 4)) == 0);
+
+	divm(parse("54ac7", 4), parse("17658", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("65ea6a65", 4)) == 0);
+
+	divm(parse("fc3f1", 4), parse("24b06461", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("179e6e1c", 4)) == 0);
+
+	divm(parse("c7a", 4), parse("2ef", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3f100578", 4)) == 0);
+
+	divm(parse("78640917", 4), parse("41788", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("422abea3", 4)) == 0);
+
+	divm(parse("6340", 4), parse("1fe", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("51d1d203", 4)) == 0);
+
+	divm(parse("cb3f7e2", 4), parse("4de02702", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("71154b66", 4)) == 0);
+
+	divm(parse("98321d9", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("40f38362", 4)) == 0);
+
+	divm(parse("797", 4), parse("ac2a213", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4352ada8", 4)) == 0);
+
+	divm(parse("605306d", 4), parse("d8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("455c77ed", 4)) == 0);
+
+	divm(parse("816c75", 4), parse("eabf", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6a272af9", 4)) == 0);
+
+	divm(parse("96", 4), parse("bd9f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("509db437", 4)) == 0);
+
+	divm(parse("a603c9", 4), parse("a", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("401099fa", 4)) == 0);
+
+	divm(parse("951", 4), parse("7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("24924a79", 4)) == 0);
+
+	divm(parse("3dfb", 4), parse("f", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4cccd0ee", 4)) == 0);
+
+	divm(parse("ee4f50d", 4), parse("dc92", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("71f06183", 4)) == 0);
+
+	divm(parse("7cd", 4), parse("6ed9add8", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("4ee5dfe3", 4)) == 0);
+
+	divm(parse("27", 4), parse("d390", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("444ef494", 4)) == 0);
+
+	divm(parse("8655f4", 4), parse("6a4d1", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7f2b8c0a", 4)) == 0);
+
+	divm(parse("812715b", 4), parse("7511e", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("6b2b2fd6", 4)) == 0);
+
+	divm(parse("5ebf", 4), parse("6c24af59", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5199d9cc", 4)) == 0);
+
+	divm(parse("21f2067e", 4), parse("52fdf", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("7cc6c9f0", 4)) == 0);
+
+	divm(parse("11", 4), parse("b", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("3a2e8ba4", 4)) == 0);
+
+	divm(parse("d9731", 4), parse("3947ec", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("79a99e89", 4)) == 0);
+
+	divm(parse("9263c4", 4), parse("7", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("5b82a089", 4)) == 0);
+
+	divm(parse("2844", 4), parse("b8c454", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("79574fc5", 4)) == 0);
+
+	divm(parse("fe2d0ce", 4), parse("4037", 4), p, result);
+	print(result);
+	assert(cmp(result, parse("1906bdc0", 4)) == 0);
+
 }
