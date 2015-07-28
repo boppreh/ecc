@@ -4,7 +4,7 @@ from random import randint
 import math
 
 prime = 2**31 -1
-n_chunks = math.ceil(math.log2(prime) / 2)
+n = math.ceil(math.log2(prime) / 2)
 F = lambda i: FieldValue(i, prime)
 h = lambda i: hex(i)[2:]
 
@@ -13,13 +13,14 @@ print("""
 
 int main() {
 """)
-print('\tNumber p = parse("{}");'.format(h(prime)))
-print('\tNumber result = new_number(2*{});'.format(n_chunks))
+print('\tNumber p = parse("{}", {});'.format(h(prime), n))
+print('\tNumber result = new_number(2*{});'.format(n))
 print()
 
 def make_test(a, b, expected, op):
-    print('\t{}(parse("{}"), parse("{}"), p, result);'.format(op, h(a), h(b)))
-    print('\tassert(cmp(result, parse("{}")) == 0);'.format(h(expected)))
+    print('\t{}(parse("{}", {}), parse("{}", {}), p, result);'.format(op, h(a), n, h(b), n))
+    print('\tprint(result);')
+    print('\tassert(cmp(result, parse("{}", {})) == 0);'.format(h(expected), n))
     print()
 
 make_test(F(0), F(0), F(0), 'addm')

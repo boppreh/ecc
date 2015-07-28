@@ -21,8 +21,11 @@ void testSanity() {
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
     assert(cmp(to_number(2, 4), to_number(1, 5)) == 1);
 
-    assert(cmp(parse("0002"), to_number(2, 2)) == 0);
-    assert(cmp(parse("00FF"), to_number(255, 2)) == 0);
+    assert(cmp(parse("0002", 2), to_number(2, 2)) == 0);
+    assert(cmp(parse("00FF", 2), to_number(255, 2)) == 0);
+
+    assert(cmp(parse("0002", 4), to_number(2, 2)) == 0);
+    assert(cmp(parse("00FF", 4), to_number(255, 2)) == 0);
 }
 
 void testAddSub() {
@@ -52,13 +55,13 @@ void testMul() {
     assert(cmp(q, to_number(16, 4)) == 0);
 
     mul(_255, _3, p);
-    assert(cmp(p, parse("02FD")) == 0);
+    assert(cmp(p, parse("02FD", 4)) == 0);
 
-    mul(parse("55"), _3, p);
+    mul(parse("55", 4), _3, p);
     assert(cmp(p, _255) == 0);
 
     mul(_128, _3, p);
-    assert(cmp(p, parse("0180")) == 0);
+    assert(cmp(p, parse("0180", 8)) == 0);
 }
 
 void testDiv2() {
@@ -66,11 +69,11 @@ void testDiv2() {
     int remainder2;
 
     remainder2 = div2(_128, quotient);
-    assert(cmp(quotient, parse("40")) == 0);
+    assert(cmp(quotient, parse("40", 4)) == 0);
     assert(remainder2 == 0);
 
-    remainder2 = div2(parse("0FFF"), quotient);
-    assert(cmp(quotient, parse("07FF")) == 0);
+    remainder2 = div2(parse("0FFF", 4), quotient);
+    assert(cmp(quotient, parse("07FF", 4)) == 0);
     assert(remainder2 == 1);
 }
 
@@ -84,14 +87,14 @@ void testDiv() {
 
     divmod(_255, _128, quotient, remainder);
     assert(cmp(quotient, _1) == 0);
-    assert(cmp(remainder, parse("7F")) == 0);
+    assert(cmp(remainder, parse("7F", 4)) == 0);
 
     divmod(_255, _3, quotient, remainder);
-    assert(cmp(quotient, parse("55")) == 0);
+    assert(cmp(quotient, parse("55", 4)) == 0);
     assert(cmp(remainder, _0) == 0);
 
     divmod(_128, _2, quotient, remainder);
-    assert(cmp(quotient, parse("40")) == 0);
+    assert(cmp(quotient, parse("40", 4)) == 0);
     assert(cmp(remainder, _0) == 0);
 }
 

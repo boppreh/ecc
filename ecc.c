@@ -26,8 +26,15 @@ void print_with_label(const char* func, const char* label, int line, Number n) {
     printf("\n");
 }
 
+void zero(Number dst) {
+    FOR(i, dst) {
+        dst.v[i] = 0;
+    }
+}
+
 Number new_number(long size) {
     Number n = {malloc(sizeof(chunk) * size), size};
+    zero(n);
     return n;
 }
 
@@ -49,12 +56,6 @@ int ismax(Number a) {
     return 1;
 }
 
-void zero(Number dst) {
-    FOR(i, dst) {
-        dst.v[i] = 0;
-    }
-}
-
 Number smallest(Number a, Number b) {
     if (a.length < b.length) {
         return a;
@@ -64,6 +65,7 @@ Number smallest(Number a, Number b) {
 }
 
 void cp(Number src, Number dst) {
+    zero(dst);
     FOR2(i, src, dst) {
         dst.v[i] = src.v[i];
     }
@@ -105,25 +107,34 @@ Number to_number(chunk least, long size) {
     return n;
 }
 
-Number parse(const char* text) {
-    int missing = strlen(text) % 2 == 1;
-    // +1 for ceiling division.
-    int length = (strlen(text) + 1) / (2 * sizeof(chunk));
+Number parse(const char* text, int length) {
+    // Assumes chunk = byte/char.
+    int textLength = (strlen(text) + 1) / (2 * sizeof(chunk));
+
+    assert(length >= textLength);
+
     Number b = new_number(length);
-    RFOR(i, b) {
-        if (i == b.length - 1 && missing) {
-            sscanf(text, "%2hhx", &b.v[i]);
-            text += 1;
-        } else {
-            sscanf(text, "%02hhx", &b.v[i]);
-            text += 2;
-        }
+
+    int i = textLength - 1;
+
+    // If 'text' has an odd number of digits we need special considerations.
+    if (strlen(text) % 2 == 1) {
+        sscanf(text, "%1hhx", &b.v[i]);
+        text++;
+        i--;
+    }
+
+    for (; i >= 0; i--) {
+        sscanf(text, "%02hhx", &b.v[i]);
+        text += 2;
     }
     return b;
 }
 
-void add(Number a, Number b, Number result) {
-    assert(result.length >= a.length && result.length >= b.length);
+void add(Number a, Number b, Number output) {
+    assert(output.length >= a.length && output.length >= b.length);
+
+    Number result = new_number(output.length);
 
     chunk carry = 0;
     chunk sum;
@@ -133,11 +144,16 @@ void add(Number a, Number b, Number result) {
         result.v[i] = sum;
     }
 
+    // This is necessary if the user does sub(a, b, a) and b << a. In
+    // this case the algorithm won't write over every chunk of a,
+    // and there will be leftover values.
+    cp(result, output);
+    free(result.v);
     assert(carry == 0);
 }
 
-void sub(Number a, Number b, Number result) {
-    // assert(result.length >= a.length && result.length >= b.length);
+void sub(Number a, Number b, Number output) {
+    Number result = new_number(output.length);
 
     chunk carry = 0;
     chunk dif;
@@ -146,6 +162,9 @@ void sub(Number a, Number b, Number result) {
         carry = a.v[i] < b.v[i] || dif > a.v[i];
         result.v[i] = dif;
     }
+
+    cp(result, output);
+    free(result.v);
 }
 
 void mul(Number a, Number b, Number result) {
@@ -232,6 +251,7 @@ void divfloor(Number a, Number b, Number result) {
 
 void mod(Number a, Number p, Number result) {
     Number quotient = new_number(a.length);
+    // Clone in case of a == result.
     Number temp = clone(a);
     divmod(temp, p, quotient, result);
     free(quotient.v);
