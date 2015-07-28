@@ -4,7 +4,7 @@ from random import randint
 import math
 
 prime = 2**31 -1
-n = math.ceil(math.log2(prime) / 2)
+n = math.ceil(math.log2(prime) / 8)
 F = lambda i: FieldValue(i, prime)
 h = lambda i: hex(i)[2:]
 
@@ -14,7 +14,7 @@ print("""
 int main() {
 """)
 print('\tNumber p = parse("{}", {});'.format(h(prime), n))
-print('\tNumber result = new_number(2*{});'.format(n))
+print('\tNumber result = new_number({});'.format(n))
 print()
 
 def make_test(a, b, expected, op):

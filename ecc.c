@@ -259,22 +259,28 @@ void mod(Number a, Number p, Number result) {
 }
 
 void addm(Number a, Number b, Number p, Number result) {
-    add(a, b, result);
-    mod(result, p, result);
+    Number tempResult = new_number(2 * p.length);
+    add(a, b, tempResult);
+    mod(tempResult, p, result);
+    free(tempResult.v);
 }
 
 void subm(Number a, Number b, Number p, Number result) {
     if (cmp(a, b) == -1) {
-        cp(a, result);
-        add(result, p, result);
-        a = result;
+        Number tempA = new_number(p.length + 1);
+        add(a, p, tempA);
+        sub(tempA, b, result);
+        free(tempA.v);
+    } else {
+        sub(a, b, result);
     }
-    sub(a, b, result);
 }
 
 void mulm(Number a, Number b, Number p, Number result) {
-    mul(a, b, result);
-    mod(result, p, result);
+    Number tempResult = new_number(2 * p.length);
+    mul(a, b, tempResult);
+    mod(tempResult, p, result);
+    free(tempResult.v);
 }
 
 void inversem(Number a, Number p, Number result) {
