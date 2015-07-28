@@ -1,12 +1,18 @@
 #!/bin/env python3
 from field import FieldValue
-from random import randint
+from random import randint, choice
 import math
 
 prime = 2**31 -1
 n = math.ceil(math.log2(prime) / 8)
 F = lambda i: FieldValue(i, prime)
 h = lambda i: hex(i)[2:]
+
+def random():
+    """ Generates a number with a uniformly random number of digits. """
+    length = randint(1, math.ceil(math.log(prime, 16)))
+    str = ''.join(choice('0123456789ABCDEF') for i in range(length))
+    return F(int(str, 16))
 
 print("""
 #include "ecc.c"
@@ -35,8 +41,8 @@ make_test(F(1), F(1), F(1), 'mulm')
 
 def make_op_test(n, function, name):
     for i in range(n):
-        a = F(randint(0, prime))
-        b = F(randint(0, prime))
+        a = random()
+        b = random()
         make_test(a, b, function(a, b), name)
 
 make_op_test(100, lambda a, b: a + b, 'addm')
