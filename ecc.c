@@ -224,7 +224,7 @@ void divmod(Number a, Number b, Number quotient, Number remainder) {
     free(total.v);
 }
 
-void _div(Number a, Number b, Number result) {
+void divfloor(Number a, Number b, Number result) {
     Number remainder = new_number(a.length);
     divmod(a, b, result, remainder);
     free(remainder.v);
@@ -272,7 +272,7 @@ void inversem(Number a, Number p, Number result) {
     Number m = new_number(l * 2);
     Number n = new_number(l * 2);
     while (!iszero(a)) {
-        _div(b, a, q);
+        divfloor(b, a, q);
         mod(b, a, r);
 
         // m = x-u*q
