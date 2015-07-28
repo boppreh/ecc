@@ -40,8 +40,8 @@ def make_op_test(n, function, name):
         make_test(a, b, function(a, b), name)
 
 make_op_test(100, lambda a, b: a + b, 'addm')
-make_op_test(100, lambda a, b: a + b, 'subm')
-make_op_test(100, lambda a, b: a + b, 'mulm')
-make_op_test(100, lambda a, b: a + b, 'divm')
+make_op_test(100, lambda a, b: a - b, 'subm')
+make_op_test(100, lambda a, b: a * b, 'mulm')
+make_op_test(100, lambda a, b: a / b, 'divm')
 
 print('}')
