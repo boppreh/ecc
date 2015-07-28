@@ -13,7 +13,7 @@ print("""
 
 int main() {
 """)
-print('\tNumber p = parse("{}");'.format(prime))
+print('\tNumber p = parse("{}");'.format(h(prime)))
 print('\tNumber a = new_number({});'.format(n_chunks))
 print('\tNumber b = new_number({});'.format(n_chunks))
 print('\tNumber result = new_number(2*{});'.format(n_chunks))
