@@ -14,16 +14,13 @@ print("""
 int main() {
 """)
 print('\tNumber p = parse("{}");'.format(h(prime)))
-print('\tNumber a = new_number({});'.format(n_chunks))
-print('\tNumber b = new_number({});'.format(n_chunks))
 print('\tNumber result = new_number(2*{});'.format(n_chunks))
+print()
 
 def make_test(a, b, expected, op):
-    print()
-    print('\ta = parse("{}");'.format(h(a)))
-    print('\tb = parse("{}");'.format(h(b)))
-    print('\t{}(a, b, p, result);'.format(op))
+    print('\t{}(parse("{}"), parse("{}"), p, result);'.format(op, h(a), h(b)))
     print('\tassert(cmp(result, parse("{}")) == 0);'.format(h(expected)))
+    print()
 
 make_test(F(0), F(0), F(0), 'addm')
 make_test(F(0), F(1), F(1), 'addm')
