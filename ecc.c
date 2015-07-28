@@ -183,6 +183,13 @@ int div2(Number a, Number quotient) {
 }
 
 void divmod(Number a, Number b, Number quotient, Number remainder) {
+    // Shortcut for most finite field operations.
+    if (cmp(a, b) == -1) {
+        zero(quotient);
+        cp(a, remainder);
+        return;
+    }
+
     zero(remainder);
     // Assumes a < b^2 (i.e. no more than one multiplication was performed).
     cp(b, quotient);
@@ -225,8 +232,10 @@ void _div(Number a, Number b, Number result) {
 
 void mod(Number a, Number p, Number result) {
     Number quotient = new_number(a.length);
-    divmod(a, p, quotient, result);
+    Number temp = clone(a);
+    divmod(temp, p, quotient, result);
     free(quotient.v);
+    free(temp.v);
 }
 
 void addm(Number a, Number b, Number p, Number result) {
