@@ -111,7 +111,10 @@ void testInverse() {
 	Number p = parse("7fffffff", 4);
 	Number result = new_number(4);
     inversem(parse("FF", 4), p, result);
-	assert(cmp(result, parse("1010101", 4)) == 0);
+	assertEquals(result, parse("1010101", 4));
+
+    inversem(parse("ea0d", 4), p, result);
+	assertEquals(result, parse("6b1b6ac8", 4));
 }
 
 int main(void) {
