@@ -39,6 +39,11 @@ void testAddSub() {
     assert(cmp(a, _1) == 0);
     sub(_2, _1, a);
     assert(cmp(a, _1) == 0);
+
+    // Test with borrows that overflow.
+    Number result = new_number(4);
+    sub(parse("7f310ffeac6", 8), parse("7f2fffff01a", 8), result);
+	assertEquals(result, parse("10fffaac", 4));
 }
 
 void testMul() {
@@ -102,6 +107,13 @@ void testDiv() {
 	assert(cmp(result, parse("522122d1", 4)) == 0);
 }
 
+void testInverse() {
+	Number p = parse("7fffffff", 4);
+	Number result = new_number(4);
+    inversem(parse("FF", 4), p, result);
+	assert(cmp(result, parse("1010101", 4)) == 0);
+}
+
 int main(void) {
     setup();
     testSanity();
@@ -109,6 +121,7 @@ int main(void) {
     testMul();
     testDiv2();
     testDiv();
+    testInverse();
 
     return 0;
 }

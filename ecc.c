@@ -160,12 +160,10 @@ void add(Number a, Number b, Number output) {
 }
 
 void sub(Number a, Number b, Number output) {
-    print(a);
-    print(b);
     Number result = new_number(output.length);
 
-    chunk carry = 0;
-    chunk dif;
+    unsigned long carry = 0;
+    unsigned long dif;
     FOR2(i, a, b) {
         dif = a.v[i] - b.v[i] - carry;
         carry = a.v[i] < b.v[i] || dif > a.v[i];
