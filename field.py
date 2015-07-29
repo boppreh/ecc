@@ -85,7 +85,7 @@ class FieldValue(base_value):
             r, newr = newr, r - quotient * newr
         if r > 1: raise ValueError('Not invertible {}'.format(self))
         if t < 0: t +=n
-        return t 
+        return FieldValue(t, self.mod)
 
     def __repr__(self):
         return '{}(%{})'.format(int(self), self.mod)
