@@ -23,6 +23,9 @@ class FieldValue(base_value):
         self.mod = mod
         base_value.__init__(base_value(value))
 
+    def __bool__(self):
+        return base_value(self) != 0
+
     def __add__(self, other):
         return FieldValue(base_value.__add__(self, base_value(other)), self.mod)
 
