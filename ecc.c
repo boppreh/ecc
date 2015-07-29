@@ -17,14 +17,19 @@ typedef struct {
 #define FOR2(i, a, b) for (int i = 0; i < smallest(a, b).length; i++)
 #define RFOR2(i, a, b) for (int i = smallest(a, b).length - 1; i >= 0; i--)
 
-#define print(n) print_with_label(__func__, #n, __LINE__, n)
-void print_with_label(const char* func, const char* label, int line, Number n) {
-    printf("%s (%s:%d): ", label, func, line);
+const char * to_string(Number n) {
+    int chunk_length = 2 * sizeof(chunk);
+    int length = chunk_length * n.length + 1;
+    char* str = malloc(length);
+    char* result = str;
     RFOR(i, n) {
-        printf("%02hhx", n.v[i]);
+        sprintf(str, "%02hhx", n.v[i]);
+        str += chunk_length;
     } 
-    printf("\n");
+    return result;
 }
+
+#define print(n) printf("%s (%s:%d):\t%s\n", #n, __func__, __LINE__, to_string(n));
 
 void zero(Number dst) {
     FOR(i, dst) {
@@ -153,6 +158,8 @@ void add(Number a, Number b, Number output) {
 }
 
 void sub(Number a, Number b, Number output) {
+    print(a);
+    print(b);
     Number result = new_number(output.length);
 
     chunk carry = 0;
@@ -282,6 +289,7 @@ void subm(Number a, Number b, Number p, Number result) {
 void mulm(Number a, Number b, Number p, Number result) {
     Number tempResult = new_number(2 * p.length);
     mul(a, b, tempResult);
+    print(tempResult);
     mod(tempResult, p, result);
     free(tempResult.v);
 }
@@ -335,7 +343,7 @@ void inversem(Number a, Number p, Number result) {
 void divm(Number a, Number b, Number p, Number result) {
     Number inverse = new_number(p.length);
     inversem(b, p, inverse);
-    mul(a, inverse, result);
+    mulm(a, inverse, p, result);
     free(inverse.v);
 }
 
