@@ -26,7 +26,7 @@ print()
 def make_test(a, b, expected, op):
     print('\t{}(parse("{}", {}), parse("{}", {}), p, result);'.format(op, h(a), n, h(b), n))
     print('\tprint(result);')
-    print('\tassert(cmp(result, parse("{}", {})) == 0);'.format(h(expected), n))
+    print('\tassertEquals(result, parse("{}", {}));'.format(h(expected), n))
     print()
 
 make_test(F(0), F(0), F(0), 'addm')
@@ -39,15 +39,18 @@ make_test(F(0), F(1), F(0), 'mulm')
 make_test(F(1), F(0), F(0), 'mulm')
 make_test(F(1), F(1), F(1), 'mulm')
 
-def make_op_test(n, function, name):
+def make_op_test(n, function, name, b_can_be_zero=True):
     for i in range(n):
         a = random()
-        b = random()
+        while True:
+            b = random()
+            if b or b_can_be_zero:
+                break
         make_test(a, b, function(a, b), name)
 
-make_op_test(100, lambda a, b: a + b, 'addm')
-make_op_test(100, lambda a, b: a - b, 'subm')
-make_op_test(100, lambda a, b: a * b, 'mulm')
-make_op_test(100, lambda a, b: a / b, 'divm')
+make_op_test(1000, lambda a, b: a + b, 'addm')
+make_op_test(1000, lambda a, b: a - b, 'subm')
+make_op_test(1000, lambda a, b: a * b, 'mulm')
+make_op_test(1000, lambda a, b: a / b, 'divm', False)
 
 print('}')
