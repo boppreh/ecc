@@ -71,19 +71,18 @@ class FieldValue(base_value):
         Returns the multiplicative inverse such that `a.inverse() * a == 1`.
         The modulus must be a prime for this to work.
         """
-        return self.gcd(self.mod)[0]
-
-    def gcd(self, other):
-        a, b = self, other
-        x, y = 0, 1
-        lastx, lasty = 1, 0
-        while b:
-            quotient = a // b
-            a, b = b, a % b
-            x, lastx = lastx - quotient * x, x
-            y, lasty = lasty - quotient * y, y
-
-        return lastx, lasty
+        a, n = base_value(self), self.mod
+        t = 0
+        newt = 1
+        r = n
+        newr = a
+        while newr != 0:
+            quotient = r // newr
+            t, newt = newt, t - quotient * newt 
+            r, newr = newr, r - quotient * newr
+        if r > 1: raise ValueError('Not invertible {}'.format(self))
+        if t < 0: t +=n
+        return t 
 
     def __repr__(self):
         return '{}(%{})'.format(int(self), self.mod)
