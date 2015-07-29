@@ -178,8 +178,8 @@ void mul(Number a, Number b, Number result) {
 
     zero(result);
 
-    RFOR2(i, a, b) {
-        RFOR2(j, a, b) {
+    FOR2(i, a, b) {
+        FOR2(j, a, b) {
             k = i + j;
             n = a.v[i] * b.v[j] + result.v[k] + carry;
             carry = n / 0x100;
@@ -201,25 +201,26 @@ int div2(Number a, Number quotient) {
     return remainder;
 }
 
-void divmod(Number a, Number b, Number quotient, Number remainder) {
+void divmod(Number a, Number b, Number quotient, Number out_remainder) {
     // Shortcut for most finite field operations.
     if (cmp(a, b) == -1) {
         zero(quotient);
-        cp(a, remainder);
+        cp(a, out_remainder);
         return;
     }
 
+    Number remainder = new_number(b.length * 2);
+
+    Number distance = new_number(b.length);
+    distance.v[b.length-1] = 0x40;
+    zero(quotient);
+    quotient.v[b.length-1] = 0x80;
     zero(remainder);
-    // Assumes a < b^2 (i.e. no more than one multiplication was performed).
-    cp(b, quotient);
 
-    Number distance = new_number(a.length);
-    div2(quotient, distance);
     Number total = new_number(a.length * 2);
-    Number _1 = to_number(1, a.length);
+    Number _1 = to_number(1, b.length);
 
-    int count = 0;
-    while (!iszero(distance) && count++ < 100) {
+    while (!iszero(distance)) {
         mul(b, quotient, total);
         int comparison = cmp(total, a);
         if (comparison == 0) {
@@ -239,8 +240,10 @@ void divmod(Number a, Number b, Number quotient, Number remainder) {
             add(distance, _1, distance);
         }
     }
+    cp(remainder, out_remainder);
     free(distance.v);
     free(total.v);
+    free(remainder.v);
 }
 
 void divfloor(Number a, Number b, Number result) {

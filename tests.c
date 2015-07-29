@@ -96,6 +96,10 @@ void testDiv() {
     divmod(_128, _2, quotient, remainder);
     assert(cmp(quotient, parse("40", 4)) == 0);
     assert(cmp(remainder, _0) == 0);
+
+	Number result = new_number(4);
+    mod(parse("000002dc52211d19", 8), parse("7fffffff", 4), result);
+	assert(cmp(result, parse("522122d1", 4)) == 0);
 }
 
 int main(void) {
