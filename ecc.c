@@ -289,7 +289,6 @@ void subm(Number a, Number b, Number p, Number result) {
 void mulm(Number a, Number b, Number p, Number result) {
     Number tempResult = new_number(2 * p.length);
     mul(a, b, tempResult);
-    print(tempResult);
     mod(tempResult, p, result);
     free(tempResult.v);
 }
@@ -313,12 +312,12 @@ void inversem(Number a, Number p, Number result) {
         mod(b, a, r);
 
         // m = x-u*q
-        mul(u, q, m);
-        sub(x, m, m);
+        mulm(u, q, p, m);
+        subm(x, m, p, m);
 
         // n = y-v*q
-        mul(v, q, n);
-        sub(y, n, n);
+        mulm(v, q, p, n);
+        subm(y, n, p, n);
         
         cp(a, b);
         cp(r, a);
@@ -328,6 +327,7 @@ void inversem(Number a, Number p, Number result) {
         cp(n, v);
     }
     cp(x, result);
+
     free(a.v);
     free(b.v);
     free(x.v);
