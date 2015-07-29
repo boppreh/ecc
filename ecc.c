@@ -17,6 +17,8 @@ typedef struct {
 #define FOR2(i, a, b) for (int i = 0; i < smallest(a, b).length; i++)
 #define RFOR2(i, a, b) for (int i = smallest(a, b).length - 1; i >= 0; i--)
 
+#define assertEquals(A, B) if (cmp(A, B) != 0) { printf("---\nASSERTION ERROR at %s:%d\n%s (%s)\n!=\n%s (%s)\n---\n", __func__, __LINE__, to_string(A), #A, to_string(B), #B);}
+
 const char * to_string(Number n) {
     int chunk_length = 2 * sizeof(chunk);
     int length = chunk_length * n.length + 1;
