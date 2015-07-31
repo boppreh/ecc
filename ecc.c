@@ -400,7 +400,7 @@ void doublep(Point p, Curve c, Point result) {
     free(_3.v);
 }
 
-void addc(Point p, Point q, Curve c, Point result) {
+void addp(Point p, Point q, Curve c, Point result) {
     if (p.isinf) {
         cpp(q, result);
         return;
@@ -445,4 +445,23 @@ void addc(Point p, Point q, Curve c, Point result) {
     free(dx.v);
     free(dy.v);
     free(temp.v);
+}
+
+void mulp(Point p, Number k, Curve c, Point result) {
+    if (iszero(k)) {
+        result.isinf = 1;
+        return;
+    }
+
+    Point n = new_point(c);
+    cpp(p, n);
+    do {
+        if (div2(k, k) == 1) {
+            addp(result, n, c, result);
+        }
+        doublep(n, c, n);
+    } while (!iszero(k));
+
+    free(n.x.v);
+    free(n.y.v);
 }
