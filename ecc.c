@@ -348,7 +348,7 @@ void divm(Number a, Number b, Number p, Number result) {
 }
 
 typedef struct {
-    Number prime;
+    Number p;
     Number a;
     Number b;
     Number generator;
@@ -358,5 +358,91 @@ typedef struct {
 typedef struct {
     Number x;
     Number y;
-    Curve* c;
+    int isinf;
 } Point;
+
+Point new_point(Curve c) {
+    Point p = {new_number(c.p.length), new_number(c.p.length), 0};
+    return p;
+}
+
+void cpp(Point src, Point dst) {
+    cp(src.x, dst.x);
+    cp(src.y, dst.y);
+}
+
+void doublep(Point p, Curve c, Point result) {
+    Number s = new_number(c.p.length);
+    Number temp = new_number(c.p.length);
+    Number _2 = to_number(2, c.p.length);
+    Number _3 = to_number(3, c.p.length);
+
+    // s = (3 * p.x**2 + curve.a) / (2 * p.y)
+    mulm(p.x, p.x, c.p, s);
+    mulm(s, _3, c.p, s);
+    addm(s, c.a, c.p, s);
+    mulm(p.y, _2, c.p, temp);
+    divm(s, temp, c.p, s);
+
+    // s**2 - 2 * p.x
+    mulm(s, s, c.p, result.x);
+    mulm(p.x, _2, c.p, temp);
+    subm(result.x, temp, c.p, result.x);
+
+    // s * (p.x - r.x) - p.y
+    subm(p.x, result.x, c.p, temp);
+    mulm(s, temp, c.p, result.y);
+    subm(result.y, p.y, c.p, result.y);
+
+    free(s.v);
+    free(temp.v);
+    free(_2.v);
+    free(_3.v);
+}
+
+void addc(Point p, Point q, Curve c, Point result) {
+    if (p.isinf) {
+        cpp(q, result);
+        return;
+    }
+    if (q.isinf) {
+        cpp(p, result);
+        return;
+    }
+
+    Number temp = new_number(c.p.length);
+    sub(c.p, q.y, temp);
+    if (cmp(p.x, q.x) == 0) {
+        if (cmp(p.y, temp) == 0) {
+            result.isinf = 1;
+        } else if (cmp(p.y, q.y) == 0) {
+            doublep(p, c, result);
+        }
+        free(temp.v);
+        return;
+    }
+
+    Number s = new_number(c.p.length);
+    Number dx = new_number(c.p.length);
+    Number dy = new_number(c.p.length);
+
+    // s = (py - qy) / (px - qx)
+    subm(p.x, q.x, c.p, dx);
+    subm(p.y, q.y, c.p, dy);
+    divm(dy, dx, c.p, s);
+
+    // rx = s**2 - px - qx
+    mulm(s, s, c.p, result.x);
+    subm(result.x, p.x, c.p, result.x);
+    subm(result.x, q.x, c.p, result.x);
+
+    // ry = s * (px - rx) - py
+    subm(p.x, result.x, c.p, result.y);
+    mulm(s, result.y, c.p, result.y);
+    subm(result.y, p.y, c.p, result.y);
+
+    free(s.v);
+    free(dx.v);
+    free(dy.v);
+    free(temp.v);
+}
