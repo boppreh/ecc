@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 // Chunk of a finite field element.
 typedef unsigned char chunk;
@@ -34,9 +36,15 @@ const char * to_string(Number n) {
 #define print(n) printf("%s (%s:%d):\t%s\n", #n, __func__, __LINE__, to_string(n));
 
 void zero(Number dst) {
-    FOR(i, dst) {
-        dst.v[i] = 0;
-    }
+    memset(dst.v, 0x00, sizeof(chunk) * dst.length);
+}
+
+void rand_number(Number dst) {
+    int urandom = open("/dev/urandom", O_RDONLY);
+    assert(urandom != -1);
+    ssize_t nbytes = read(urandom, dst.v, sizeof(chunk) * dst.length);
+    assert(nbytes == dst.length);
+    close(urandom);
 }
 
 Number new_number(long size) {
@@ -72,10 +80,10 @@ Number smallest(Number a, Number b) {
 }
 
 void cp(Number src, Number dst) {
+    assert(src.v != dst.v);
+    // In case dst is bigger than src.
     zero(dst);
-    FOR2(i, src, dst) {
-        dst.v[i] = src.v[i];
-    }
+    memcpy(dst.v, src.v, sizeof(chunk) * src.length);
 }
 
 Number clone(Number src) {
@@ -361,8 +369,8 @@ typedef struct {
     int isinf;
 } Point;
 
-Point new_point(Curve c) {
-    Point p = {new_number(c.p.length), new_number(c.p.length), 0};
+Point new_point(int length) {
+    Point p = {new_number(length), new_number(length), 0};
     return p;
 }
 
@@ -453,7 +461,7 @@ void mulp(Point p, Number k, Curve c, Point result) {
         return;
     }
 
-    Point n = new_point(c);
+    Point n = new_point(c.p.length);
     cpp(p, n);
     do {
         if (div2(k, k) == 1) {
@@ -464,4 +472,18 @@ void mulp(Point p, Number k, Curve c, Point result) {
 
     free(n.x.v);
     free(n.y.v);
+}
+
+typedef struct {
+    Number da;
+    Point qa;
+    Curve c;
+} Keypair;
+
+Keypair generate_keypair(Curve c) {
+    Keypair kp;
+    kp.da = new_number(c.p.length);
+    kp.qa = new_point(c.p.length);
+    mulp(kp.qa, kp.da, c, kp.qa);
+    return kp;
 }
