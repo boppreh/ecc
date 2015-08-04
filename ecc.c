@@ -163,8 +163,8 @@ void add(Number a, Number b, Number output) {
     // this case the algorithm won't write over every chunk of a,
     // and there will be leftover values.
     cp(result, output);
-    free(result.v);
-    assert(carry == 0);
+    //free(result.v);
+    output.v[smallest(a, b).length] = carry;
 }
 
 void sub(Number a, Number b, Number output) {
