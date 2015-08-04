@@ -374,6 +374,8 @@ Point new_point(int length) {
     return p;
 }
 
+#define printp(p) printf("%s (%s:%d):\t(%s, %s)\n", #p, __func__, __LINE__, to_string(p.x), to_string(p.y));
+
 void cpp(Point src, Point dst) {
     cp(src.x, dst.x);
     cp(src.y, dst.y);
@@ -489,14 +491,46 @@ void mulp(Point p, Number a, Curve c, Point result) {
 }
 
 typedef struct {
-    Number da;
-    Point qa;
+    Point p;
     Curve c;
+} PublicKey;
+
+typedef struct {
+    Number k;
+    Curve c;
+} PrivateKey;
+
+typedef struct {
+    PublicKey public;
+    PrivateKey private;
 } Keypair;
 
 Keypair generate_keypair(Curve c) {
-    Keypair kp = {new_number(c.p.length), new_point(c.p.length), c};
-    rand_number(kp.da);
-    mulp(c.generator, kp.da, c, kp.qa);
+    PublicKey public = {new_point(c.p.length), c};
+    PrivateKey private = {new_number(c.p.length), c};
+    rand_number(private.k);
+    mulp(c.generator, private.k, c, public.p);
+
+    Keypair kp = {public, private};
     return kp;
+}
+
+typedef struct {
+    Point secret;
+    Point hint;
+} EncryptionData;
+
+EncryptionData generate_encryption(PublicKey public) {
+    EncryptionData data = {new_point(public.c.p.length), new_point(public.c.p.length)};
+    Number secret = new_number(public.c.p.length);
+    rand_number(secret);
+    mulp(public.p, secret, public.c, data.secret);
+    mulp(public.c.generator, secret, public.c, data.hint);
+    return data;
+}
+
+Point generate_decryption(PrivateKey private, Point hint) {
+    Point secret = new_point(private.c.p.length);
+    mulp(hint, private.k, private.c, secret);
+    return secret;
 }

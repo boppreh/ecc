@@ -138,9 +138,14 @@ int main(void) {
         parse("E95E4A5F737059DC60DF5991D45029409E60FC09", 20),
     };
     Keypair kp = generate_keypair(c);
-    print(kp.da);
-    print(kp.qa.x);
-    print(kp.qa.y);
+    print(kp.private.k);
+    printp(kp.public.p);
+
+    EncryptionData data = generate_encryption(kp.public);
+    printp(data.secret);
+    printp(data.hint);
+
+    printp(generate_decryption(kp.private, data.hint));
 
     return 0;
 }
