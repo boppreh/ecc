@@ -179,7 +179,7 @@ void sub(Number a, Number b, Number output) {
     }
 
     cp(result, output);
-    free(result.v);
+    //free(result.v);
 }
 
 void mul(Number a, Number b, Number result) {
@@ -256,15 +256,15 @@ void divmod(Number a, Number b, Number quotient, Number out_remainder) {
         }
     }
     cp(remainder, out_remainder);
-    free(distance.v);
-    free(total.v);
-    free(remainder.v);
+    //free(distance.v);
+    //free(total.v);
+    //free(remainder.v);
 }
 
 void divfloor(Number a, Number b, Number result) {
     Number remainder = new_number(a.length);
     divmod(a, b, result, remainder);
-    free(remainder.v);
+    //free(remainder.v);
 }
 
 void mod(Number a, Number p, Number result) {
@@ -272,15 +272,15 @@ void mod(Number a, Number p, Number result) {
     // Clone in case of a == result.
     Number temp = clone(a);
     divmod(temp, p, quotient, result);
-    free(quotient.v);
-    free(temp.v);
+    //free(quotient.v);
+    //free(temp.v);
 }
 
 void addm(Number a, Number b, Number p, Number result) {
     Number tempResult = new_number(2 * p.length);
     add(a, b, tempResult);
     mod(tempResult, p, result);
-    free(tempResult.v);
+    //free(tempResult.v);
 }
 
 void subm(Number a, Number b, Number p, Number result) {
@@ -288,7 +288,7 @@ void subm(Number a, Number b, Number p, Number result) {
         Number tempA = new_number(p.length + 1);
         add(a, p, tempA);
         sub(tempA, b, result);
-        free(tempA.v);
+        //free(tempA.v);
     } else {
         sub(a, b, result);
     }
@@ -298,7 +298,7 @@ void mulm(Number a, Number b, Number p, Number result) {
     Number tempResult = new_number(2 * p.length);
     mul(a, b, tempResult);
     mod(tempResult, p, result);
-    free(tempResult.v);
+    //free(tempResult.v);
 }
 
 void inversem(Number a, Number p, Number result) {
@@ -336,38 +336,38 @@ void inversem(Number a, Number p, Number result) {
     }
     cp(x, result);
 
-    free(a.v);
-    free(b.v);
-    free(x.v);
-    free(y.v);
-    free(u.v);
-    free(v.v);
-    free(q.v);
-    free(r.v);
-    free(m.v);
-    free(n.v);
+    //free(a.v);
+    //free(b.v);
+    //free(x.v);
+    //free(y.v);
+    //free(u.v);
+    //free(v.v);
+    //free(q.v);
+    //free(r.v);
+    //free(m.v);
+    //free(n.v);
 }
 
 void divm(Number a, Number b, Number p, Number result) {
     Number inverse = new_number(p.length);
     inversem(b, p, inverse);
     mulm(a, inverse, p, result);
-    free(inverse.v);
+    //free(inverse.v);
 }
-
-typedef struct {
-    Number p;
-    Number a;
-    Number b;
-    Number generator;
-    Number generator_order;
-} Curve;
 
 typedef struct {
     Number x;
     Number y;
     int isinf;
 } Point;
+
+typedef struct {
+    Number p;
+    Number a;
+    Number b;
+    Point generator;
+    Number generator_order;
+} Curve;
 
 Point new_point(int length) {
     Point p = {new_number(length), new_number(length), 0};
@@ -379,11 +379,13 @@ void cpp(Point src, Point dst) {
     cp(src.y, dst.y);
 }
 
-void doublep(Point p, Curve c, Point result) {
+void doublep(Point p, Curve c, Point output) {
     Number s = new_number(c.p.length);
     Number temp = new_number(c.p.length);
     Number _2 = to_number(2, c.p.length);
     Number _3 = to_number(3, c.p.length);
+
+    Point result = new_point(c.p.length);
 
     // s = (3 * p.x**2 + curve.a) / (2 * p.y)
     mulm(p.x, p.x, c.p, s);
@@ -402,19 +404,23 @@ void doublep(Point p, Curve c, Point result) {
     mulm(s, temp, c.p, result.y);
     subm(result.y, p.y, c.p, result.y);
 
-    free(s.v);
-    free(temp.v);
-    free(_2.v);
-    free(_3.v);
+    //free(s.v);
+    //free(temp.v);
+    //free(_2.v);
+    //free(_3.v);
+
+    cpp(result, output);
+    //free(result.x.v);
+    //free(result.y.v);
 }
 
-void addp(Point p, Point q, Curve c, Point result) {
+void addp(Point p, Point q, Curve c, Point output) {
     if (p.isinf) {
-        cpp(q, result);
+        cpp(q, output);
         return;
     }
     if (q.isinf) {
-        cpp(p, result);
+        cpp(p, output);
         return;
     }
 
@@ -422,17 +428,20 @@ void addp(Point p, Point q, Curve c, Point result) {
     sub(c.p, q.y, temp);
     if (cmp(p.x, q.x) == 0) {
         if (cmp(p.y, temp) == 0) {
-            result.isinf = 1;
+            output.isinf = 1;
+            //free(temp.v);
+            return;
         } else if (cmp(p.y, q.y) == 0) {
-            doublep(p, c, result);
+            doublep(p, c, output);
+            //free(temp.v);
+            return;
         }
-        free(temp.v);
-        return;
     }
 
     Number s = new_number(c.p.length);
     Number dx = new_number(c.p.length);
     Number dy = new_number(c.p.length);
+    Point result = new_point(c.p.length);
 
     // s = (py - qy) / (px - qx)
     subm(p.x, q.x, c.p, dx);
@@ -449,29 +458,34 @@ void addp(Point p, Point q, Curve c, Point result) {
     mulm(s, result.y, c.p, result.y);
     subm(result.y, p.y, c.p, result.y);
 
-    free(s.v);
-    free(dx.v);
-    free(dy.v);
-    free(temp.v);
+    cpp(result, output);
+
+    //free(s.v);
+    //free(dx.v);
+    //free(dy.v);
+    //free(temp.v);
 }
 
-void mulp(Point p, Number k, Curve c, Point result) {
-    if (iszero(k)) {
+void mulp(Point p, Number a, Curve c, Point result) {
+    if (iszero(a)) {
         result.isinf = 1;
         return;
     }
 
     Point n = new_point(c.p.length);
     cpp(p, n);
+    Number k = new_number(c.p.length);
+    cp(a, k);
     do {
+        print(k);
         if (div2(k, k) == 1) {
             addp(result, n, c, result);
         }
         doublep(n, c, n);
     } while (!iszero(k));
 
-    free(n.x.v);
-    free(n.y.v);
+    //free(n.x.v);
+    //free(n.y.v);
 }
 
 typedef struct {
@@ -481,9 +495,8 @@ typedef struct {
 } Keypair;
 
 Keypair generate_keypair(Curve c) {
-    Keypair kp;
-    kp.da = new_number(c.p.length);
-    kp.qa = new_point(c.p.length);
-    mulp(kp.qa, kp.da, c, kp.qa);
+    Keypair kp = {new_number(c.p.length), new_point(c.p.length), c};
+    rand_number(kp.da);
+    mulp(c.generator, kp.da, c, kp.qa);
     return kp;
 }
