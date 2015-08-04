@@ -575,6 +575,25 @@ Signature sign(PrivateKey private, Number hash) {
     free(nonce.v);
 
     Signature signature = {r.x, s};
-
     return signature;
+}
+
+int verify(PublicKey public, Number hash, Signature signature) {
+    Curve c = public.c;
+    Number w = new_number(c.p.length);
+    inversem(signature.s, c.p, w);
+
+    Number u1 = new_number(c.p.length);
+    mulm(hash, w, c.p, u1);
+    Number u2 = new_number(c.p.length);
+    mulm(signature.r, w, c.p, u1);
+
+    Point p = new_point(c.p.length);
+    Point q = new_point(c.p.length);
+    mulp(c.generator, u1, c, p);
+    mulp(public.p, u2, c, q);
+    addp(p, q, c, p);
+
+    mod(p.x, c.generator_order, w);
+    return cmp(w, signature.r) == 0;
 }

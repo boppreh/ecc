@@ -144,8 +144,11 @@ int main(void) {
     EncryptionData data = generate_encryption(kp.public);
     printp(data.secret);
     printp(data.hint);
-
     printp(generate_decryption(kp.private, data.hint));
+
+    Number hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
+    Signature signature = sign(kp.private, hash);
+    assert(verify(kp.public, hash, signature));
 
     return 0;
 }
