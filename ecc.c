@@ -39,20 +39,6 @@ void zero(Number dst) {
     memset(dst.v, 0x00, sizeof(chunk) * dst.length);
 }
 
-void rand_number(Number dst) {
-    int urandom = open("/dev/urandom", O_RDONLY);
-    assert(urandom != -1);
-    ssize_t nbytes = read(urandom, dst.v, sizeof(chunk) * dst.length);
-    assert(nbytes == dst.length);
-    close(urandom);
-}
-
-Number new_number(long size) {
-    Number n = {malloc(sizeof(chunk) * size), size};
-    zero(n);
-    return n;
-}
-
 int iszero(Number a) {
     FOR(i, a) {
         if (a.v[i] != 0) {
@@ -60,6 +46,49 @@ int iszero(Number a) {
         }
     }
     return 1;
+}
+
+int cmp(Number a, Number b) {
+    if (a.length < b.length) {
+        return -cmp(b, a);
+    }
+
+    for (int i = b.length; i < a.length; i++) {
+        if (a.v[i] > 0) {
+            return 1;
+        }
+    }
+
+    RFOR(i, b) {
+        if (a.v[i] > b.v[i]) {
+            return 1;
+        } else if (a.v[i] < b.v[i]) {
+            return -1;
+        }
+    }
+    return 0;
+}
+
+void rand_number(Number dst, Number max) {
+    int urandom = open("/dev/urandom", O_RDONLY);
+    assert(urandom != -1);
+    while (1) {
+        ssize_t nbytes = read(urandom, dst.v, sizeof(chunk) * max.length);
+        if (nbytes != max.length || cmp(dst, max) >= 1 || iszero(dst)) {
+            printf("Random number generation failed. Trying again...\n");
+            print(dst);
+            continue;
+        } else {
+            break;
+        }
+    }
+    close(urandom);
+}
+
+Number new_number(long size) {
+    Number n = {malloc(sizeof(chunk) * size), size};
+    zero(n);
+    return n;
 }
 
 int ismax(Number a) {
@@ -90,27 +119,6 @@ Number clone(Number src) {
     Number c = new_number(src.length);
     cp(src, c);
     return c;
-}
-
-int cmp(Number a, Number b) {
-    if (a.length < b.length) {
-        return -cmp(b, a);
-    }
-
-    for (int i = b.length; i < a.length; i++) {
-        if (a.v[i] > 0) {
-            return 1;
-        }
-    }
-
-    RFOR(i, b) {
-        if (a.v[i] > b.v[i]) {
-            return 1;
-        } else if (a.v[i] < b.v[i]) {
-            return -1;
-        }
-    }
-    return 0;
 }
 
 Number to_number(chunk least, long size) {
@@ -508,7 +516,7 @@ typedef struct {
 Keypair generate_keypair(Curve c) {
     PublicKey public = {new_point(c.p.length), c};
     PrivateKey private = {new_number(c.p.length), c};
-    rand_number(private.k);
+    rand_number(private.k, c.generator_order);
     mulp(c.generator, private.k, c, public.p);
 
     Keypair kp = {public, private};
@@ -523,7 +531,7 @@ typedef struct {
 EncryptionData generate_encryption(PublicKey public) {
     EncryptionData data = {new_point(public.c.p.length), new_point(public.c.p.length)};
     Number secret = new_number(public.c.p.length);
-    rand_number(secret);
+    rand_number(secret, public.c.generator_order);
     mulp(public.p, secret, public.c, data.secret);
     mulp(public.c.generator, secret, public.c, data.hint);
     return data;
@@ -533,4 +541,40 @@ Point generate_decryption(PrivateKey private, Point hint) {
     Point secret = new_point(private.c.p.length);
     mulp(hint, private.k, private.c, secret);
     return secret;
+}
+
+typedef struct {
+    Number r;
+    Number s; 
+} Signature;
+
+Signature sign(PrivateKey private, Number hash) {
+    Curve c = private.c;
+    Number nonce = new_number(c.p.length);
+    Point r = new_point(c.p.length);
+    Number s = new_number(c.p.length);
+    while (1) {
+        rand_number(nonce, c.generator_order);
+        mulp(c.generator, nonce, c, r);
+        if (iszero(r.x)) {
+            // Unlucky r.
+            continue;
+        }
+        mulm(private.k, r.x, c.p, s);
+        addm(s, hash, c.p, s);
+        divm(s, nonce, c.p, s);
+        if (iszero(s)) {
+            // Unlucky s.
+            continue;
+        }
+
+        break;
+    }
+
+    free(r.y.v);
+    free(nonce.v);
+
+    Signature signature = {r.x, s};
+
+    return signature;
 }
