@@ -1,11 +1,11 @@
 #include "ecc.c"
 
-static Number _0;
-static Number _1;
-static Number _2;
-static Number _3;
-static Number _128;
-static Number _255;
+static Number* _0;
+static Number* _1;
+static Number* _2;
+static Number* _3;
+static Number* _128;
+static Number* _255;
 
 void setup() {
     _0 = to_number(0, 4);
@@ -29,7 +29,7 @@ void testSanity() {
 }
 
 void testAddSub() {
-    Number a = new_number(4);
+    Number* a = new_number(4);
     add(_1, _0, a);
     assert(cmp(a, _1) == 0);
     add(_1, _1, a);
@@ -41,14 +41,14 @@ void testAddSub() {
     assert(cmp(a, _1) == 0);
 
     // Test with borrows that overflow.
-    Number result = new_number(4);
+    Number* result = new_number(4);
     sub(parse("7f310ffeac6", 8), parse("7f2fffff01a", 8), result);
 	assertEquals(result, parse("10fffaac", 4));
 }
 
 void testMul() {
-    Number p = new_number(8);
-    Number q = new_number(16);
+    Number* p = new_number(8);
+    Number* q = new_number(16);
     mul(_0, _0, p);
     assert(cmp(p, _0) == 0);
     mul(_0, _1, p);
@@ -70,7 +70,7 @@ void testMul() {
 }
 
 void testDiv2() {
-    Number quotient = new_number(4);
+    Number* quotient = new_number(4);
     int remainder2;
 
     remainder2 = div2(_128, quotient);
@@ -83,8 +83,8 @@ void testDiv2() {
 }
 
 void testDiv() {
-    Number quotient = new_number(4);
-    Number remainder = new_number(4);
+    Number* quotient = new_number(4);
+    Number* remainder = new_number(4);
 
     divmod(_1, _128, quotient, remainder);
     assert(cmp(quotient, _0) == 0);
@@ -102,14 +102,14 @@ void testDiv() {
     assert(cmp(quotient, parse("40", 4)) == 0);
     assert(cmp(remainder, _0) == 0);
 
-	Number result = new_number(4);
+	Number* result = new_number(4);
     mod(parse("000002dc52211d19", 8), parse("7fffffff", 4), result);
 	assert(cmp(result, parse("522122d1", 4)) == 0);
 }
 
 void testInverse() {
-	Number p = parse("7fffffff", 4);
-	Number result = new_number(4);
+	Number* p = parse("7fffffff", 4);
+	Number* result = new_number(4);
     inversem(parse("FF", 4), p, result);
 	assertEquals(result, parse("1010101", 4));
 
@@ -118,6 +118,10 @@ void testInverse() {
 }
 
 int main(void) {
+    //chunk arr[10];
+    //Number n = {10, arr};
+    //print(&n);
+    //return 0;
     setup();
     testSanity();
     testAddSub();
@@ -146,7 +150,7 @@ int main(void) {
     printp(data.hint);
     printp(generate_decryption(kp.private, data.hint));
 
-    Number hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
+    Number* hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
     Signature signature = sign(kp.private, hash);
     assert(verify(kp.public, hash, signature));
 
