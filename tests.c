@@ -117,11 +117,32 @@ void testInverse() {
 	assertEquals(result, parse("6b1b6ac8", 4));
 }
 
-int main(void) {
-    //chunk arr[10];
-    //Number n = {10, arr};
-    //print(&n);
+void testEcc() {
+    // Curve brainpoolP160r1 from https://tools.ietf.org/html/rfc5639#section-3.1
+    Curve c  = {
+        parse("E95E4A5F737059DC60DFC7AD95B3D8139515620F", 20),
+        parse("340E7BE2A280EB74E2BE61BADA745D97E8F7C300", 20),
+        parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20),
+        parse_point("BED5AF16EA3F6A4F62938C4631EB5AF7BDBCDBC3",
+                "1667CB477A1A8EC338F94741669C976316DA6321", 20),
+        parse("E95E4A5F737059DC60DF5991D45029409E60FC09", 20),
+    };
+
+    //Point* p = new_point(c.p->length);
+    //mulp(c.generator, parse("1760c598030c3e846ebe045ee30bd13a39adae6c", 20), c, p);
     //return 0;
+
+    Keypair kp = generate_keypair(c);
+
+    EncryptionData data = generate_encryption(kp.public);
+    assertEquals(data.secret->x, generate_decryption(kp.private, data.hint)->x);
+
+    Number* hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
+    Signature signature = sign(kp.private, hash);
+    assert(verify(kp.public, hash, signature));
+}
+
+int main(void) {
     setup();
     testSanity();
     testAddSub();
@@ -129,30 +150,5 @@ int main(void) {
     testDiv2();
     testDiv();
     testInverse();
-
-    // Curve brainpoolP160r1 from https://tools.ietf.org/html/rfc5639#section-3.1
-    Curve c  = {
-        parse("E95E4A5F737059DC60DFC7AD95B3D8139515620F", 20),
-        parse("340E7BE2A280EB74E2BE61BADA745D97E8F7C300", 20),
-        parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20),
-        {
-            parse("BED5AF16EA3F6A4F62938C4631EB5AF7BDBCDBC3", 20),
-            parse("1667CB477A1A8EC338F94741669C976316DA6321", 20)
-        },
-        parse("E95E4A5F737059DC60DF5991D45029409E60FC09", 20),
-    };
-    Keypair kp = generate_keypair(c);
-    print(kp.private.k);
-    printp(kp.public.p);
-
-    EncryptionData data = generate_encryption(kp.public);
-    printp(data.secret);
-    printp(data.hint);
-    printp(generate_decryption(kp.private, data.hint));
-
-    Number* hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
-    Signature signature = sign(kp.private, hash);
-    assert(verify(kp.public, hash, signature));
-
-    return 0;
+    testEcc();
 }
