@@ -102,10 +102,10 @@ int ismax(Number* a) {
 }
 
 void cp(Number* src, Number* dst) {
-    assert(src->v != dst->v);
+    assert(src != dst);
     // In case dst is bigger than src.
     zero(dst);
-    memcpy(dst->v, src->v, sizeof(chunk) * src->length);
+    memcpy(dst->v, src->v, sizeof(chunk) * MIN(src->length, dst->length));
 }
 
 Number* clone(Number* src) {
@@ -164,7 +164,7 @@ void add(Number* a, Number* b, Number* output) {
     // this case the algorithm won't write over every chunk of a,
     // and there will be leftover values.
     cp(result, output);
-    //free(result);
+    free(result);
     output->v[MIN(a->length, b->length)] = carry;
 }
 
@@ -180,7 +180,7 @@ void sub(Number* a, Number* b, Number* output) {
     }
 
     cp(result, output);
-    //free(result);
+    free(result);
 }
 
 void mul(Number* a, Number* b, Number* result) {
@@ -257,15 +257,16 @@ void divmod(Number* a, Number* b, Number* quotient, Number* out_remainder) {
         }
     }
     cp(remainder, out_remainder);
-    //free(distance);
-    //free(total);
-    //free(remainder);
+    free(distance);
+    free(total);
+    free(remainder);
+    free(_1);
 }
 
 void divfloor(Number* a, Number* b, Number* result) {
     Number* remainder = new_number(a->length);
     divmod(a, b, result, remainder);
-    //free(remainder);
+    free(remainder);
 }
 
 void mod(Number* a, Number* p, Number* result) {
@@ -273,15 +274,15 @@ void mod(Number* a, Number* p, Number* result) {
     // Clone in case of a == result.
     Number* temp = clone(a);
     divmod(temp, p, quotient, result);
-    //free(quotient);
-    //free(temp);
+    free(quotient);
+    free(temp);
 }
 
 void addm(Number* a, Number* b, Number* p, Number* result) {
     Number* tempResult = new_number(2 * p->length);
     add(a, b, tempResult);
     mod(tempResult, p, result);
-    //free(tempResult);
+    free(tempResult);
 }
 
 void subm(Number* a, Number* b, Number* p, Number* result) {
@@ -289,7 +290,7 @@ void subm(Number* a, Number* b, Number* p, Number* result) {
         Number* tempA = new_number(p->length + 1);
         add(a, p, tempA);
         sub(tempA, b, result);
-        //free(tempA);
+        free(tempA);
     } else {
         sub(a, b, result);
     }
@@ -299,7 +300,7 @@ void mulm(Number* a, Number* b, Number* p, Number* result) {
     Number* tempResult = new_number(2 * p->length);
     mul(a, b, tempResult);
     mod(tempResult, p, result);
-    //free(tempResult);
+    free(tempResult);
 }
 
 void inversem(Number* a, Number* p, Number* result) {
@@ -337,23 +338,23 @@ void inversem(Number* a, Number* p, Number* result) {
     }
     cp(x, result);
 
-    //free(a);
-    //free(b);
-    //free(x);
-    //free(y);
-    //free(u);
-    //free(v);
-    //free(q);
-    //free(r);
-    //free(m);
-    //free(n);
+    free(a);
+    free(b);
+    free(x);
+    free(y);
+    free(u);
+    free(v);
+    free(q);
+    free(r);
+    free(m);
+    free(n);
 }
 
 void divm(Number* a, Number* b, Number* p, Number* result) {
     Number* inverse = new_number(p->length);
     inversem(b, p, inverse);
     mulm(a, inverse, p, result);
-    //free(inverse);
+    free(inverse);
 }
 
 typedef struct {
@@ -407,14 +408,14 @@ void doublep(Point p, Curve c, Point output) {
     mulm(s, temp, c.p, result.y);
     subm(result.y, p.y, c.p, result.y);
 
-    //free(s);
-    //free(temp);
-    //free(_2);
-    //free(_3);
+    free(s);
+    free(temp);
+    free(_2);
+    free(_3);
 
     cpp(result, output);
-    //free(result.x);
-    //free(result.y);
+    free(result.x);
+    free(result.y);
 }
 
 void addp(Point p, Point q, Curve c, Point output) {
@@ -432,11 +433,11 @@ void addp(Point p, Point q, Curve c, Point output) {
     if (cmp(p.x, q.x) == 0) {
         if (cmp(p.y, temp) == 0) {
             output.isinf = 1;
-            //free(temp);
+            free(temp);
             return;
         } else if (cmp(p.y, q.y) == 0) {
             doublep(p, c, output);
-            //free(temp);
+            free(temp);
             return;
         }
     }
@@ -463,10 +464,10 @@ void addp(Point p, Point q, Curve c, Point output) {
 
     cpp(result, output);
 
-    //free(s);
-    //free(dx);
-    //free(dy);
-    //free(temp);
+    free(s);
+    free(dx);
+    free(dy);
+    free(temp);
 }
 
 void mulp(Point p, Number* a, Curve c, Point result) {
@@ -482,8 +483,8 @@ void mulp(Point p, Number* a, Curve c, Point result) {
         doublep(n, c, n);
     }
 
-    //free(n.x);
-    //free(n.y);
+    free(n.x);
+    free(n.y);
 }
 
 typedef struct {
@@ -560,8 +561,8 @@ Signature sign(PrivateKey private, Number* hash) {
         break;
     }
 
-    //free(r.y);
-    //free(nonce);
+    free(r.y);
+    free(nonce);
 
     Signature signature = {r.x, s};
     return signature;
