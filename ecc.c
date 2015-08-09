@@ -102,10 +102,13 @@ int ismax(Number* a) {
 }
 
 void cp(Number* src, Number* dst) {
-    assert(src != dst);
-    // In case dst is bigger than src.
-    zero(dst);
-    memcpy(dst->v, src->v, sizeof(chunk) * MIN(src->length, dst->length));
+    if (src == dst) {
+        return;
+    } else {
+        // In case dst is bigger than src.
+        zero(dst);
+        memcpy(dst->v, src->v, sizeof(chunk) * MIN(src->length, dst->length));
+    }
 }
 
 Number* clone(Number* src) {
@@ -367,46 +370,62 @@ typedef struct {
     Number* p;
     Number* a;
     Number* b;
-    Point generator;
+    Point* generator;
     Number* generator_order;
 } Curve;
 
-Point new_point(int length) {
-    Point p = {new_number(length), new_number(length), 0};
+Point* new_point(int length) {
+    Point* p = malloc(sizeof(Point));
+    p->x = new_number(length);
+    p->y = new_number(length);
+    p->isinf = 1;
     return p;
 }
 
-#define printp(p) if (p.isinf == 0) { printf("%s (%s:%d):\t(%s, %s)\n", #p, __func__, __LINE__, to_string(p.x), to_string(p.y)); } else { printf("%s (%s:%d):\tINF\n", #p, __func__, __LINE__); }
-
-void cpp(Point src, Point dst) {
-    cp(src.x, dst.x);
-    cp(src.y, dst.y);
+Point* parse_point(const char* x, const char* y, int length) {
+    Point* p = malloc(sizeof(Point));
+    p->x = parse(x, length);
+    p->y = parse(y, length);
+    return p;
 }
 
-void doublep(Point p, Curve c, Point output) {
+#define printp(p) if (p->isinf == 0) { printf("%s (%s:%d):\t(%s, %s)\n", #p, __func__, __LINE__, to_string(p->x), to_string(p->y)); } else { printf("%s (%s:%d):\tINF\n", #p, __func__, __LINE__); }
+
+void cpp(Point* src, Point* dst) {
+    dst->isinf = 0;
+    cp(src->x, dst->x);
+    cp(src->y, dst->y);
+}
+
+void doublep(Point* p, Curve c, Point* output) {
+    if (p->isinf) {
+        output->isinf = 1;
+        return;
+    }
+
     Number* s = new_number(c.p->length);
     Number* temp = new_number(c.p->length);
     Number* _2 = to_number(2, c.p->length);
     Number* _3 = to_number(3, c.p->length);
 
-    Point result = new_point(c.p->length);
+    Point* result = new_point(c.p->length);
 
-    // s = (3 * p.x**2 + curve.a) / (2 * p.y)
-    mulm(p.x, p.x, c.p, s);
+    // s = (3 * p->x**2 + curve.a) / (2 * p->y)
+    mulm(p->x, p->x, c.p, s);
     mulm(s, _3, c.p, s);
     addm(s, c.a, c.p, s);
-    mulm(p.y, _2, c.p, temp);
+    mulm(p->y, _2, c.p, temp);
     divm(s, temp, c.p, s);
 
-    // s**2 - 2 * p.x
-    mulm(s, s, c.p, result.x);
-    mulm(p.x, _2, c.p, temp);
-    subm(result.x, temp, c.p, result.x);
+    // s**2 - 2 * p->x
+    mulm(s, s, c.p, result->x);
+    mulm(p->x, _2, c.p, temp);
+    subm(result->x, temp, c.p, result->x);
 
-    // s * (p.x - r.x) - p.y
-    subm(p.x, result.x, c.p, temp);
-    mulm(s, temp, c.p, result.y);
-    subm(result.y, p.y, c.p, result.y);
+    // s * (p->x - r->x) - p->y
+    subm(p->x, result->x, c.p, temp);
+    mulm(s, temp, c.p, result->y);
+    subm(result->y, p->y, c.p, result->y);
 
     free(s);
     free(temp);
@@ -414,28 +433,29 @@ void doublep(Point p, Curve c, Point output) {
     free(_3);
 
     cpp(result, output);
-    free(result.x);
-    free(result.y);
+    output->isinf = 0;
+    free(result->x);
+    free(result->y);
 }
 
-void addp(Point p, Point q, Curve c, Point output) {
-    if (p.isinf) {
+void addp(Point* p, Point* q, Curve c, Point* output) {
+    if (p->isinf) {
         cpp(q, output);
         return;
     }
-    if (q.isinf) {
+    if (q->isinf) {
         cpp(p, output);
         return;
     }
 
     Number* temp = new_number(c.p->length);
-    sub(c.p, q.y, temp);
-    if (cmp(p.x, q.x) == 0) {
-        if (cmp(p.y, temp) == 0) {
-            output.isinf = 1;
+    sub(c.p, q->y, temp);
+    if (cmp(p->x, q->x) == 0) {
+        if (cmp(p->y, temp) == 0) {
+            output->isinf = 1;
             free(temp);
             return;
-        } else if (cmp(p.y, q.y) == 0) {
+        } else if (cmp(p->y, q->y) == 0) {
             doublep(p, c, output);
             free(temp);
             return;
@@ -445,22 +465,22 @@ void addp(Point p, Point q, Curve c, Point output) {
     Number* s = new_number(c.p->length);
     Number* dx = new_number(c.p->length);
     Number* dy = new_number(c.p->length);
-    Point result = new_point(c.p->length);
+    Point* result = new_point(c.p->length);
 
     // s = (py - qy) / (px - qx)
-    subm(p.x, q.x, c.p, dx);
-    subm(p.y, q.y, c.p, dy);
+    subm(p->x, q->x, c.p, dx);
+    subm(p->y, q->y, c.p, dy);
     divm(dy, dx, c.p, s);
 
     // rx = s**2 - px - qx
-    mulm(s, s, c.p, result.x);
-    subm(result.x, p.x, c.p, result.x);
-    subm(result.x, q.x, c.p, result.x);
+    mulm(s, s, c.p, result->x);
+    subm(result->x, p->x, c.p, result->x);
+    subm(result->x, q->x, c.p, result->x);
 
     // ry = s * (px - rx) - py
-    subm(p.x, result.x, c.p, result.y);
-    mulm(s, result.y, c.p, result.y);
-    subm(result.y, p.y, c.p, result.y);
+    subm(p->x, result->x, c.p, result->y);
+    mulm(s, result->y, c.p, result->y);
+    subm(result->y, p->y, c.p, result->y);
 
     cpp(result, output);
 
@@ -470,25 +490,31 @@ void addp(Point p, Point q, Curve c, Point output) {
     free(temp);
 }
 
-void mulp(Point p, Number* a, Curve c, Point result) {
-    Point n = new_point(c.p->length);
+void mulp(Point* p, Number* a, Curve c, Point* result) {
+    //printp(p);
+    //print(a);
+
+    Point* n = new_point(c.p->length);
     cpp(p, n);
     Number* k = new_number(c.p->length);
     cp(a, k);
-    result.isinf = 1;
+    result->isinf = 1;
     while (!iszero(k)) {
         if (div2(k, k) == 1) {
             addp(result, n, c, result);
+            //print(k);
+            //printp(result);
+            //printp(n);
         }
         doublep(n, c, n);
     }
 
-    free(n.x);
-    free(n.y);
+    free(n->x);
+    free(n->y);
 }
 
 typedef struct {
-    Point p;
+    Point* p;
     Curve c;
 } PublicKey;
 
@@ -506,7 +532,6 @@ Keypair generate_keypair(Curve c) {
     PublicKey public = {new_point(c.p->length), c};
     PrivateKey private = {new_number(c.p->length), c};
     rand_number(private.k, c.generator_order);
-    print(private.k);
     mulp(c.generator, private.k, c, public.p);
 
     Keypair kp = {public, private};
@@ -514,8 +539,8 @@ Keypair generate_keypair(Curve c) {
 }
 
 typedef struct {
-    Point secret;
-    Point hint;
+    Point* secret;
+    Point* hint;
 } EncryptionData;
 
 EncryptionData generate_encryption(PublicKey public) {
@@ -527,8 +552,8 @@ EncryptionData generate_encryption(PublicKey public) {
     return data;
 }
 
-Point generate_decryption(PrivateKey private, Point hint) {
-    Point secret = new_point(private.c.p->length);
+Point* generate_decryption(PrivateKey private, Point* hint) {
+    Point* secret = new_point(private.c.p->length);
     mulp(hint, private.k, private.c, secret);
     return secret;
 }
@@ -541,18 +566,18 @@ typedef struct {
 Signature sign(PrivateKey private, Number* hash) {
     Curve c = private.c;
     Number* nonce = new_number(c.p->length);
-    Point r = new_point(c.p->length);
+    Point* r = new_point(c.p->length);
     Number* s = new_number(c.p->length);
     while (1) {
         rand_number(nonce, c.generator_order);
         mulp(c.generator, nonce, c, r);
-        if (iszero(r.x)) {
+        if (iszero(r->x)) {
             // Unlucky r.
             continue;
         }
-        mulm(private.k, r.x, c.p, s);
-        addm(s, hash, c.p, s);
-        divm(s, nonce, c.p, s);
+        mulm(private.k, r->x, c.generator_order, s);
+        addm(s, hash, c.generator_order, s);
+        divm(s, nonce, c.generator_order, s);
         if (iszero(s)) {
             // Unlucky s.
             continue;
@@ -561,29 +586,31 @@ Signature sign(PrivateKey private, Number* hash) {
         break;
     }
 
-    free(r.y);
+    Signature signature = {new_number(c.p->length), s};
+    cp(r->x, signature.r);
+
+    free(r);
     free(nonce);
 
-    Signature signature = {r.x, s};
     return signature;
 }
 
 int verify(PublicKey public, Number* hash, Signature signature) {
     Curve c = public.c;
     Number* w = new_number(c.p->length);
-    inversem(signature.s, c.p, w);
+    inversem(signature.s, c.generator_order, w);
 
     Number* u1 = new_number(c.p->length);
-    mulm(hash, w, c.p, u1);
+    mulm(hash, w, c.generator_order, u1);
     Number* u2 = new_number(c.p->length);
-    mulm(signature.r, w, c.p, u1);
+    mulm(signature.r, w, c.generator_order, u2);
 
-    Point p = new_point(c.p->length);
-    Point q = new_point(c.p->length);
+    Point* p = new_point(c.p->length);
+    Point* q = new_point(c.p->length);
     mulp(c.generator, u1, c, p);
     mulp(public.p, u2, c, q);
     addp(p, q, c, p);
 
-    mod(p.x, c.generator_order, w);
+    mod(p->x, c.generator_order, w);
     return cmp(w, signature.r) == 0;
 }
