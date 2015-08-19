@@ -140,6 +140,9 @@ void testEcc() {
     Number* hash = parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20);
     Signature signature = sign(kp.private, hash);
     assert(verify(kp.public, hash, signature));
+
+    rand_number(signature.r, c.generator_order);
+    assert(!verify(kp.public, hash, signature));
 }
 
 int main(void) {
