@@ -19,8 +19,8 @@ def make_c_source(prime=2**31-1):
 
     int main() {
     """
-    yield '\tNumber p = parse("{}", {});'.format(h(prime), n)
-    yield '\tNumber result = new_number({});'.format(n)
+    yield '\tNumber* p = parse("{}", {});'.format(h(prime), n)
+    yield '\tNumber* result = new_number({});'.format(n)
     yield ''
 
     def make_test(a, b, expected, op):
@@ -49,10 +49,10 @@ def make_c_source(prime=2**31-1):
             yield from make_test(a, b, function(a, b), name)
         yield 'printf("Finished {} tests.\\n");'.format(name)
 
-    yield from make_op_test(2000, lambda a, b: a + b, 'addm')
-    yield from make_op_test(2000, lambda a, b: a - b, 'subm')
-    yield from make_op_test(2000, lambda a, b: a * b, 'mulm')
-    yield from make_op_test(2000, lambda a, b: a / b, 'divm', False)
+    yield from make_op_test(200, lambda a, b: a + b, 'addm')
+    yield from make_op_test(200, lambda a, b: a - b, 'subm')
+    yield from make_op_test(200, lambda a, b: a * b, 'mulm')
+    yield from make_op_test(200, lambda a, b: a / b, 'divm', False)
 
     yield '}'
 
@@ -65,4 +65,5 @@ for prime in [2**31-1, 2147483659, 4294967311, 4294967357, 3221225473]:
 
     print('Testing prime {}...'.format(prime))
 
-    os.system('clang -Wall automated_tests.c -o automated_tests && ./automated_tests && rm automated_tests automated_tests.c')
+    os.system('clang -pg -O3 -Wall automated_tests.c -o automated_tests && ./automated_tests && rm automated_tests automated_tests.c')
+    input('Finished test. Press enter to run next.')
