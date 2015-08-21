@@ -26,6 +26,10 @@ void testSanity() {
 
     assert(cmp(parse("0002", 4), to_number(2, 2)) == 0);
     assert(cmp(parse("00FF", 4), to_number(255, 2)) == 0);
+
+    assert(effective_length(parse("00", 4)) == 0);
+    assert(effective_length(parse("FF", 4)) == 1);
+    assert(effective_length(parse("FFFFFFFF", 4)) == 4);
 }
 
 void testAddSub() {
