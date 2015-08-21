@@ -357,7 +357,9 @@ void mod(Number* a, Number* p, Number* output) {
 void addm(Number* a, Number* b, Number* p, Number* result) {
     Number* tempResult = new_number(2 * p->length);
     add(a, b, tempResult);
-    mod(tempResult, p, result);
+    if (cmp(tempResult, p) >= 0) {
+        sub(result, result, result);
+    }
     free(tempResult);
 }
 
