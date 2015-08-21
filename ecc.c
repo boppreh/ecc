@@ -220,14 +220,7 @@ int div2(Number* a, Number* quotient) {
     return remainder;
 }
 
-void divmod(Number* a, Number* b, Number* quotient, Number* out_remainder) {
-    // Shortcut for most finite field operations.
-    if (cmp(a, b) == -1) {
-        zero(quotient);
-        cp(a, out_remainder);
-        return;
-    }
-
+void divmod_binarysearch(Number* a, Number* b, Number* quotient, Number* out_remainder) {
     Number* remainder = new_number(b->length * 2);
 
     Number* distance = new_number(b->length);
@@ -266,19 +259,99 @@ void divmod(Number* a, Number* b, Number* quotient, Number* out_remainder) {
     free(_1);
 }
 
+void divmod(Number* a, Number* b, Number* quotient, Number* out_remainder) {
+    // Shortcut for most finite field operations.
+    if (cmp(a, b) == -1) {
+        zero(quotient);
+        cp(a, out_remainder);
+        return;
+    }
+
+    divmod_binarysearch(a, b, quotient, out_remainder);
+}
+
 void divfloor(Number* a, Number* b, Number* result) {
     Number* remainder = new_number(a->length);
     divmod(a, b, result, remainder);
     free(remainder);
 }
 
-void mod(Number* a, Number* p, Number* result) {
+void mod_divmod(Number* a, Number* p, Number* result) {
     Number* quotient = new_number(a->length);
     // Clone in case of a == result.
     Number* temp = clone(a);
     divmod(temp, p, quotient, result);
     free(quotient);
     free(temp);
+}
+
+static Number* specialP;
+
+void mod(Number* a, Number* p, Number* output) {
+    if (cmp(p, parse("fffffffffffffffffffffffffffffffeffffffffffffffff", 24)) == 0) {
+        Number* c5 = new_number(6);
+        memcpy(c5->v, a->v + 6 * 5, 6);
+
+        Number* c4 = new_number(6);
+        memcpy(c4->v, a->v + 6 * 4, 6);
+
+        Number* c3 = new_number(6);
+        memcpy(c3->v, a->v + 6 * 3, 6);
+
+        Number* c2 = new_number(6);
+        memcpy(c2->v, a->v + 6 * 2, 6);
+
+        Number* c1 = new_number(6);
+        memcpy(c1->v, a->v + 6 * 1, 6);
+
+        Number* c0 = new_number(6);
+        memcpy(c0->v, a->v + 6 * 0, 6);
+
+        Number* s1 = new_number(24);
+        memcpy(s1->v + 6 * 0, c0->v, 6);
+        memcpy(s1->v + 6 * 1, c1->v, 6);
+        memcpy(s1->v + 6 * 2, c2->v, 6);
+
+        Number* s2 = new_number(24);
+        memcpy(s2->v + 6 * 0, c3->v, 6);
+        memcpy(s2->v + 6 * 1, c3->v, 6);
+        //memcpy(s2->v + 6 * 2, _0->v, 6);
+
+        Number* s3 = new_number(24);
+        //memcpy(s3->v + 6 * 0, _0->v, 6);
+        memcpy(s3->v + 6 * 1, c4->v, 6);
+        memcpy(s3->v + 6 * 2, c4->v, 6);
+
+        Number* s4 = new_number(24);
+        memcpy(s4->v + 6 * 0, c5->v, 6);
+        memcpy(s4->v + 6 * 1, c5->v, 6);
+        memcpy(s4->v + 6 * 2, c5->v, 6);
+
+        Number* result = new_number(24);
+        add(s1, s2, result);
+        add(result, s3, result);
+        add(result, s4, result);
+
+        //print(result);
+        //print(p);
+        assert(cmp(result, p) == -1);
+
+        cp(result, output);
+
+        free(c5);
+        free(c4);
+        free(c3);
+        free(c2);
+        free(c0);
+        free(s1);
+        free(s2);
+        free(s3);
+        free(s4);
+        free(result);
+        return;
+    }
+
+    mod_divmod(a, p, output);
 }
 
 void addm(Number* a, Number* b, Number* p, Number* result) {
