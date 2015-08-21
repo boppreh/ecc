@@ -76,9 +76,10 @@ int cmp(Number* a, Number* b) {
 void rand_number(Number* dst, Number* max) {
     int urandom = open("/dev/urandom", O_RDONLY);
     assert(urandom != -1);
+    int target_nbytes = sizeof(chunk) * effective_length(max);
     while (1) {
-        ssize_t nbytes = read(urandom, dst->v, sizeof(chunk) * max->length);
-        if (nbytes != max->length || cmp(dst, max) >= 1 || iszero(dst)) {
+        ssize_t nbytes = read(urandom, dst->v, target_nbytes);
+        if (nbytes != target_nbytes || cmp(dst, max) >= 1 || iszero(dst)) {
             printf("Random number generation failed. Trying again...\n");
             print(dst);
             continue;
