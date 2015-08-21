@@ -118,8 +118,9 @@ void testInverse() {
 }
 
 void testEcc() {
+    /*
     // Curve brainpoolP160r1 from https://tools.ietf.org/html/rfc5639#section-3.1
-    Curve c  = {
+    Curve brainpoolP160r1 = {
         parse("E95E4A5F737059DC60DFC7AD95B3D8139515620F", 20),
         parse("340E7BE2A280EB74E2BE61BADA745D97E8F7C300", 20),
         parse("1E589A8595423412134FAA2DBDEC95C8D8675E58", 20),
@@ -127,6 +128,20 @@ void testEcc() {
                 "1667CB477A1A8EC338F94741669C976316DA6321", 20),
         parse("E95E4A5F737059DC60DF5991D45029409E60FC09", 20),
     };
+    */
+
+    Curve nistP192 = {
+        parse("fffffffffffffffffffffffffffffffeffffffffffffffff", 24),
+        parse("fffffffffffffffffffffffffffffffefffffffffffffffc", 24),
+        parse("64210519e59c80e70fa7e9ab72243049feb8deecc146b9b1", 24),
+        //s = parse("3045ae6fc8422f64ed579528d38120eae12196d5", 24),
+        parse_point("188da80eb03090f67cbf20eb43a18800f4ff0afd82ff1012",
+               "07192b95ffc8da78631011ed6b24cdd573f977a11e794811", 24),
+        parse("ffffffffffffffffffffffff99def836146bc9b1b4d22831", 24),
+    };
+
+    Curve c = nistP192;
+    specialP = c.p;
 
     //Point* p = new_point(c.p->length);
     //mulp(c.generator, parse("1760c598030c3e846ebe045ee30bd13a39adae6c", 20), c, p);
