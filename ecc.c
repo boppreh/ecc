@@ -10,7 +10,7 @@ typedef unsigned char chunk;
 
 // A finite field element.
 typedef struct {
-    long length; 
+    int length; 
     chunk v[];
 } Number;
 
@@ -39,13 +39,17 @@ void zero(Number* dst) {
     memset(dst->v, 0x00, sizeof(chunk) * dst->length);
 }
 
-int iszero(Number* a) {
+int effective_length(Number* a) {
     FOR(i, a->length) {
-        if (a->v[i] != 0) {
-            return 0;
+        if (a->v[i] == 0) {
+            return i;
         }
     }
-    return 1;
+    return a->length;
+}
+
+int iszero(Number* a) {
+    return effective_length(a) == 0;
 }
 
 int cmp(Number* a, Number* b) {
