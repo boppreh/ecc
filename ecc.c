@@ -40,12 +40,12 @@ void zero(Number* dst) {
 }
 
 int effective_length(Number* a) {
-    FOR(i, a->length) {
-        if (a->v[i] == 0) {
-            return i;
+    RFOR(i, a->length) {
+        if (a->v[i] != 0) {
+            return i + 1;
         }
     }
-    return a->length;
+    return 0;
 }
 
 int iszero(Number* a) {
