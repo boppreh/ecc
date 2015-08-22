@@ -88,7 +88,7 @@ class FieldValue(base_value):
         return FieldValue(t, self.mod)
 
     def __repr__(self):
-        return '{}(%{})'.format(int(self), self.mod)
+        return '{:x}(%{:x})'.format(int(self), self.mod)
 
     def __str__(self):
         return repr(self)
