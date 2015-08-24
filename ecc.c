@@ -363,7 +363,7 @@ void addm(Number* a, Number* b, Number* p, Number* result) {
     Number* tempResult = new_number(2 * p->length);
     add(a, b, tempResult);
     if (cmp(tempResult, p) >= 0) {
-        sub(result, result, result);
+        sub(tempResult, p, result);
     } else {
         cp(tempResult, result);
     }
