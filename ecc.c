@@ -364,6 +364,8 @@ void addm(Number* a, Number* b, Number* p, Number* result) {
     add(a, b, tempResult);
     if (cmp(tempResult, p) >= 0) {
         sub(result, result, result);
+    } else {
+        cp(tempResult, result);
     }
     free(tempResult);
 }
