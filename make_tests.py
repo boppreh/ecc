@@ -58,12 +58,12 @@ def make_c_source(prime=2**31-1):
 
 import os
 
-for prime in [2**31-1, 2147483659, 4294967311, 4294967357, 3221225473]:
+for prime in [0xfffffffffffffffffffffffffffffffeffffffffffffffff, 2**31-1, 2147483659, 4294967311, 4294967357, 3221225473]:
     with open('automated_tests.c', 'w') as f:
         for line in make_c_source(prime):
             f.write(line + '\n')
 
     print('Testing prime {}...'.format(prime))
 
-    os.system('clang -pg -O3 -Wall automated_tests.c -o automated_tests && ./automated_tests && rm automated_tests automated_tests.c')
+    os.system('clang -g -O3 -Wall automated_tests.c -o automated_tests && ./automated_tests && rm automated_tests automated_tests.c')
     input('Finished test. Press enter to run next.')
