@@ -294,43 +294,43 @@ static Number* specialP;
 
 void mod(Number* a, Number* p, Number* output) {
     if (cmp(p, parse("fffffffffffffffffffffffffffffffeffffffffffffffff", 24)) == 0) {
-        Number* c5 = new_number(6);
-        memcpy(c5->v, a->v + 6 * 5, 6);
+        Number* c5 = new_number(8);
+        memcpy(c5->v, a->v + 8 * 5, 8);
 
-        Number* c4 = new_number(6);
-        memcpy(c4->v, a->v + 6 * 4, 6);
+        Number* c4 = new_number(8);
+        memcpy(c4->v, a->v + 8 * 4, 8);
 
-        Number* c3 = new_number(6);
-        memcpy(c3->v, a->v + 6 * 3, 6);
+        Number* c3 = new_number(8);
+        memcpy(c3->v, a->v + 8 * 3, 8);
 
-        Number* c2 = new_number(6);
-        memcpy(c2->v, a->v + 6 * 2, 6);
+        Number* c2 = new_number(8);
+        memcpy(c2->v, a->v + 8 * 2, 8);
 
-        Number* c1 = new_number(6);
-        memcpy(c1->v, a->v + 6 * 1, 6);
+        Number* c1 = new_number(8);
+        memcpy(c1->v, a->v + 8 * 1, 8);
 
-        Number* c0 = new_number(6);
-        memcpy(c0->v, a->v + 6 * 0, 6);
+        Number* c0 = new_number(8);
+        memcpy(c0->v, a->v + 8 * 0, 8);
 
         Number* s1 = new_number(24);
-        memcpy(s1->v + 6 * 0, c0->v, 6);
-        memcpy(s1->v + 6 * 1, c1->v, 6);
-        memcpy(s1->v + 6 * 2, c2->v, 6);
+        memcpy(s1->v + 8 * 0, c0->v, 8);
+        memcpy(s1->v + 8 * 1, c1->v, 8);
+        memcpy(s1->v + 8 * 2, c2->v, 8);
 
         Number* s2 = new_number(24);
-        memcpy(s2->v + 6 * 0, c3->v, 6);
-        memcpy(s2->v + 6 * 1, c3->v, 6);
-        //memcpy(s2->v + 6 * 2, _0->v, 6);
+        memcpy(s2->v + 8 * 0, c3->v, 8);
+        memcpy(s2->v + 8 * 1, c3->v, 8);
+        //memcpy(s2->v + 8 * 2, _0->v, 8);
 
         Number* s3 = new_number(24);
-        //memcpy(s3->v + 6 * 0, _0->v, 6);
-        memcpy(s3->v + 6 * 1, c4->v, 6);
-        memcpy(s3->v + 6 * 2, c4->v, 6);
+        //memcpy(s3->v + 8 * 0, _0->v, 8);
+        memcpy(s3->v + 8 * 1, c4->v, 8);
+        memcpy(s3->v + 8 * 2, c4->v, 8);
 
         Number* s4 = new_number(24);
-        memcpy(s4->v + 6 * 0, c5->v, 6);
-        memcpy(s4->v + 6 * 1, c5->v, 6);
-        memcpy(s4->v + 6 * 2, c5->v, 6);
+        memcpy(s4->v + 8 * 0, c5->v, 8);
+        memcpy(s4->v + 8 * 1, c5->v, 8);
+        memcpy(s4->v + 8 * 2, c5->v, 8);   
 
         Number* result = new_number(24);
         add(s1, s2, result);
