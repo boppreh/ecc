@@ -290,10 +290,34 @@ void mod_divmod(Number* a, Number* p, Number* result) {
     free(temp);
 }
 
+void addm(Number* a, Number* b, Number* p, Number* result) {
+    Number* tempResult = new_number(2 * p->length);
+    add(a, b, tempResult);
+    if (cmp(tempResult, p) >= 0) {
+        sub(tempResult, p, result);
+    } else {
+        cp(tempResult, result);
+    }
+    free(tempResult);
+}
+
+void subm(Number* a, Number* b, Number* p, Number* result) {
+    if (cmp(a, b) == -1) {
+        Number* tempA = new_number(p->length + 1);
+        add(a, p, tempA);
+        sub(tempA, b, result);
+        free(tempA);
+    } else {
+        sub(a, b, result);
+    }
+}
+
 static Number* specialP;
 
 void mod(Number* a, Number* p, Number* output) {
     if (cmp(p, parse("fffffffffffffffffffffffffffffffeffffffffffffffff", 24)) == 0) {
+        assert(a->length >= 8 * 6);
+
         Number* c5 = new_number(8);
         memcpy(c5->v, a->v + 8 * 5, 8);
 
@@ -332,13 +356,11 @@ void mod(Number* a, Number* p, Number* output) {
         memcpy(s4->v + 8 * 1, c5->v, 8);
         memcpy(s4->v + 8 * 2, c5->v, 8);   
 
-        Number* result = new_number(24);
-        add(s1, s2, result);
-        add(result, s3, result);
-        add(result, s4, result);
+        Number* result = new_number(25);
+        addm(s1, s2, p, result);
+        addm(result, s3, p, result);
+        addm(result, s4, p, result);
 
-        //print(result);
-        //print(p);
         assert(cmp(result, p) == -1);
 
         cp(result, output);
@@ -357,28 +379,6 @@ void mod(Number* a, Number* p, Number* output) {
     }
 
     mod_divmod(a, p, output);
-}
-
-void addm(Number* a, Number* b, Number* p, Number* result) {
-    Number* tempResult = new_number(2 * p->length);
-    add(a, b, tempResult);
-    if (cmp(tempResult, p) >= 0) {
-        sub(tempResult, p, result);
-    } else {
-        cp(tempResult, result);
-    }
-    free(tempResult);
-}
-
-void subm(Number* a, Number* b, Number* p, Number* result) {
-    if (cmp(a, b) == -1) {
-        Number* tempA = new_number(p->length + 1);
-        add(a, p, tempA);
-        sub(tempA, b, result);
-        free(tempA);
-    } else {
-        sub(a, b, result);
-    }
 }
 
 void mulm(Number* a, Number* b, Number* p, Number* result) {
